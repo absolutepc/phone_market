@@ -251,12 +251,7 @@ function initCatalogPage() {
   const params = new URLSearchParams(window.location.search);
   const sectionId = resolveCatalogSectionId(params) || 'iphone';
   const catParam = params.get('cat');
-
-  if (params.get('section') || params.get('cat')) {
-    showCatalogProductsView(sectionId, catParam);
-  } else {
-    renderCatalogSections();
-  }
+  showCatalogProductsView(sectionId, catParam);
 }
 
 if (document.getElementById('catalogSectionsGrid') || document.getElementById('catalogProductsView')) {

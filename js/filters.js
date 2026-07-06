@@ -13,6 +13,8 @@ function initPhoneCatalog(options = {}) {
   const listEl = document.getElementById('catalogGrid');
   const resetBtn = document.getElementById('resetFilters');
   const sidebar = document.getElementById('filtersSidebar');
+  const pageLayout = document.getElementById('catalogPageLayout');
+  const filtersToggle = document.getElementById('filtersToggle');
 
   function renderCheckboxGroup(container, items, cssClass, checkedValues = []) {
     if (!container) return;
@@ -167,6 +169,47 @@ function initPhoneCatalog(options = {}) {
 
   sortSelect?.addEventListener('change', applyFilters);
   resetBtn?.addEventListener('click', resetFilters);
+
+  function setFiltersVisible(visible) {
+    if (!pageLayout || !filtersToggle) return;
+    const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+    if (isMobile) {
+      pageLayout.classList.toggle('filters-open', visible);
+      pageLayout.classList.remove('filters-collapsed');
+    } else {
+      pageLayout.classList.toggle('filters-collapsed', !visible);
+      pageLayout.classList.remove('filters-open');
+    }
+    filtersToggle.setAttribute('aria-expanded', String(visible));
+    filtersToggle.textContent = visible ? 'Скрыть фильтры' : 'Показать фильтры';
+  }
+
+  function isFiltersVisible() {
+    if (!pageLayout) return true;
+    const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+    return isMobile
+      ? pageLayout.classList.contains('filters-open')
+      : !pageLayout.classList.contains('filters-collapsed');
+  }
+
+  filtersToggle?.addEventListener('click', () => {
+    setFiltersVisible(!isFiltersVisible());
+  });
+
+  window.addEventListener('resize', () => {
+    const visible = isFiltersVisible();
+    if (window.matchMedia('(max-width: 1024px)').matches) {
+      pageLayout?.classList.toggle('filters-open', visible);
+      pageLayout?.classList.remove('filters-collapsed');
+    } else {
+      pageLayout?.classList.toggle('filters-collapsed', !visible);
+      pageLayout?.classList.remove('filters-open');
+    }
+  });
+
+  if (window.matchMedia('(max-width: 1024px)').matches) {
+    setFiltersVisible(false);
+  }
 
   applyFilters();
 }

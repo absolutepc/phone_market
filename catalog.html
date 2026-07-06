@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <div class="container page-layout">
+    <div class="container page-layout" id="catalogPageLayout">
       <aside class="filters-sidebar" id="filtersSidebar">
         <h3>Фильтры</h3>
 
@@ -68,7 +68,18 @@
 
       <div class="catalog-content">
         <div class="catalog-toolbar">
-          <span class="results-count" id="resultsCount">Найдено: 0</span>
+          <div class="catalog-toolbar-start">
+            <button
+              type="button"
+              class="btn btn-secondary btn-sm filters-toggle-btn"
+              id="filtersToggle"
+              aria-expanded="true"
+              aria-controls="filtersSidebar"
+            >
+              Скрыть фильтры
+            </button>
+            <span class="results-count" id="resultsCount">Найдено: 0</span>
+          </div>
           <select id="sortSelect">
             <option value="default">Сортировка: по умолчанию</option>
             <option value="price-asc">Цена: по возрастанию</option>
@@ -88,7 +99,7 @@
   <script src="js/layout.js"></script>
   <script src="js/transition.js"></script>
   <script src="js/reviews.js"></script>
-  <script src="js/filters.js?v=1.1"></script>
+  <script src="js/filters.js?v=1.2"></script>
   <script src="js/catalog.js?v=2.0"></script>
   <script>initLayout('catalog');</script>
 </body>

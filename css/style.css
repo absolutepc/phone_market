@@ -678,9 +678,22 @@ main {
 .filters-sidebar h3 {
   font-size: 1rem;
   font-weight: 600;
+  margin: 0;
+}
+
+.filters-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin-bottom: 16px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
+}
+
+.filters-close-btn {
+  display: none;
+  flex-shrink: 0;
 }
 
 .filter-group {
@@ -2896,6 +2909,9 @@ main {
     position: static;
     width: 100%;
     max-height: none;
+  }
+  .filters-close-btn {
+    display: inline-flex;
   }
   .configurator-layout { grid-template-columns: 1fr; }
   .config-summary { position: static; }

@@ -33,7 +33,17 @@
 
     <div class="container page-layout" id="catalogPageLayout">
       <aside class="filters-sidebar" id="filtersSidebar">
-        <h3>Фильтры</h3>
+        <div class="filters-sidebar-header">
+          <h3>Фильтры</h3>
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm filters-close-btn"
+            id="filtersClose"
+            aria-label="Скрыть фильтры"
+          >
+            Скрыть
+          </button>
+        </div>
 
         <div class="filter-group">
           <label>Модель</label>
@@ -99,7 +109,7 @@
   <script src="js/layout.js"></script>
   <script src="js/transition.js"></script>
   <script src="js/reviews.js"></script>
-  <script src="js/filters.js?v=1.2"></script>
+  <script src="js/filters.js?v=1.3"></script>
   <script src="js/catalog.js?v=2.0"></script>
   <script>initLayout('catalog');</script>
 </body>

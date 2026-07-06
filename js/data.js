@@ -1,4 +1,4 @@
-const STORE_VERSION = 3;
+const STORE_VERSION = 4;
 const STORE_KEY = 'phonemarket_data_v1';
 const LEGACY_STORE_KEYS = [];
 const APP_BUILD = '1.0';

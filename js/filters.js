@@ -7,7 +7,6 @@ function initPhoneCatalog(options = {}) {
   const categoryFiltersEl = document.getElementById('categoryFilters');
   const storageFiltersEl = document.getElementById('storageFilters');
   const simFiltersEl = document.getElementById('simFilters');
-  const seriesFiltersEl = document.getElementById('seriesFilters');
   const badgeFiltersEl = document.getElementById('badgeFilters');
   const resultsCountEl = document.getElementById('resultsCount');
   const sortSelect = document.getElementById('sortSelect');
@@ -65,14 +64,6 @@ function initPhoneCatalog(options = {}) {
     );
 
     renderCheckboxGroup(
-      seriesFiltersEl,
-      FILTER_SERIES
-        .filter(value => getAvailableValues('series').includes(value))
-        .map(value => ({ value, label: value })),
-      'series-filter'
-    );
-
-    renderCheckboxGroup(
       badgeFiltersEl,
       Object.entries(BADGE_LABELS).map(([value, label]) => ({ value, label })),
       'badge-filter'
@@ -96,7 +87,6 @@ function initPhoneCatalog(options = {}) {
       categories: getCheckedValues('.cat-filter'),
       storage: getCheckedValues('.storage-filter'),
       simTypes: getCheckedValues('.sim-filter'),
-      series: getCheckedValues('.series-filter'),
       badges: getCheckedValues('.badge-filter'),
       priceMin: parsePriceValue(priceMinInput?.value),
       priceMax: parsePriceValue(priceMaxInput?.value),
@@ -108,7 +98,6 @@ function initPhoneCatalog(options = {}) {
     if (state.categories.length && !state.categories.includes(product.category)) return false;
     if (state.storage.length && !state.storage.includes(product.storage)) return false;
     if (state.simTypes.length && !state.simTypes.includes(product.simType)) return false;
-    if (state.series.length && !state.series.includes(product.series)) return false;
     if (state.badges.length && !state.badges.includes(product.badge)) return false;
     if (state.priceMin != null && product.price < state.priceMin) return false;
     if (state.priceMax != null && product.price > state.priceMax) return false;

@@ -5,14 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Отзывы — Phone Market</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>#page-transition{position:fixed;inset:0;z-index:10000;background:#0a0e17}body.page-transition-active>:not(#page-transition){visibility:hidden}</style>
 </head>
-<body>
+<body class="page-transition-active">
+  <div id="page-transition" class="page-transition" role="status" aria-live="polite" aria-label="Загрузка">
+    <div class="page-transition__inner">
+      <div class="page-transition__logo"><img src="img/logo.svg" alt=""></div>
+      <p class="page-transition__label">Отзывы</p>
+      <div class="page-transition__progress" aria-hidden="true"><span class="page-transition__progress-bar"></span></div>
+    </div>
+  </div>
+  <script src="js/catalog-reset-boot.js?v=1.0"></script>
+  <script src="js/transition-boot.js"></script>
+
   <div id="site-header"></div>
   <main id="reviewsPageContent"></main>
   <div id="site-footer"></div>
   <script src="js/data.js?v=1.0"></script>
   <script src="js/app.js"></script>
   <script src="js/layout.js"></script>
+  <script src="js/transition.js"></script>
   <script src="js/reviews.js"></script>
   <script>initLayout('reviews');</script>
 </body>

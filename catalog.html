@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог — Phone Market</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>#page-transition{position:fixed;inset:0;z-index:10000;background:#0a0e17}body.page-transition-active>:not(#page-transition){visibility:hidden}</style>
+</head>
+<body class="page-transition-active">
+  <div id="page-transition" class="page-transition" role="status" aria-live="polite" aria-label="Загрузка">
+    <div class="page-transition__inner">
+      <div class="page-transition__logo"><img src="img/logo.svg" alt=""></div>
+      <p class="page-transition__label">Каталог</p>
+      <div class="page-transition__progress" aria-hidden="true"><span class="page-transition__progress-bar"></span></div>
+    </div>
+  </div>
+  <script src="js/catalog-reset-boot.js?v=1.0"></script>
+  <script src="js/transition-boot.js"></script>
+
+  <div id="site-header"></div>
+
+  <main>
+    <div class="page-header">
+      <div class="container">
+        <div class="breadcrumbs" id="catalogBreadcrumbs">
+          <a href="index.html">Главная</a> / <span id="catalogBreadcrumbCurrent">Каталог</span>
+        </div>
+        <h1 id="catalogTitle">Каталог iPhone</h1>
+        <p id="catalogSubtitle">Весь модельный ряд Apple iPhone 17</p>
+      </div>
+    </div>
+
+    <div class="container catalog-sections-wrap" id="catalogSectionsView">
+      <div class="catalog-sections-grid" id="catalogSectionsGrid"></div>
+    </div>
+
+    <div class="container page-layout catalog-products-wrap" id="catalogProductsView" hidden>
+      <aside class="catalog-filters-sticky">
+        <div class="filters-sidebar">
+          <h3>Фильтры</h3>
+          <div class="filter-group">
+            <label>Модель</label>
+            <div class="filter-checkboxes" id="categoryFilters"></div>
+          </div>
+          <div class="filter-group">
+            <label>Память</label>
+            <div class="filter-checkboxes" id="storageFilters"></div>
+          </div>
+          <div class="filter-group">
+            <label>SIM</label>
+            <div class="filter-checkboxes" id="simFilters"></div>
+          </div>
+          <div class="filter-group">
+            <label>Серия</label>
+            <div class="filter-checkboxes" id="seriesFilters"></div>
+          </div>
+          <div class="filter-group">
+            <label>Цена</label>
+            <p id="priceLabel" class="price-label">0 ₽ — 0 ₽</p>
+            <input type="range" id="priceMinRange" min="0" max="200000" value="0" step="5000">
+            <input type="range" id="priceMaxRange" min="0" max="200000" value="200000" step="5000">
+            <div class="price-inputs">
+              <input type="number" id="priceMinInput" min="0" step="5000" placeholder="От">
+              <input type="number" id="priceMaxInput" min="0" step="5000" placeholder="До">
+            </div>
+          </div>
+          <div class="filter-group">
+            <label>Метка</label>
+            <div class="filter-checkboxes">
+              <label><input type="checkbox" value="new" class="badge-filter"> Новинка</label>
+              <label><input type="checkbox" value="hit" class="badge-filter"> Хит</label>
+              <label><input type="checkbox" value="sale" class="badge-filter"> Скидка</label>
+            </div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="resetFilters" style="width:100%;margin-top:12px">Сбросить</button>
+        </div>
+      </aside>
+
+      <div class="catalog-main">
+        <div class="catalog-toolbar">
+          <span id="catalogResultCount">0 моделей</span>
+          <select id="sortSelect" class="sort-select">
+            <option value="default">По умолчанию</option>
+            <option value="price-asc">Цена: по возрастанию</option>
+            <option value="price-desc">Цена: по убыванию</option>
+            <option value="name">По названию</option>
+          </select>
+        </div>
+        <div class="products-grid" id="catalogGrid"></div>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/data.js?v=1.0"></script>
+  <script src="js/app.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/transition.js"></script>
+  <script src="js/reviews.js"></script>
+  <script src="js/catalog.js?v=1.0"></script>
+  <script>initLayout('catalog');</script>
+</body>
+</html>

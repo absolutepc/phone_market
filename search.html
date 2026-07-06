@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Поиск — Phone Market</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <main>
+    <div class="container search-header">
+      <h1>Результаты поиска</h1>
+      <p>Запрос: <strong id="searchQuery"></strong></p>
+    </div>
+    <div class="container" style="padding-bottom:80px">
+      <div class="products-grid" id="searchResults"></div>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <script src="js/data.js?v=1.0"></script>
+  <script src="js/app.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/reviews.js"></script>
+  <script>
+    initLayout('search');
+    const query = new URLSearchParams(window.location.search).get('q') || '';
+    document.getElementById('searchQuery').textContent = query || '(пусто)';
+    const results = searchProducts(query);
+    const container = document.getElementById('searchResults');
+    if (!results.length) {
+      container.innerHTML = '<div class="no-results" style="grid-column:1/-1"><h2>Ничего не найдено</h2><a href="catalog.html">В каталог</a></div>';
+    } else {
+      container.innerHTML = results.map(p => renderProductCard(p)).join('');
+      bindProductCards(container);
+    }
+  </script>
+</body>
+</html>

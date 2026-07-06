@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phone Market — Официальные iPhone</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>#page-transition{position:fixed;inset:0;z-index:10000;background:#0a0e17}body.page-transition-active>:not(#page-transition){visibility:hidden}</style>
+</head>
+<body class="page-transition-active">
+  <div id="page-transition" class="page-transition" role="status" aria-live="polite" aria-label="Загрузка">
+    <div class="page-transition__inner">
+      <div class="page-transition__logo"><img src="img/logo.svg" alt=""></div>
+      <p class="page-transition__label">Главная</p>
+      <div class="page-transition__progress" aria-hidden="true"><span class="page-transition__progress-bar"></span></div>
+    </div>
+  </div>
+  <script src="js/catalog-reset-boot.js?v=1.0"></script>
+  <script src="js/transition-boot.js"></script>
+
+  <div id="site-header"></div>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-content">
+        <div class="hero-text">
+          <h1>iPhone 17 <span class="highlight">уже здесь</span></h1>
+          <p>Официальные смартфоны Apple — весь модельный ряд iPhone 17, Pro и Pro Max. Оригинальная гарантия, trade-in и доставка по России.</p>
+          <div class="hero-buttons">
+            <a href="catalog.html" class="btn btn-primary btn-lg">Смотреть каталог</a>
+            <a href="catalog.html?cat=iphone-17-pro" class="btn btn-secondary btn-lg">iPhone 17 Pro</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-pc"><img src="img/hero-phone.svg" alt="iPhone 17"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Почему Phone Market?</h2>
+          <p>Мы специализируемся исключительно на смартфонах Apple</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🍎</div>
+            <h3>Только оригинал</h3>
+            <p>Все iPhone — с официальной гарантией Apple и сертификатом подлинности</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <h3>Все цвета в наличии</h3>
+            <p>Выбирайте цвет прямо в карточке товара — от розового до титанового</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🚚</div>
+            <h3>Быстрая доставка</h3>
+            <p>Бесплатная доставка по Москве в день заказа, по России — от 1 дня</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">♻️</div>
+            <h3>Trade-in</h3>
+            <p>Сдайте старый iPhone и получите скидку на новый</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <h2>Популярные модели</h2>
+          <p>Лучшие предложения линейки iPhone 17</p>
+        </div>
+        <div class="products-grid" id="popularProducts"></div>
+        <div style="text-align:center;margin-top:40px">
+          <a href="catalog.html" class="btn btn-secondary">Весь каталог →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Модельный ряд iPhone 17</h2>
+        </div>
+        <div class="catalog-sections-grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+          <a href="catalog.html?cat=iphone-17" class="catalog-section-card">
+            <div class="catalog-section-card__media"><img src="img/phones/iphone-standard.svg" alt="iPhone 17"></div>
+            <div class="catalog-section-card__body"><h2>iPhone 17</h2><p>от 89 990 ₽</p></div>
+          </a>
+          <a href="catalog.html?cat=iphone-17-plus" class="catalog-section-card">
+            <div class="catalog-section-card__media"><img src="img/phones/iphone-standard.svg" alt="iPhone 17 Plus"></div>
+            <div class="catalog-section-card__body"><h2>iPhone 17 Plus</h2><p>от 99 990 ₽</p></div>
+          </a>
+          <a href="catalog.html?cat=iphone-17-pro" class="catalog-section-card">
+            <div class="catalog-section-card__media"><img src="img/phones/iphone-pro.svg" alt="iPhone 17 Pro"></div>
+            <div class="catalog-section-card__body"><h2>iPhone 17 Pro</h2><p>от 109 990 ₽</p></div>
+          </a>
+          <a href="catalog.html?cat=iphone-17-pro-max" class="catalog-section-card">
+            <div class="catalog-section-card__media"><img src="img/phones/iphone-pro.svg" alt="iPhone 17 Pro Max"></div>
+            <div class="catalog-section-card__body"><h2>iPhone 17 Pro Max</h2><p>от 129 990 ₽</p></div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/data.js?v=1.0"></script>
+  <script src="js/app.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/transition.js"></script>
+  <script src="js/reviews.js"></script>
+  <script>
+    initLayout('home');
+    const popularIds = ['ip17', 'ip17-pro-256', 'ip17-pro-max-512', 'ip17-plus'];
+    const grid = document.getElementById('popularProducts');
+    const products = popularIds.map(id => getEnrichedProductById(id)).filter(Boolean);
+    grid.innerHTML = products.map(p => renderProductCard(p)).join('');
+    bindProductCards(grid);
+    updateCartBadge();
+  </script>
+</body>
+</html>

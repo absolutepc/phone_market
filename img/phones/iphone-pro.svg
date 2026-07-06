@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 400" fill="none">
+  <rect x="18" y="6" width="164" height="388" rx="26" fill="#3a3a3e" stroke="#666" stroke-width="2"/>
+  <rect x="26" y="18" width="148" height="364" rx="20" fill="#2a2a2e"/>
+  <rect x="68" y="12" width="64" height="10" rx="5" fill="#1a1a1a"/>
+  <rect x="34" y="34" width="132" height="284" rx="4" fill="#111"/>
+  <rect x="42" y="42" width="116" height="268" rx="2" fill="url(#proScreen)"/>
+  <rect x="78" y="330" width="44" height="4" rx="2" fill="#555"/>
+  <defs>
+    <linearGradient id="proScreen" x1="42" y1="42" x2="158" y2="310">
+      <stop offset="0%" stop-color="#2d3748"/>
+      <stop offset="100%" stop-color="#1a202c"/>
+    </linearGradient>
+  </defs>
+</svg>

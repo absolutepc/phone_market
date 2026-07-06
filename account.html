@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный кабинет — Phone Market</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="site-header"></div>
+  <main>
+    <div id="authView">
+      <div class="auth-layout">
+        <div class="auth-form-panel">
+          <div class="auth-form">
+            <div class="form-tabs">
+              <button class="form-tab active" data-tab="login">Вход</button>
+              <button class="form-tab" data-tab="register">Регистрация</button>
+            </div>
+            <div id="loginForm">
+              <h2>С возвращением</h2>
+              <form id="loginFormEl">
+                <div class="form-group"><label>Email</label><input type="email" name="email" required></div>
+                <div class="form-group"><label>Пароль</label><input type="password" name="password" required></div>
+                <button type="submit" class="btn btn-primary" style="width:100%">Войти</button>
+              </form>
+            </div>
+            <div id="registerForm" style="display:none">
+              <h2>Регистрация</h2>
+              <form id="registerFormEl">
+                <div class="form-group"><label>Имя</label><input type="text" name="name" required></div>
+                <div class="form-group"><label>Email</label><input type="email" name="email" required></div>
+                <div class="form-group"><label>Пароль</label><input type="password" name="password" required minlength="6"></div>
+                <button type="submit" class="btn btn-primary" style="width:100%">Создать аккаунт</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="auth-visual-panel">
+          <div class="auth-visual-content">
+            <div class="icon"><img src="img/hero-phone.svg" alt="" style="width:100px;margin:0 auto"></div>
+            <h2>Ваш iPhone ждёт</h2>
+            <p>Отслеживайте заказы и получайте персональные предложения</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="dashboardView" style="display:none">
+      <div class="container account-dashboard">
+        <div class="account-grid">
+          <aside class="account-sidebar">
+            <div class="user-info">
+              <div class="avatar" id="userAvatar">U</div>
+              <h3 id="userName">Пользователь</h3>
+              <p id="userEmail" style="color:var(--text-muted);font-size:0.85rem"></p>
+            </div>
+            <nav class="account-nav">
+              <button class="active" data-section="orders">📦 Заказы</button>
+              <button id="logoutBtn">🚪 Выйти</button>
+            </nav>
+          </aside>
+          <div class="account-content" id="accountContent"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <script src="js/data.js?v=1.0"></script>
+  <script src="js/app.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    initLayout('account');
+    const authView = document.getElementById('authView');
+    const dashboardView = document.getElementById('dashboardView');
+    function showDashboard() {
+      const user = getCurrentUser();
+      if (!user) { authView.style.display = 'block'; dashboardView.style.display = 'none'; return; }
+      authView.style.display = 'none';
+      dashboardView.style.display = 'block';
+      document.getElementById('userName').textContent = user.name;
+      document.getElementById('userEmail').textContent = user.email;
+      document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+      renderOrders();
+    }
+    document.querySelectorAll('.form-tab').forEach(tab => tab.addEventListener('click', () => {
+      document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('loginForm').style.display = tab.dataset.tab === 'login' ? 'block' : 'none';
+      document.getElementById('registerForm').style.display = tab.dataset.tab === 'register' ? 'block' : 'none';
+    }));
+    document.getElementById('loginFormEl').addEventListener('submit', e => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const r = loginUser(fd.get('email'), fd.get('password'));
+      r.success ? (showToast('Добро пожаловать!', 'success'), showDashboard()) : showToast(r.message, 'error');
+    });
+    document.getElementById('registerFormEl').addEventListener('submit', e => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const r = registerUser(fd.get('name'), fd.get('email'), fd.get('password'));
+      r.success ? (showToast('Аккаунт создан!', 'success'), showDashboard()) : showToast(r.message, 'error');
+    });
+    document.getElementById('logoutBtn').addEventListener('click', () => { logoutUser(); showDashboard(); });
+    function renderOrders() {
+      const user = getCurrentUser();
+      const orders = getOrders().filter(o => o.userId === user.id);
+      document.getElementById('accountContent').innerHTML = `<h2>Мои заказы</h2>${orders.length ? orders.map(o => `
+        <div class="order-card" style="margin-bottom:16px;padding:16px;background:var(--bg-card);border-radius:var(--radius-md)">
+          <strong>${o.id}</strong> — ${formatPrice(o.total)} — ${new Date(o.createdAt).toLocaleDateString('ru-RU')}
+        </div>`).join('') : '<p style="color:var(--text-secondary)">Заказов пока нет</p>'}`;
+    }
+    showDashboard();
+  </script>
+</body>
+</html>

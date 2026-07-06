@@ -586,17 +586,35 @@ function getRatingSummary(itemId, itemType) {
   return { average: sum / reviews.length, count: reviews.length, distribution };
 }
 
-function addReview(itemId, itemType, author, rating, text) {
+function addReview(reviewData, itemType, author, rating, text) {
   const reviews = getReviews();
-  const review = {
-    id: 'r' + Date.now(),
-    itemId,
-    itemType,
-    author,
-    rating: Math.max(1, Math.min(5, Number(rating) || 5)),
-    text,
-    createdAt: new Date().toISOString(),
-  };
+  let review;
+
+  if (reviewData && typeof reviewData === 'object' && reviewData.itemId) {
+    review = {
+      id: 'r' + Date.now(),
+      itemId: reviewData.itemId,
+      itemType: reviewData.itemType,
+      author: reviewData.userName || reviewData.author || 'Покупатель',
+      userName: reviewData.userName || reviewData.author || 'Покупатель',
+      userId: reviewData.userId || null,
+      rating: Math.max(1, Math.min(5, Number(reviewData.rating) || 5)),
+      text: reviewData.text,
+      createdAt: new Date().toISOString(),
+    };
+  } else {
+    review = {
+      id: 'r' + Date.now(),
+      itemId: reviewData,
+      itemType,
+      author,
+      userName: author,
+      rating: Math.max(1, Math.min(5, Number(rating) || 5)),
+      text,
+      createdAt: new Date().toISOString(),
+    };
+  }
+
   reviews.unshift(review);
   localStorage.setItem(REVIEWS_KEY, JSON.stringify({ version: REVIEWS_VERSION, reviews }));
   return review;

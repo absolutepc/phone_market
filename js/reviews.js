@@ -15,6 +15,32 @@ function getReviewCountLabel(count) {
   return `${count} отзывов`;
 }
 
+function getReviewItemMeta(itemId, itemType) {
+  if (itemType !== 'product' || typeof getEnrichedProductById !== 'function') return null;
+
+  const product = getEnrichedProductById(itemId);
+  if (!product) return null;
+
+  return {
+    name: product.name,
+    label: product.series || CATEGORY_LABELS[product.category] || 'iPhone',
+    href: `product.html?id=${encodeURIComponent(product.id)}`,
+  };
+}
+
+function hasUserReviewedItem(itemId, itemType, userId) {
+  if (!userId) return false;
+  return getReviews().some(review =>
+    review.itemId === itemId
+    && review.itemType === itemType
+    && review.userId === userId
+  );
+}
+
+function getReviewAuthorName(review) {
+  return review.userName || review.author || 'Покупатель';
+}
+
 function renderStarRating(rating, options = {}) {
   const {
     size = 'md',
@@ -135,9 +161,9 @@ function renderReviewCard(review, options = {}) {
     <article class="review-card">
       <div class="review-card-header">
         <div class="review-card-author">
-          <div class="review-card-avatar">${escapeHtml((review.userName || 'П')[0])}</div>
+          <div class="review-card-avatar">${escapeHtml(getReviewAuthorName(review)[0])}</div>
           <div>
-            <div class="review-card-name">${escapeHtml(review.userName || 'Покупатель')}</div>
+            <div class="review-card-name">${escapeHtml(getReviewAuthorName(review))}</div>
             <div class="review-card-date">${formatReviewDate(review.createdAt)}</div>
           </div>
         </div>
@@ -366,7 +392,11 @@ function initReviewsPage() {
     : 0;
 
   const productReviews = allReviews.filter(r => r.itemType === 'product').length;
-  const pcReviews = allReviews.filter(r => r.itemType === 'ready-pc').length;
+  const proReviews = allReviews.filter(r => {
+    if (r.itemType !== 'product') return false;
+    const product = typeof getEnrichedProductById === 'function' ? getEnrichedProductById(r.itemId) : null;
+    return product?.category?.includes('pro');
+  }).length;
 
   container.innerHTML = `
     <div class="container reviews-page">
@@ -396,8 +426,8 @@ function initReviewsPage() {
           <div class="reviews-overview-label">О товарах</div>
         </div>
         <div class="reviews-overview-card">
-          <div class="reviews-overview-value">${pcReviews}</div>
-          <div class="reviews-overview-label">О готовых ПК</div>
+          <div class="reviews-overview-value">${proReviews}</div>
+          <div class="reviews-overview-label">О моделях Pro</div>
         </div>
       </div>
 

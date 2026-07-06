@@ -8,27 +8,23 @@ const PAGE_TRANSITION_REDUCE_MS = 650;
 const PAGE_LABELS_BY_HREF = {
   'index.html': 'Главная',
   'catalog.html': 'Каталог',
-  'ready-pcs.html': 'Готовые ПК',
-  'ready-pc.html': 'Сборка',
-  'configurator.html': 'Конфигуратор',
   'product.html': 'Товар',
+  'reviews.html': 'Отзывы',
   'about.html': 'О нас',
   'cart.html': 'Корзина',
   'account.html': 'Аккаунт',
   'search.html': 'Поиск',
-  'admin.html': 'Админ-панель',
 };
 
 const PAGE_LABELS_BY_PAGE = {
   home: 'Главная',
   catalog: 'Каталог',
-  'ready-pcs': 'Готовые ПК',
-  configurator: 'Конфигуратор',
+  product: 'Товар',
+  reviews: 'Отзывы',
   about: 'О нас',
   cart: 'Корзина',
   account: 'Аккаунт',
   search: 'Поиск',
-  admin: 'Админ-панель',
 };
 
 let pageTransitionLinksBound = false;
@@ -61,7 +57,7 @@ function normalizeHref(href) {
 
 function getLabelFromHref(href) {
   const file = normalizeHref(href);
-  return PAGE_LABELS_BY_HREF[file] || 'PC Market';
+  return PAGE_LABELS_BY_HREF[file] || 'Phone Market';
 }
 
 function getImageFromLink(link) {
@@ -321,7 +317,7 @@ async function finishPageTransition(defaultLabel) {
   try {
     const isNavEnter = overlay.dataset.transitionMode === 'nav';
     const labelEl = overlay.querySelector('.page-transition__label');
-    const currentLabel = labelEl?.textContent.trim() || defaultLabel || 'PC Market';
+    const currentLabel = labelEl?.textContent.trim() || defaultLabel || 'Phone Market';
 
     if (isNavEnter) {
       document.body.classList.remove('page-transition-active');
@@ -350,7 +346,7 @@ async function finishPageTransition(defaultLabel) {
 
     hidePageTransition(overlay);
   } catch (error) {
-    console.warn('PC Market: ошибка анимации перехода', error);
+    console.warn('Phone Market: ошибка анимации перехода', error);
     if (!pageTransitionNavigating) hidePageTransition(overlay);
   }
 }
@@ -360,10 +356,10 @@ function initPageTransition(defaultLabel) {
 }
 
 function getPageTransitionLabel(activePage) {
-  if (!activePage) return 'PC Market';
+  if (!activePage) return 'Phone Market';
   return PAGE_LABELS_BY_PAGE[activePage]
     || NAV_ITEMS?.find((item) => item.page === activePage)?.label
-    || 'PC Market';
+    || 'Phone Market';
 }
 
 bindPageTransitionLinks(document);

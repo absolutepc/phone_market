@@ -1,4 +1,4 @@
-const STORE_VERSION = 2;
+const STORE_VERSION = 3;
 const STORE_KEY = 'phonemarket_data_v1';
 const LEGACY_STORE_KEYS = [];
 const APP_BUILD = '1.0';
@@ -12,10 +12,10 @@ const DEFAULT_IMG = 'img/default.svg';
 const ADMIN_CREDENTIALS = { email: 'admin@phonemarket.ru', password: 'admin123' };
 
 const CATEGORY_IMAGES = {
-  'iphone-17': 'img/phones/iphone-standard.svg',
-  'iphone-17-plus': 'img/phones/iphone-standard.svg',
-  'iphone-17-pro': 'img/phones/iphone-pro.svg',
-  'iphone-17-pro-max': 'img/phones/iphone-pro.svg',
+  'iphone-17': 'img/phones/standard/black.png',
+  'iphone-17-plus': 'img/phones/standard/black.png',
+  'iphone-17-pro': 'img/phones/pro/black.png',
+  'iphone-17-pro-max': 'img/phones/pro-max/black.png',
 };
 
 const FILTER_STORAGE = ['128 ГБ', '256 ГБ', '512 ГБ', '1 ТБ'];
@@ -55,46 +55,59 @@ const CATALOG_SECTIONS = [
     name: 'iPhone',
     description: 'Весь модельный ряд Apple iPhone 17',
     categories: ['iphone-17', 'iphone-17-plus', 'iphone-17-pro', 'iphone-17-pro-max'],
-    img: 'img/hero-phone.svg',
+    img: 'img/phones/hero/iphone-17-hero.jpg',
   },
 ];
 
 const STANDARD_COLORS = [
-  { name: 'Чёрный', hex: '#1d1d1f', filter: 'none' },
-  { name: 'Белый', hex: '#f5f5f7', filter: 'brightness(1.15) saturate(0.3)' },
-  { name: 'Розовый', hex: '#f9c9d0', filter: 'hue-rotate(-15deg) saturate(1.4) brightness(1.05)' },
-  { name: 'Бирюзовый', hex: '#4db8a4', filter: 'hue-rotate(130deg) saturate(1.3)' },
-  { name: 'Ультрамарин', hex: '#3d4f9f', filter: 'hue-rotate(210deg) saturate(1.5)' },
+  { name: 'Чёрный', hex: '#1d1d1f', img: 'img/phones/standard/black.png' },
+  { name: 'Белый', hex: '#f5f5f7', img: 'img/phones/standard/white.png' },
+  { name: 'Розовый', hex: '#c8b4d8', img: 'img/phones/standard/lavender.png' },
+  { name: 'Бирюзовый', hex: '#9bb89f', img: 'img/phones/standard/sage.png' },
+  { name: 'Ультрамарин', hex: '#7ba3c9', img: 'img/phones/standard/mist-blue.png' },
 ];
 
 const PRO_COLORS = [
-  { name: 'Белый', hex: '#f5f5f7', filter: 'brightness(1.2) saturate(0.25)' },
-  { name: 'Синий', hex: '#3d5a9e', filter: 'hue-rotate(200deg) saturate(1.4)' },
-  { name: 'Оранжевый', hex: '#e8752a', filter: 'hue-rotate(25deg) saturate(1.5) brightness(1.05)' },
-  { name: 'Чёрный', hex: '#1d1d1f', filter: 'none' },
+  { name: 'Белый', hex: '#e8e8ed', img: 'img/phones/pro/white.png' },
+  { name: 'Синий', hex: '#3d5a9e', img: 'img/phones/pro/blue.png' },
+  { name: 'Оранжевый', hex: '#e8752a', img: 'img/phones/pro/orange.png' },
+  { name: 'Чёрный', hex: '#1d1d1f', img: 'img/phones/pro/black.png' },
 ];
 
-function buildColors(colorSet, baseImg) {
+const PRO_MAX_COLORS = [
+  { name: 'Белый', hex: '#e8e8ed', img: 'img/phones/pro-max/white.png' },
+  { name: 'Синий', hex: '#3d5a9e', img: 'img/phones/pro-max/blue.png' },
+  { name: 'Оранжевый', hex: '#e8752a', img: 'img/phones/pro-max/orange.png' },
+  { name: 'Чёрный', hex: '#1d1d1f', img: 'img/phones/pro-max/black.png' },
+];
+
+function getColorSetForCategory(category) {
+  if (category === 'iphone-17-pro-max') return PRO_MAX_COLORS;
+  if (category === 'iphone-17-pro') return PRO_COLORS;
+  return STANDARD_COLORS;
+}
+
+function buildColors(colorSet) {
   return colorSet.map(c => ({
     ...c,
-    img: baseImg,
-    images: [baseImg],
+    filter: 'none',
+    images: [c.img],
   }));
 }
 
 function createPhone({
   id, name, category, price, oldPrice, storage, simType, series,
-  description, specs, badge, stock = 5, isPro = false,
+  description, specs, badge, stock = 5,
 }) {
-  const baseImg = isPro ? 'img/phones/iphone-pro.svg' : 'img/phones/iphone-standard.svg';
-  const colors = buildColors(isPro ? PRO_COLORS : STANDARD_COLORS, baseImg);
+  const colors = buildColors(getColorSetForCategory(category));
+  const img = colors[0].img;
   return {
     id,
     name,
     category,
     price,
     oldPrice,
-    img: baseImg,
+    img,
     description,
     badge,
     stock,
@@ -157,7 +170,6 @@ const DEFAULT_PRODUCTS = [
     simType: 'eSIM',
     series: 'iPhone 17 Pro',
     badge: 'new',
-    isPro: true,
     description: '6.3″ ProMotion 120 Гц, титановый корпус, A19 Pro, только eSIM',
     specs: {
       display: '6.3″ ProMotion OLED 120 Гц',
@@ -177,7 +189,6 @@ const DEFAULT_PRODUCTS = [
     storage: '256 ГБ',
     simType: 'eSIM',
     series: 'iPhone 17 Pro',
-    isPro: true,
     description: '6.3″ ProMotion 120 Гц, титановый корпус, A19 Pro, только eSIM',
     specs: {
       display: '6.3″ ProMotion OLED 120 Гц',
@@ -197,7 +208,6 @@ const DEFAULT_PRODUCTS = [
     storage: '512 ГБ',
     simType: 'eSIM',
     series: 'iPhone 17 Pro',
-    isPro: true,
     description: '6.3″ ProMotion 120 Гц, титановый корпус, A19 Pro, только eSIM',
     specs: {
       display: '6.3″ ProMotion OLED 120 Гц',
@@ -218,7 +228,6 @@ const DEFAULT_PRODUCTS = [
     simType: 'SIM + eSIM',
     series: 'iPhone 17 Pro',
     badge: 'hit',
-    isPro: true,
     description: '6.3″ ProMotion 120 Гц, титановый корпус, A19 Pro, физическая SIM + eSIM',
     specs: {
       display: '6.3″ ProMotion OLED 120 Гц',
@@ -238,7 +247,6 @@ const DEFAULT_PRODUCTS = [
     storage: '256 ГБ',
     simType: 'SIM + eSIM',
     series: 'iPhone 17 Pro',
-    isPro: true,
     description: '6.3″ ProMotion 120 Гц, титановый корпус, A19 Pro, физическая SIM + eSIM',
     specs: {
       display: '6.3″ ProMotion OLED 120 Гц',
@@ -258,7 +266,6 @@ const DEFAULT_PRODUCTS = [
     storage: '512 ГБ',
     simType: 'SIM + eSIM',
     series: 'iPhone 17 Pro',
-    isPro: true,
     description: '6.3″ ProMotion 120 Гц, титановый корпус, A19 Pro, физическая SIM + eSIM',
     specs: {
       display: '6.3″ ProMotion OLED 120 Гц',
@@ -279,7 +286,6 @@ const DEFAULT_PRODUCTS = [
     simType: 'eSIM',
     series: 'iPhone 17 Pro Max',
     badge: 'new',
-    isPro: true,
     description: '6.9″ ProMotion 120 Гц, максимальная автономность, A19 Pro, только eSIM',
     specs: {
       display: '6.9″ ProMotion OLED 120 Гц',
@@ -299,7 +305,6 @@ const DEFAULT_PRODUCTS = [
     storage: '512 ГБ',
     simType: 'eSIM',
     series: 'iPhone 17 Pro Max',
-    isPro: true,
     description: '6.9″ ProMotion 120 Гц, максимальная автономность, A19 Pro, только eSIM',
     specs: {
       display: '6.9″ ProMotion OLED 120 Гц',
@@ -319,7 +324,6 @@ const DEFAULT_PRODUCTS = [
     storage: '1 ТБ',
     simType: 'eSIM',
     series: 'iPhone 17 Pro Max',
-    isPro: true,
     description: '6.9″ ProMotion 120 Гц, максимальная автономность, A19 Pro, только eSIM',
     specs: {
       display: '6.9″ ProMotion OLED 120 Гц',
@@ -340,7 +344,6 @@ const DEFAULT_PRODUCTS = [
     simType: 'SIM + eSIM',
     series: 'iPhone 17 Pro Max',
     badge: 'hit',
-    isPro: true,
     description: '6.9″ ProMotion 120 Гц, максимальная автономность, A19 Pro, физическая SIM + eSIM',
     specs: {
       display: '6.9″ ProMotion OLED 120 Гц',
@@ -360,7 +363,6 @@ const DEFAULT_PRODUCTS = [
     storage: '512 ГБ',
     simType: 'SIM + eSIM',
     series: 'iPhone 17 Pro Max',
-    isPro: true,
     description: '6.9″ ProMotion 120 Гц, максимальная автономность, A19 Pro, физическая SIM + eSIM',
     specs: {
       display: '6.9″ ProMotion OLED 120 Гц',
@@ -380,7 +382,6 @@ const DEFAULT_PRODUCTS = [
     storage: '1 ТБ',
     simType: 'SIM + eSIM',
     series: 'iPhone 17 Pro Max',
-    isPro: true,
     description: '6.9″ ProMotion 120 Гц, максимальная автономность, A19 Pro, физическая SIM + eSIM',
     specs: {
       display: '6.9″ ProMotion OLED 120 Гц',

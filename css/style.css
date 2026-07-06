@@ -3425,5 +3425,6 @@ body.page-transition-active > :not(#page-transition) {
 }
 
 .product-card .product-image img {
-  transition: filter 0.3s ease;
+  transition: opacity 0.3s ease;
+  object-fit: contain;
 }

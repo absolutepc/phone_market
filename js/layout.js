@@ -9,6 +9,8 @@ function renderHeader(activePage) {
     `<a href="${item.href}" class="${item.page === activePage ? 'active' : ''}">${item.label}</a>`
   ).join('');
 
+  const accountLink = `<a href="account.html" class="main-nav-account ${activePage === 'account' ? 'active' : ''}"><span class="main-nav-account-icon" aria-hidden="true">👤</span><span class="account-btn-text">Аккаунт</span></a>`;
+
   return `
     <header class="site-header">
       <div class="container header-inner">
@@ -16,23 +18,19 @@ function renderHeader(activePage) {
           <div class="logo-icon"><img src="img/logo.svg" alt="Phone Market"></div>
           <span>Phone Market</span>
         </a>
-        <nav class="main-nav" id="mainNav">${navLinks}</nav>
+        <nav class="main-nav" id="mainNav">${navLinks}${accountLink}</nav>
         <div class="header-search">
           <span class="search-icon">🔍</span>
           <input type="text" placeholder="Поиск iPhone..." aria-label="Поиск">
         </div>
         <div class="header-actions">
-          <a href="account.html" class="header-btn">
-            <span>👤</span>
-            <span class="account-btn-text">Аккаунт</span>
-          </a>
           <a href="cart.html" class="header-btn">
             <span>🛒</span>
             <span>Корзина</span>
             <span class="cart-badge" style="display:none">0</span>
           </a>
         </div>
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Меню">☰</button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Меню" aria-expanded="false" aria-controls="mainNav">☰</button>
       </div>
     </header>
   `;
@@ -104,7 +102,21 @@ function initLayout(activePage) {
   const menuBtn = document.getElementById('mobileMenuBtn');
   const nav = document.getElementById('mainNav');
   if (menuBtn && nav) {
-    menuBtn.addEventListener('click', () => nav.classList.toggle('open'));
+    menuBtn.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  if (typeof updateAccountButton === 'function') {
+    updateAccountButton();
   }
 
   const searchInput = document.querySelector('.header-search input');

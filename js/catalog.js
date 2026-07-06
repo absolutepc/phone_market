@@ -228,6 +228,20 @@ function bindCatalogFilters(activeSectionId) {
       filterCatalogProducts(activeSectionId);
     });
   }
+
+  bindCatalogFiltersToggle();
+}
+
+function bindCatalogFiltersToggle() {
+  const toggle = document.getElementById('catalogFiltersToggle');
+  const wrap = document.getElementById('catalogProductsView');
+  if (!toggle || !wrap) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = wrap.classList.toggle('filters-open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+    toggle.textContent = isOpen ? 'Скрыть фильтры' : 'Фильтры';
+  });
 }
 
 function showCatalogProductsView(sectionId, catParam) {

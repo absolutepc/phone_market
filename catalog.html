@@ -36,7 +36,7 @@
     </div>
 
     <div class="container page-layout catalog-products-wrap" id="catalogProductsView">
-      <aside class="catalog-filters-sticky">
+      <aside class="catalog-filters-sticky" id="catalogFiltersPanel">
         <div class="filters-sidebar">
           <h3>Фильтры</h3>
           <div class="filter-group">
@@ -79,7 +79,12 @@
 
       <div class="catalog-main">
         <div class="catalog-toolbar">
-          <span id="catalogResultCount">0 моделей</span>
+          <div class="catalog-toolbar-left">
+            <button type="button" class="btn btn-secondary btn-sm catalog-filters-toggle" id="catalogFiltersToggle" aria-expanded="false" aria-controls="catalogFiltersPanel">
+              Фильтры
+            </button>
+            <span id="catalogResultCount">0 моделей</span>
+          </div>
           <select id="sortSelect" class="sort-select">
             <option value="default">По умолчанию</option>
             <option value="price-asc">Цена: по возрастанию</option>
@@ -99,7 +104,7 @@
   <script src="js/layout.js"></script>
   <script src="js/transition.js"></script>
   <script src="js/reviews.js"></script>
-  <script src="js/catalog.js?v=1.1"></script>
+  <script src="js/catalog.js?v=1.2"></script>
   <script>initLayout('catalog');</script>
 </body>
 </html>

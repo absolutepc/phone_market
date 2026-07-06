@@ -210,6 +210,13 @@ button, input, select, textarea {
   flex-shrink: 0;
 }
 
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
 .header-btn {
   display: flex;
   align-items: center;
@@ -2952,7 +2959,27 @@ main {
   }
   .mobile-menu-btn { display: block; }
   .header-search { display: none; }
-  .header-inner { gap: 12px; }
+  .header-inner {
+    gap: 8px;
+    min-width: 0;
+  }
+  .logo {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .logo span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .header-tools {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .site-header .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
   .header-btn-label { display: none; }
   .header-btn-cart {
     padding: 8px 10px;

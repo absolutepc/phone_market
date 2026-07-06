@@ -24,9 +24,9 @@ function renderHeader(activePage) {
           <input type="text" placeholder="Поиск iPhone..." aria-label="Поиск">
         </div>
         <div class="header-actions">
-          <a href="cart.html" class="header-btn">
-            <span>🛒</span>
-            <span>Корзина</span>
+          <a href="cart.html" class="header-btn header-btn-cart" aria-label="Корзина">
+            <span class="header-btn-icon" aria-hidden="true">🛒</span>
+            <span class="header-btn-label">Корзина</span>
             <span class="cart-badge" style="display:none">0</span>
           </a>
         </div>

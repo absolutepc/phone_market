@@ -2319,6 +2319,22 @@ main {
   font-size: 0.825rem;
 }
 
+.footer-credit {
+  display: inline-block;
+  margin-left: 8px;
+  opacity: 0.75;
+}
+
+.footer-credit a {
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer-credit a:hover {
+  color: var(--text-secondary);
+}
+
 .footer-payments {
   display: flex;
   gap: 12px;

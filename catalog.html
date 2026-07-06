@@ -31,68 +31,57 @@
       </div>
     </div>
 
-    <div class="container catalog-sections-wrap" id="catalogSectionsView" hidden>
-      <div class="catalog-sections-grid" id="catalogSectionsGrid"></div>
-    </div>
+    <div class="container page-layout">
+      <aside class="filters-sidebar" id="filtersSidebar">
+        <h3>Фильтры</h3>
 
-    <div class="container page-layout catalog-products-wrap" id="catalogProductsView">
-      <aside class="catalog-filters-sticky" id="catalogFiltersPanel">
-        <div class="filters-sidebar">
-          <h3>Фильтры</h3>
-          <div class="filter-group">
-            <label>Модель</label>
-            <div class="filter-checkboxes" id="categoryFilters"></div>
-          </div>
-          <div class="filter-group">
-            <label>Память</label>
-            <div class="filter-checkboxes" id="storageFilters"></div>
-          </div>
-          <div class="filter-group">
-            <label>SIM</label>
-            <div class="filter-checkboxes" id="simFilters"></div>
-          </div>
-          <div class="filter-group">
-            <label>Серия</label>
-            <div class="filter-checkboxes" id="seriesFilters"></div>
-          </div>
-          <div class="filter-group">
-            <label>Цена</label>
-            <p id="priceLabel" class="price-label">0 ₽ — 0 ₽</p>
-            <input type="range" id="priceMinRange" min="0" max="200000" value="0" step="5000">
-            <input type="range" id="priceMaxRange" min="0" max="200000" value="200000" step="5000">
-            <div class="price-inputs">
-              <input type="number" id="priceMinInput" min="0" step="5000" placeholder="От">
-              <input type="number" id="priceMaxInput" min="0" step="5000" placeholder="До">
-            </div>
-          </div>
-          <div class="filter-group">
-            <label>Метка</label>
-            <div class="filter-checkboxes">
-              <label><input type="checkbox" value="new" class="badge-filter"> Новинка</label>
-              <label><input type="checkbox" value="hit" class="badge-filter"> Хит</label>
-              <label><input type="checkbox" value="sale" class="badge-filter"> Скидка</label>
-            </div>
-          </div>
-          <button class="btn btn-secondary btn-sm" id="resetFilters" style="width:100%;margin-top:12px">Сбросить</button>
+        <div class="filter-group">
+          <label>Модель</label>
+          <div class="filter-checkboxes" id="categoryFilters"></div>
         </div>
+
+        <div class="filter-group">
+          <label>Память</label>
+          <div class="filter-checkboxes" id="storageFilters"></div>
+        </div>
+
+        <div class="filter-group">
+          <label>SIM</label>
+          <div class="filter-checkboxes" id="simFilters"></div>
+        </div>
+
+        <div class="filter-group">
+          <label>Серия</label>
+          <div class="filter-checkboxes" id="seriesFilters"></div>
+        </div>
+
+        <div class="filter-group" id="priceFilterGroup">
+          <label>Цена, ₽</label>
+          <div class="filter-range-inputs">
+            <input type="number" id="priceMin" placeholder="от" min="0" step="1000">
+            <input type="number" id="priceMax" placeholder="до" min="0" step="1000">
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label>Метка</label>
+          <div class="filter-checkboxes" id="badgeFilters"></div>
+        </div>
+
+        <button class="btn btn-secondary btn-sm" id="resetFilters" style="width:100%;margin-top:8px">Сбросить фильтры</button>
       </aside>
 
-      <div class="catalog-main">
+      <div class="catalog-content">
         <div class="catalog-toolbar">
-          <div class="catalog-toolbar-left">
-            <button type="button" class="btn btn-secondary btn-sm catalog-filters-toggle" id="catalogFiltersToggle" aria-expanded="false" aria-controls="catalogFiltersPanel">
-              Фильтры
-            </button>
-            <span id="catalogResultCount">0 моделей</span>
-          </div>
-          <select id="sortSelect" class="sort-select">
-            <option value="default">По умолчанию</option>
+          <span class="results-count" id="resultsCount">Найдено: 0</span>
+          <select id="sortSelect">
+            <option value="default">Сортировка: по умолчанию</option>
             <option value="price-asc">Цена: по возрастанию</option>
             <option value="price-desc">Цена: по убыванию</option>
-            <option value="name">По названию</option>
+            <option value="name">Название: А–Я</option>
           </select>
         </div>
-        <div class="products-grid" id="catalogGrid"></div>
+        <div id="catalogGrid"></div>
       </div>
     </div>
   </main>
@@ -104,7 +93,8 @@
   <script src="js/layout.js"></script>
   <script src="js/transition.js"></script>
   <script src="js/reviews.js"></script>
-  <script src="js/catalog.js?v=1.2"></script>
+  <script src="js/filters.js?v=1.0"></script>
+  <script src="js/catalog.js?v=2.0"></script>
   <script>initLayout('catalog');</script>
 </body>
 </html>

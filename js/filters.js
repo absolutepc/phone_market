@@ -1,0 +1,183 @@
+function initPhoneCatalog(options = {}) {
+  const { preselectedCategory = null } = options;
+  const allProducts = getProducts();
+
+  const priceMinInput = document.getElementById('priceMin');
+  const priceMaxInput = document.getElementById('priceMax');
+  const categoryFiltersEl = document.getElementById('categoryFilters');
+  const storageFiltersEl = document.getElementById('storageFilters');
+  const simFiltersEl = document.getElementById('simFilters');
+  const seriesFiltersEl = document.getElementById('seriesFilters');
+  const badgeFiltersEl = document.getElementById('badgeFilters');
+  const resultsCountEl = document.getElementById('resultsCount');
+  const sortSelect = document.getElementById('sortSelect');
+  const listEl = document.getElementById('catalogGrid');
+  const resetBtn = document.getElementById('resetFilters');
+  const sidebar = document.getElementById('filtersSidebar');
+
+  function renderCheckboxGroup(container, items, cssClass, checkedValues = []) {
+    if (!container) return;
+    const group = container.closest('.filter-group');
+    if (!items.length) {
+      if (group) group.style.display = 'none';
+      container.innerHTML = '';
+      return;
+    }
+    if (group) group.style.display = '';
+    const checked = new Set(checkedValues);
+    container.innerHTML = items.map(item => `
+      <label>
+        <input type="checkbox" value="${escapeHtml(item.value)}" class="${cssClass}" ${checked.has(item.value) ? 'checked' : ''}>
+        ${escapeHtml(item.label)}
+      </label>
+    `).join('');
+  }
+
+  function getAvailableValues(field) {
+    return [...new Set(allProducts.map(product => product[field]).filter(Boolean))];
+  }
+
+  function renderFilterOptions() {
+    renderCheckboxGroup(
+      categoryFiltersEl,
+      getAvailableValues('category').map(value => ({
+        value,
+        label: CATEGORY_LABELS[value] || value,
+      })),
+      'cat-filter',
+      preselectedCategory ? [preselectedCategory] : []
+    );
+
+    renderCheckboxGroup(
+      storageFiltersEl,
+      FILTER_STORAGE
+        .filter(value => getAvailableValues('storage').includes(value))
+        .map(value => ({ value, label: value })),
+      'storage-filter'
+    );
+
+    renderCheckboxGroup(
+      simFiltersEl,
+      FILTER_SIM
+        .filter(value => getAvailableValues('simType').includes(value))
+        .map(value => ({ value, label: value })),
+      'sim-filter'
+    );
+
+    renderCheckboxGroup(
+      seriesFiltersEl,
+      FILTER_SERIES
+        .filter(value => getAvailableValues('series').includes(value))
+        .map(value => ({ value, label: value })),
+      'series-filter'
+    );
+
+    renderCheckboxGroup(
+      badgeFiltersEl,
+      Object.entries(BADGE_LABELS).map(([value, label]) => ({ value, label })),
+      'badge-filter'
+    );
+  }
+
+  function getCheckedValues(selector) {
+    return [...document.querySelectorAll(selector)]
+      .filter(input => input.checked)
+      .map(input => input.value);
+  }
+
+  function parsePriceValue(raw) {
+    if (!raw?.trim()) return null;
+    const parsed = Number(raw.replace(/\s/g, ''));
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+
+  function getFilterState() {
+    return {
+      categories: getCheckedValues('.cat-filter'),
+      storage: getCheckedValues('.storage-filter'),
+      simTypes: getCheckedValues('.sim-filter'),
+      series: getCheckedValues('.series-filter'),
+      badges: getCheckedValues('.badge-filter'),
+      priceMin: parsePriceValue(priceMinInput?.value),
+      priceMax: parsePriceValue(priceMaxInput?.value),
+      sort: sortSelect?.value || 'default',
+    };
+  }
+
+  function productMatchesFilters(product, state) {
+    if (state.categories.length && !state.categories.includes(product.category)) return false;
+    if (state.storage.length && !state.storage.includes(product.storage)) return false;
+    if (state.simTypes.length && !state.simTypes.includes(product.simType)) return false;
+    if (state.series.length && !state.series.includes(product.series)) return false;
+    if (state.badges.length && !state.badges.includes(product.badge)) return false;
+    if (state.priceMin != null && product.price < state.priceMin) return false;
+    if (state.priceMax != null && product.price > state.priceMax) return false;
+    return true;
+  }
+
+  function sortProducts(products, sortValue) {
+    const sorted = [...products];
+    switch (sortValue) {
+      case 'price-asc':
+        return sorted.sort((a, b) => a.price - b.price);
+      case 'price-desc':
+        return sorted.sort((a, b) => b.price - a.price);
+      case 'name':
+        return sorted.sort((a, b) => a.name.localeCompare(b.name, 'ru'));
+      default:
+        return sorted;
+    }
+  }
+
+  function renderProductsGrid(products, emptyMessage) {
+    if (!products.length) {
+      return `<div class="empty-state">${escapeHtml(emptyMessage)}</div>`;
+    }
+    return `<div class="products-grid">${products.map(product => renderProductCard(product)).join('')}</div>`;
+  }
+
+  function applyFilters() {
+    const state = getFilterState();
+    const filtered = sortProducts(
+      allProducts.filter(product => productMatchesFilters(product, state)),
+      state.sort
+    );
+
+    if (resultsCountEl) {
+      resultsCountEl.textContent = `Найдено: ${filtered.length}`;
+    }
+
+    if (listEl) {
+      listEl.innerHTML = renderProductsGrid(
+        filtered,
+        'По выбранным фильтрам ничего не найдено. Попробуйте изменить параметры.'
+      );
+      bindProductCards(listEl);
+    }
+  }
+
+  function resetFilters() {
+    if (priceMinInput) priceMinInput.value = '';
+    if (priceMaxInput) priceMaxInput.value = '';
+    if (sortSelect) sortSelect.value = 'default';
+    sidebar?.querySelectorAll('input[type="checkbox"]').forEach(input => {
+      input.checked = false;
+    });
+    applyFilters();
+  }
+
+  renderFilterOptions();
+
+  sidebar?.addEventListener('input', (event) => {
+    if (event.target.matches('#priceMin, #priceMax')) applyFilters();
+  });
+
+  sidebar?.addEventListener('change', (event) => {
+    if (event.target.matches('#priceMin, #priceMax, input[type="checkbox"]')) applyFilters();
+  });
+
+  sortSelect?.addEventListener('change', applyFilters);
+  resetBtn?.addEventListener('click', resetFilters);
+
+  applyFilters();
+}

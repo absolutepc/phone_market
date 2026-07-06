@@ -82,7 +82,7 @@ function renderFooter() {
         </div>
       </div>
       <div class="container footer-bottom">
-        <p>&copy; 2026 Phone Market. Все права защищены.</p>
+        <p>&copy; 2026 Phone Market. Все права защищены. <span class="footer-credit">Фото на главной: <a href="https://unsplash.com/photos/34VzxoqHyB8" target="_blank" rel="noopener">Veli Batuhan Aytaç</a> / Unsplash</span></p>
         <div class="footer-payments">
           <span>Visa</span>
           <span>Mastercard</span>

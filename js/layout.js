@@ -23,16 +23,14 @@ function renderHeader(activePage) {
           <span class="search-icon">🔍</span>
           <input type="text" placeholder="Поиск iPhone..." aria-label="Поиск">
         </div>
-        <div class="header-tools">
-          <div class="header-actions">
-            <a href="cart.html" class="header-btn header-btn-cart" aria-label="Корзина">
-              <span class="header-btn-icon" aria-hidden="true">🛒</span>
-              <span class="header-btn-label">Корзина</span>
-              <span class="cart-badge" style="display:none">0</span>
-            </a>
-          </div>
-          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Меню" aria-expanded="false" aria-controls="mainNav">☰</button>
+        <div class="header-actions">
+          <a href="cart.html" class="header-btn header-btn-cart" aria-label="Корзина">
+            <span class="header-btn-icon" aria-hidden="true">🛒</span>
+            <span class="header-btn-label">Корзина</span>
+            <span class="cart-badge" style="display:none">0</span>
+          </a>
         </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Меню" aria-expanded="false" aria-controls="mainNav">☰</button>
       </div>
     </header>
   `;

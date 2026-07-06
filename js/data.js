@@ -1,4 +1,4 @@
-const STORE_VERSION = 1;
+const STORE_VERSION = 2;
 const STORE_KEY = 'phonemarket_data_v1';
 const LEGACY_STORE_KEYS = [];
 const APP_BUILD = '1.0';
@@ -68,10 +68,10 @@ const STANDARD_COLORS = [
 ];
 
 const PRO_COLORS = [
-  { name: 'Чёрный титан', hex: '#2b2b2e', filter: 'none' },
-  { name: 'Белый титан', hex: '#e8e6e1', filter: 'brightness(1.2) saturate(0.2)' },
-  { name: 'Натуральный титан', hex: '#9a8f82', filter: 'sepia(0.3) saturate(0.6)' },
-  { name: 'Пустынный титан', hex: '#c4a882', filter: 'sepia(0.5) saturate(0.8) brightness(1.05)' },
+  { name: 'Белый', hex: '#f5f5f7', filter: 'brightness(1.2) saturate(0.25)' },
+  { name: 'Синий', hex: '#3d5a9e', filter: 'hue-rotate(200deg) saturate(1.4)' },
+  { name: 'Оранжевый', hex: '#e8752a', filter: 'hue-rotate(25deg) saturate(1.5) brightness(1.05)' },
+  { name: 'Чёрный', hex: '#1d1d1f', filter: 'none' },
 ];
 
 function buildColors(colorSet, baseImg) {
@@ -396,7 +396,7 @@ const DEFAULT_PRODUCTS = [
 const DEFAULT_REVIEWS = [
   {
     id: 'r1', itemId: 'ip17-pro-256', itemType: 'product', author: 'Алексей М.',
-    rating: 5, text: 'Отличный телефон, камера на высоте. Цвет «Натуральный титан» выглядит премиально.',
+    rating: 5, text: 'Отличный телефон, камера на высоте. Цвет «Синий» выглядит очень стильно.',
     createdAt: '2026-06-15T10:00:00.000Z',
   },
   {

@@ -28,8 +28,10 @@
   simType: 'SIM + eSIM',
   series: 'iPhone 17 Pro',
   colors: [
-    { name: 'Чёрный титан', hex: '#2b2b2e', img: '...', filter: 'none' },
-    { name: 'Белый титан', hex: '#e8e6e1', img: '...', filter: 'brightness(1.2)' },
+    { name: 'Белый', hex: '#f5f5f7', img: '...', filter: 'brightness(1.2)' },
+    { name: 'Синий', hex: '#3d5a9e', img: '...', filter: 'hue-rotate(200deg)' },
+    { name: 'Оранжевый', hex: '#e8752a', img: '...', filter: 'hue-rotate(25deg)' },
+    { name: 'Чёрный', hex: '#1d1d1f', img: '...', filter: 'none' },
     // ...
   ],
   specs: { display: '...', chip: 'Apple A19 Pro', ... }
@@ -70,7 +72,7 @@
 | `ip17-pro-max-512` | Pro Max 512 ГБ | 512 ГБ | SIM + eSIM | 151 990 ₽ |
 | `ip17-pro-max-1tb` | Pro Max 1 ТБ | 1 ТБ | SIM + eSIM | 171 990 ₽ |
 
-**Цвета Pro/Pro Max (4):** Чёрный титан, Белый титан, Натуральный титан, Пустынный титан
+**Цвета Pro/Pro Max (4):** Белый, Синий, Оранжевый, Чёрный
 
 ## Структура страниц
 

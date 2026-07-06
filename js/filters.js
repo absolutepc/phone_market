@@ -15,6 +15,7 @@ function initPhoneCatalog(options = {}) {
   const sidebar = document.getElementById('filtersSidebar');
   const pageLayout = document.getElementById('catalogPageLayout');
   const filtersToggle = document.getElementById('filtersToggle');
+  const filtersClose = document.getElementById('filtersClose');
 
   function renderCheckboxGroup(container, items, cssClass, checkedValues = []) {
     if (!container) return;
@@ -194,6 +195,10 @@ function initPhoneCatalog(options = {}) {
 
   filtersToggle?.addEventListener('click', () => {
     setFiltersVisible(!isFiltersVisible());
+  });
+
+  filtersClose?.addEventListener('click', () => {
+    setFiltersVisible(false);
   });
 
   window.addEventListener('resize', () => {

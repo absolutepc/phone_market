@@ -519,7 +519,11 @@ function buildFullDescription(product) {
 function enrichProduct(product, def) {
   const merged = mergeCatalogItem(product, def);
   merged.fullDescription = buildFullDescription(merged);
-  merged.colors = (merged.colors || []).map(c => ({ ...c, img: c.img || getProductImg(merged) }));
+  if (def?.colors?.length) {
+    merged.colors = def.colors.map(color => ({ ...color, filter: 'none' }));
+  } else {
+    merged.colors = (merged.colors || []).map(color => ({ ...color, filter: 'none' }));
+  }
   return merged;
 }
 

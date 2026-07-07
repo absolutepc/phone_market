@@ -246,7 +246,6 @@ function renderProductCard(product, type = 'product') {
   const categoryLabel = CATEGORY_LABELS[product.category] || product.category;
   const initialColor = product.colors?.[0];
   const imgSrc = initialColor?.img || getProductImg(product);
-  const imgFilter = initialColor?.filter && initialColor.filter !== 'none' ? initialColor.filter : '';
   const transitionImg = getItemTransitionImage(product);
 
   const attrTags = [
@@ -258,7 +257,7 @@ function renderProductCard(product, type = 'product') {
     <div class="product-card" data-id="${product.id}" data-type="${type}">
       <div class="product-image">
         ${badgeHtml}
-        ${renderProductImg(imgSrc, product.name, imgFilter)}
+        ${renderProductImg(imgSrc, product.name)}
       </div>
       <div class="product-info">
         <div class="product-category">${categoryLabel}</div>
@@ -290,8 +289,7 @@ function bindCardColorSwatches(container) {
         const img = card?.querySelector('.product-image img');
         if (img) {
           img.src = encodeAssetPath(btn.dataset.img);
-          const filter = btn.dataset.filter;
-          img.style.filter = filter && filter !== 'none' ? filter : '';
+          img.style.filter = 'none';
         }
       });
     });

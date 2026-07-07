@@ -590,32 +590,12 @@ main {
   padding: 16px 18px;
   display: flex;
   flex-direction: column;
-  background:
-    linear-gradient(
-      165deg,
-      rgba(255, 255, 255, 0.16) 0%,
-      rgba(255, 255, 255, 0.04) 42%,
-      rgba(255, 255, 255, 0.1) 100%
-    ),
-    rgba(15, 23, 42, 0.52);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  border-top: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(15, 23, 42, 0.62);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-  box-shadow:
-    0 -10px 36px rgba(0, 0, 0, 0.38),
-    inset 0 1px 0 rgba(255, 255, 255, 0.28);
-}
-
-.product-info::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 10%;
-  right: 10%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-  pointer-events: none;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.28);
 }
 
 .product-category {
@@ -3085,40 +3065,19 @@ main {
   .product-image::after {
     background: linear-gradient(
       to top,
-      rgba(10, 14, 23, 0.35) 0%,
-      rgba(10, 14, 23, 0.12) 28%,
-      transparent 52%
+      rgba(10, 14, 23, 0.55) 0%,
+      rgba(10, 14, 23, 0.18) 30%,
+      transparent 55%
     );
   }
 
   .product-info {
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
     padding: 14px 16px;
-    border-radius: var(--radius-md);
-    border: 1px solid rgba(255, 255, 255, 0.34);
-    border-top: 1px solid rgba(255, 255, 255, 0.42);
-    background:
-      linear-gradient(
-        155deg,
-        rgba(255, 255, 255, 0.28) 0%,
-        rgba(255, 255, 255, 0.08) 38%,
-        rgba(255, 255, 255, 0.14) 100%
-      ),
-      rgba(12, 18, 32, 0.38);
-    backdrop-filter: blur(20px) saturate(190%);
-    -webkit-backdrop-filter: blur(20px) saturate(190%);
-    box-shadow:
-      0 10px 40px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.45),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.1);
-  }
-
-  .product-info::before {
-    left: 8%;
-    right: 8%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+    background: rgba(15, 23, 42, 0.68);
+    backdrop-filter: blur(16px) saturate(125%);
+    -webkit-backdrop-filter: blur(16px) saturate(125%);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.22);
   }
 }
 
@@ -3638,13 +3597,6 @@ body.page-transition-active > :not(#page-transition) {
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .product-info {
-    background:
-      linear-gradient(
-        165deg,
-        rgba(255, 255, 255, 0.22) 0%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(255, 255, 255, 0.16) 100%
-      ),
-      rgba(15, 23, 42, 0.72);
+    background: rgba(15, 23, 42, 0.78);
   }
 }

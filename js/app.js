@@ -32,6 +32,8 @@ function getActiveItemColor(scope) {
     colorHex: activeBtn.style.getPropertyValue('--swatch').trim(),
     img: activeBtn.dataset.img,
     filter: activeBtn.dataset.filter || '',
+    price: Number(activeBtn.dataset.price || 0) || 0,
+    oldPrice: Number(activeBtn.dataset.oldPrice || 0) || 0,
   };
 }
 
@@ -45,9 +47,16 @@ function resolveItemColor(item, scope) {
       colorHex: defaultColor.hex,
       img: defaultColor.img || getProductImg(item),
       filter: defaultColor.filter || '',
+      price: defaultColor.price ?? item.price,
+      oldPrice: defaultColor.oldPrice ?? item.oldPrice ?? 0,
     };
   }
-  return { colorName: '', colorHex: '', img: getProductImg(item), filter: '' };
+  return { colorName: '', colorHex: '', img: getProductImg(item), filter: '', price: item.price, oldPrice: item.oldPrice ?? 0 };
+}
+
+function renderProductPriceHtml(price, oldPrice = 0) {
+  const oldPriceHtml = oldPrice ? `<span class="old-price">${formatPrice(oldPrice)}</span>` : '';
+  return `${formatPrice(price)}${oldPriceHtml}`;
 }
 
 function addToCart(item) {
@@ -227,6 +236,8 @@ function renderCardColorSwatches(product) {
           data-name="${escapeHtml(color.name)}"
           data-img="${encodeAssetPath(color.img || getProductImg(product))}"
           data-filter="${escapeHtml(color.filter || 'none')}"
+          data-price="${color.price ?? product.price}"
+          data-old-price="${color.oldPrice ?? product.oldPrice ?? ''}"
           style="--swatch: ${color.hex}"
           title="${escapeHtml(color.name)}"
           aria-label="Цвет: ${escapeHtml(color.name)}"
@@ -239,9 +250,6 @@ function renderCardColorSwatches(product) {
 function renderProductCard(product, type = 'product') {
   const badgeHtml = product.badge
     ? `<span class="product-badge ${product.badge}">${BADGE_LABELS[product.badge] || product.badge}</span>`
-    : '';
-  const oldPriceHtml = product.oldPrice
-    ? `<span class="old-price">${formatPrice(product.oldPrice)}</span>`
     : '';
   const categoryLabel = CATEGORY_LABELS[product.category] || product.category;
   const initialColor = product.colors?.[0];
@@ -267,7 +275,7 @@ function renderProductCard(product, type = 'product') {
         <p>${product.description || ''}</p>
         ${renderCardColorSwatches(product)}
         <div class="product-footer">
-          <div class="product-price">${formatPrice(product.price)}${oldPriceHtml}</div>
+          <div class="product-price">${renderProductPriceHtml(initialColor?.price ?? product.price, initialColor?.oldPrice ?? product.oldPrice ?? 0)}</div>
           <div class="product-actions">
             <a href="product.html?id=${product.id}" class="btn btn-secondary btn-sm" data-transition-label="${escapeHtml(product.name)}" data-transition-image="${escapeHtml(transitionImg)}">Подробнее</a>
             <button class="btn btn-primary btn-sm add-to-cart-btn" data-id="${product.id}" data-type="${type}">В корзину</button>
@@ -291,6 +299,13 @@ function bindCardColorSwatches(container) {
           img.src = encodeAssetPath(btn.dataset.img);
           img.style.filter = 'none';
         }
+        const priceEl = card?.querySelector('.product-price');
+        if (priceEl) {
+          priceEl.innerHTML = renderProductPriceHtml(
+            Number(btn.dataset.price || 0),
+            Number(btn.dataset.oldPrice || 0)
+          );
+        }
       });
     });
   });
@@ -309,7 +324,7 @@ function bindAddToCartButtons(container) {
         addToCart({
           id: item.id,
           name: item.name,
-          price: item.price,
+          price: color.price || item.price,
           img: color.img,
           colorName: color.colorName,
           colorHex: color.colorHex,

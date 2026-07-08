@@ -128,6 +128,8 @@ function renderItemColorPicker(item, ui) {
             data-name="${escapeHtml(color.name)}"
             data-img="${encodeAssetPath(color.images?.[0] || color.img || getProductImg(item))}"
             data-filter="${escapeHtml(color.filter || 'none')}"
+            data-price="${color.price ?? item.price}"
+            data-old-price="${color.oldPrice ?? item.oldPrice ?? ''}"
             style="--swatch: ${color.hex}"
             title="${escapeHtml(color.name)}"
             aria-label="Цвет: ${escapeHtml(color.name)}"

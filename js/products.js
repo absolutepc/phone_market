@@ -25,7 +25,7 @@ function renderProductSpecsTable(product) {
 
 function renderProductDetail(product) {
   const categoryLabel = CATEGORY_LABELS[product.category] || product.category;
-  const oldPriceHtml = product.oldPrice ? `<span class="old-price">${formatPrice(product.oldPrice)}</span>` : '';
+  const initialColor = product.colors?.[0];
   const attrTags = PRODUCT_ATTRIBUTE_FIELDS
     .filter(f => product[f])
     .map(f => `<span class="product-attr-tag">${escapeHtml(product[f])}</span>`)
@@ -46,7 +46,7 @@ function renderProductDetail(product) {
         ${renderRatingSummary(product.id, 'product', { variant: 'hero' })}
         <p class="pc-detail-desc">${escapeHtml(product.description || '')}</p>
         ${attrTags ? `<div class="product-attrs product-detail-attrs">${attrTags}</div>` : ''}
-        <div class="product-price pc-detail-price">${formatPrice(product.price)}${oldPriceHtml}</div>
+        <div class="product-price pc-detail-price">${renderProductPriceHtml(initialColor?.price ?? product.price, initialColor?.oldPrice ?? product.oldPrice ?? 0)}</div>
         <div class="product-stock-badge ${product.stock > 0 ? 'in-stock' : 'out-of-stock'}">
           ${product.stock > 0 ? `✓ В наличии: ${product.stock} шт.` : 'Нет в наличии'}
         </div>
@@ -102,7 +102,18 @@ function initProductDetailPage() {
   if (typeof updatePageTransitionImage === 'function') updatePageTransitionImage(getItemTransitionImage(product));
 
   container.innerHTML = `<div class="container pc-detail-page">${renderProductDetail(product)}</div>`;
-  bindItemGalleryAndColor(container, GALLERY_UI.product, product);
+  bindItemGalleryAndColor(container, GALLERY_UI.product, product, {
+    onColorChange(colorIndex, currentProduct, currentContainer) {
+      const color = currentProduct.colors?.[colorIndex] || currentProduct.colors?.[0];
+      const priceEl = currentContainer.querySelector('.pc-detail-price');
+      if (priceEl && color) {
+        priceEl.innerHTML = renderProductPriceHtml(
+          color.price ?? currentProduct.price,
+          color.oldPrice ?? currentProduct.oldPrice ?? 0
+        );
+      }
+    },
+  });
   bindAddToCartButtons(container);
   bindReviewsSection(container, product.id, 'product');
   updateCartBadge();

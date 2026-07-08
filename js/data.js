@@ -1,4 +1,4 @@
-const STORE_VERSION = 4;
+const STORE_VERSION = 5;
 const STORE_KEY = 'phonemarket_data_v1';
 const LEGACY_STORE_KEYS = [];
 const APP_BUILD = '1.0';
@@ -87,19 +87,37 @@ function getColorSetForCategory(category) {
   return STANDARD_COLORS;
 }
 
-function buildColors(colorSet) {
-  return colorSet.map(c => ({
-    ...c,
-    filter: 'none',
-    images: [c.img],
-  }));
+function getColorPriceAdjustment(colorName) {
+  const adjustments = {
+    'Чёрный': 0,
+    'Белый': 1990,
+    'Розовый': 2990,
+    'Бирюзовый': 2490,
+    'Ультрамарин': 3490,
+    'Синий': 3990,
+    'Оранжевый': 4990,
+  };
+  return adjustments[colorName] ?? 0;
+}
+
+function buildColors(colorSet, basePrice, baseOldPrice = null) {
+  return colorSet.map(c => {
+    const adjustment = getColorPriceAdjustment(c.name);
+    return {
+      ...c,
+      price: basePrice + adjustment,
+      oldPrice: baseOldPrice != null ? baseOldPrice + adjustment : null,
+      filter: 'none',
+      images: [c.img],
+    };
+  });
 }
 
 function createPhone({
   id, name, category, price, oldPrice, storage, simType, series,
   description, specs, badge, stock = 5,
 }) {
-  const colors = buildColors(getColorSetForCategory(category));
+  const colors = buildColors(getColorSetForCategory(category), price, oldPrice);
   const img = colors[0].img;
   return {
     id,
@@ -522,9 +540,21 @@ function enrichProduct(product, def) {
   if (def?.colors?.length) {
     merged.colors = def.colors.map(color => ({ ...color, filter: 'none' }));
   } else {
-    merged.colors = (merged.colors || []).map(color => ({ ...color, filter: 'none' }));
+    merged.colors = (merged.colors || []).map(color => ({
+      ...color,
+      price: color.price ?? merged.price,
+      oldPrice: color.oldPrice ?? merged.oldPrice ?? null,
+      filter: 'none',
+    }));
   }
+  merged.price = merged.colors?.[0]?.price ?? merged.price;
+  merged.oldPrice = merged.colors?.[0]?.oldPrice ?? merged.oldPrice ?? null;
   return merged;
+}
+
+function getProductColorByName(product, colorName = '') {
+  if (!product?.colors?.length) return null;
+  return product.colors.find(color => color.name === colorName) || product.colors[0];
 }
 
 function getProducts() {

@@ -508,6 +508,14 @@ function writeStoreData(data) {
   }));
 }
 
+function saveProducts(products) {
+  const current = readStoreData() || createDefaultStore();
+  writeStoreData({
+    ...current,
+    products,
+  });
+}
+
 function resetCatalogToDefaults() {
   writeStoreData(createDefaultStore());
 }

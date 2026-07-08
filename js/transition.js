@@ -13,6 +13,7 @@ const PAGE_LABELS_BY_HREF = {
   'about.html': 'О нас',
   'cart.html': 'Корзина',
   'account.html': 'Аккаунт',
+  'admin.html': 'Админ-панель',
   'search.html': 'Поиск',
 };
 
@@ -24,6 +25,7 @@ const PAGE_LABELS_BY_PAGE = {
   about: 'О нас',
   cart: 'Корзина',
   account: 'Аккаунт',
+  admin: 'Админ-панель',
   search: 'Поиск',
 };
 

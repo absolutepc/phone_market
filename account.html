@@ -74,6 +74,7 @@
     const dashboardView = document.getElementById('dashboardView');
     function showDashboard() {
       const user = getCurrentUser();
+      if (user?.role === 'admin') { window.location.href = 'admin.html'; return; }
       if (!user) { authView.style.display = 'block'; dashboardView.style.display = 'none'; return; }
       authView.style.display = 'none';
       dashboardView.style.display = 'block';
@@ -92,7 +93,16 @@
       e.preventDefault();
       const fd = new FormData(e.target);
       const r = loginUser(fd.get('email'), fd.get('password'));
-      r.success ? (showToast('Добро пожаловать!', 'success'), showDashboard()) : showToast(r.message, 'error');
+      if (r.success) {
+        if (r.isAdmin) {
+          window.location.href = 'admin.html';
+        } else {
+          showToast('Добро пожаловать!', 'success');
+          showDashboard();
+        }
+      } else {
+        showToast(r.message, 'error');
+      }
     });
     document.getElementById('registerFormEl').addEventListener('submit', e => {
       e.preventDefault();

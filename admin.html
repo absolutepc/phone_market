@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Админ-панель — Phone Market</title>
+  <link rel="stylesheet" href="css/style.css?v=2.6">
+  <style>#page-transition{position:fixed;inset:0;z-index:10000;background:#0a0e17}body.page-transition-active>:not(#page-transition){visibility:hidden}</style>
+</head>
+<body class="page-transition-active">
+  <div id="page-transition" class="page-transition" role="status" aria-live="polite" aria-label="Загрузка">
+    <div class="page-transition__inner">
+      <div class="page-transition__logo"><img src="img/hero-phone.svg" alt=""></div>
+      <p class="page-transition__label">Админ-панель</p>
+      <div class="page-transition__progress" aria-hidden="true"><span class="page-transition__progress-bar"></span></div>
+    </div>
+  </div>
+  <script src="js/catalog-reset-boot.js?v=1.0"></script>
+  <script src="js/transition-boot.js"></script>
+
+  <div id="site-header"></div>
+
+  <main>
+    <div id="adminGate" style="display:none;min-height:60vh;align-items:center;justify-content:center;padding:40px">
+      <div class="auth-form" style="max-width:400px;width:100%">
+        <h2>Вход для администратора</h2>
+        <p class="subtitle">Введите учётные данные администратора Phone Market</p>
+        <form id="adminLoginForm">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" required value="admin@phonemarket.ru">
+          </div>
+          <div class="form-group">
+            <label>Пароль</label>
+            <input type="password" name="password" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Войти</button>
+        </form>
+        <p style="margin-top:16px;font-size:0.8rem;color:var(--text-muted);text-align:center">Демо: admin@phonemarket.ru / admin123</p>
+      </div>
+    </div>
+
+    <div id="adminPanel" class="admin-layout" style="display:none">
+      <aside class="admin-sidebar">
+        <h2>🍎 Админ-панель</h2>
+        <nav class="admin-nav">
+          <button class="active" data-section="dashboard">📊 Обзор</button>
+          <button data-section="products">📦 Товары</button>
+          <button data-section="orders">🛒 Заказы</button>
+          <button data-section="users">👥 Клиенты</button>
+          <button data-section="reviews">⭐ Отзывы</button>
+          <button data-section="settings">⚙️ Настройки</button>
+        </nav>
+        <div style="padding:12px;margin-top:24px">
+          <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%;text-align:center">← В магазин</a>
+        </div>
+      </aside>
+      <div class="admin-main" id="adminContent"></div>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/data.js?v=1.2"></script>
+  <script src="js/app.js?v=1.1"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/transition.js"></script>
+  <script src="js/reviews.js"></script>
+  <script src="js/admin.js?v=1.0"></script>
+  <script>initLayout('admin');</script>
+</body>
+</html>

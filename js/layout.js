@@ -141,6 +141,7 @@ function getPageTransitionLabel(page) {
     catalog: 'Каталог',
     cart: 'Корзина',
     account: 'Аккаунт',
+    admin: 'Админ-панель',
     reviews: 'Отзывы',
     about: 'О нас',
     search: 'Поиск',

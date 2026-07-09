@@ -81,7 +81,7 @@ const CATALOG_LINES = [
     pickerLabel: 'Планшеты',
     pickerTagline: 'iPad, Air и Pro',
     categories: ['ipad', 'ipad-air', 'ipad-pro'],
-    img: 'img/products/ipad.svg',
+    img: 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
   },
   {
     id: 'airpods',
@@ -90,7 +90,7 @@ const CATALOG_LINES = [
     pickerLabel: 'Аудио',
     pickerTagline: 'AirPods 4, Pro и Max',
     categories: ['airpods', 'airpods-pro', 'airpods-max'],
-    img: 'img/products/airpods.svg',
+    img: 'img/pods/Apple AirPods Max 2 (2026).png',
   },
 ];
 

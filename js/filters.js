@@ -17,24 +17,12 @@ function initPhoneCatalog(options = {}) {
   const pageLayout = document.getElementById('catalogPageLayout');
   const filtersToggle = document.getElementById('filtersToggle');
   const filtersClose = document.getElementById('filtersClose');
-  const catalogLinesEl = document.getElementById('catalogLines');
   const catalogTitleEl = document.getElementById('catalogTitle');
   const catalogSubtitleEl = document.getElementById('catalogSubtitle');
   const catalogBreadcrumbEl = document.getElementById('catalogBreadcrumbCurrent');
 
   function getLineProducts(lineId = activeLine) {
     return allProducts.filter(product => getProductLine(product) === lineId);
-  }
-
-  function renderCatalogLines() {
-    if (!catalogLinesEl) return;
-    catalogLinesEl.innerHTML = CATALOG_LINES.map(line => `
-      <a
-        href="catalog.html?line=${line.id}"
-        class="catalog-line-tab ${line.id === activeLine ? 'active' : ''}"
-        aria-current="${line.id === activeLine ? 'page' : 'false'}"
-      >${escapeHtml(line.name)}</a>
-    `).join('');
   }
 
   function updateCatalogHeader() {
@@ -198,7 +186,6 @@ function initPhoneCatalog(options = {}) {
     applyFilters();
   }
 
-  renderCatalogLines();
   updateCatalogHeader();
   renderFilterOptions();
 

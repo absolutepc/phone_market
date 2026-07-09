@@ -890,6 +890,14 @@ main {
   color: var(--accent-light);
 }
 
+.catalog-category-picker-wrap {
+  padding-bottom: 80px;
+}
+
+.catalog-category-picker {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
 .catalog-lines {
   display: flex;
   flex-wrap: wrap;

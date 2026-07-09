@@ -41,7 +41,11 @@ function initPhoneCatalog(options = {}) {
     const line = getCatalogLineById(activeLine) || CATALOG_LINES[0];
     if (catalogTitleEl) catalogTitleEl.textContent = `Каталог ${line.name}`;
     if (catalogSubtitleEl) catalogSubtitleEl.textContent = line.description;
-    if (catalogBreadcrumbEl) catalogBreadcrumbEl.textContent = line.name;
+    if (typeof updateCatalogBreadcrumbs === 'function') {
+      updateCatalogBreadcrumbs('products', line.name);
+    } else if (catalogBreadcrumbEl) {
+      catalogBreadcrumbEl.textContent = line.name;
+    }
   }
 
   function renderCheckboxGroup(container, items, cssClass, checkedValues = []) {

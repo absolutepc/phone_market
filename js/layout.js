@@ -21,7 +21,7 @@ function renderHeader(activePage) {
         <nav class="main-nav" id="mainNav">${navLinks}${accountLink}</nav>
         <div class="header-search">
           <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Поиск iPhone..." aria-label="Поиск">
+          <input type="text" placeholder="Поиск товаров..." aria-label="Поиск">
         </div>
         <div class="header-tools">
           <div class="header-actions">
@@ -56,10 +56,10 @@ function renderFooter() {
         <div class="footer-col">
           <h4>Каталог</h4>
           <ul>
-            <li><a href="catalog.html?cat=iphone-17">iPhone 17</a></li>
-            <li><a href="catalog.html?cat=iphone-17-plus">iPhone 17 Plus</a></li>
-            <li><a href="catalog.html?cat=iphone-17-pro">iPhone 17 Pro</a></li>
-            <li><a href="catalog.html?cat=iphone-17-pro-max">iPhone 17 Pro Max</a></li>
+            <li><a href="catalog.html?line=iphone">iPhone</a></li>
+            <li><a href="catalog.html?line=macbook">MacBook</a></li>
+            <li><a href="catalog.html?line=ipad">iPad</a></li>
+            <li><a href="catalog.html?line=airpods">AirPods</a></li>
           </ul>
         </div>
         <div class="footer-col">

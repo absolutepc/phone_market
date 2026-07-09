@@ -178,7 +178,7 @@ function renderDashboard() {
       <div class="stat-card">
         <div class="stat-label">Товары</div>
         <div class="stat-value">${products.length}</div>
-        <div class="stat-change positive">В каталоге iPhone</div>
+        <div class="stat-change positive">В каталоге</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Заказы</div>

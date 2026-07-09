@@ -1,6 +1,7 @@
 function initPhoneCatalog(options = {}) {
-  const { preselectedCategory = null } = options;
+  const { preselectedCategory = null, preselectedLine = 'iphone' } = options;
   const allProducts = getProducts();
+  let activeLine = preselectedLine;
 
   const priceMinInput = document.getElementById('priceMin');
   const priceMaxInput = document.getElementById('priceMax');
@@ -16,6 +17,32 @@ function initPhoneCatalog(options = {}) {
   const pageLayout = document.getElementById('catalogPageLayout');
   const filtersToggle = document.getElementById('filtersToggle');
   const filtersClose = document.getElementById('filtersClose');
+  const catalogLinesEl = document.getElementById('catalogLines');
+  const catalogTitleEl = document.getElementById('catalogTitle');
+  const catalogSubtitleEl = document.getElementById('catalogSubtitle');
+  const catalogBreadcrumbEl = document.getElementById('catalogBreadcrumbCurrent');
+
+  function getLineProducts(lineId = activeLine) {
+    return allProducts.filter(product => getProductLine(product) === lineId);
+  }
+
+  function renderCatalogLines() {
+    if (!catalogLinesEl) return;
+    catalogLinesEl.innerHTML = CATALOG_LINES.map(line => `
+      <a
+        href="catalog.html?line=${line.id}"
+        class="catalog-line-tab ${line.id === activeLine ? 'active' : ''}"
+        aria-current="${line.id === activeLine ? 'page' : 'false'}"
+      >${escapeHtml(line.name)}</a>
+    `).join('');
+  }
+
+  function updateCatalogHeader() {
+    const line = getCatalogLineById(activeLine) || CATALOG_LINES[0];
+    if (catalogTitleEl) catalogTitleEl.textContent = `Каталог ${line.name}`;
+    if (catalogSubtitleEl) catalogSubtitleEl.textContent = line.description;
+    if (catalogBreadcrumbEl) catalogBreadcrumbEl.textContent = line.name;
+  }
 
   function renderCheckboxGroup(container, items, cssClass, checkedValues = []) {
     if (!container) return;
@@ -35,34 +62,42 @@ function initPhoneCatalog(options = {}) {
     `).join('');
   }
 
-  function getAvailableValues(field) {
-    return [...new Set(allProducts.map(product => product[field]).filter(Boolean))];
+  function getAvailableValues(field, products = getLineProducts()) {
+    return [...new Set(products.map(product => product[field]).filter(value => value && value !== '—'))];
   }
 
   function renderFilterOptions() {
+    const lineProducts = getLineProducts();
+    const lineCategories = getCategoriesForLine(activeLine);
+    const availableCategories = getAvailableValues('category', lineProducts)
+      .filter(value => lineCategories.includes(value));
+
     renderCheckboxGroup(
       categoryFiltersEl,
-      getAvailableValues('category').map(value => ({
+      availableCategories.map(value => ({
         value,
         label: CATEGORY_LABELS[value] || value,
       })),
       'cat-filter',
-      preselectedCategory ? [preselectedCategory] : []
+      preselectedCategory && lineCategories.includes(preselectedCategory) ? [preselectedCategory] : []
     );
 
     renderCheckboxGroup(
       storageFiltersEl,
       FILTER_STORAGE
-        .filter(value => getAvailableValues('storage').includes(value))
+        .filter(value => getAvailableValues('storage', lineProducts).includes(value))
         .map(value => ({ value, label: value })),
       'storage-filter'
     );
 
+    const simValues = [...new Set([
+      ...FILTER_SIM.filter(value => getAvailableValues('simType', lineProducts).includes(value)),
+      ...getAvailableValues('simType', lineProducts).filter(value => !FILTER_SIM.includes(value)),
+    ])];
+
     renderCheckboxGroup(
       simFiltersEl,
-      FILTER_SIM
-        .filter(value => getAvailableValues('simType').includes(value))
-        .map(value => ({ value, label: value })),
+      simValues.map(value => ({ value, label: value })),
       'sim-filter'
     );
 
@@ -98,6 +133,7 @@ function initPhoneCatalog(options = {}) {
   }
 
   function productMatchesFilters(product, state) {
+    if (getProductLine(product) !== activeLine) return false;
     if (state.categories.length && !state.categories.includes(product.category)) return false;
     if (state.storage.length && !state.storage.includes(product.storage)) return false;
     if (state.simTypes.length && !state.simTypes.includes(product.simType)) return false;
@@ -158,6 +194,8 @@ function initPhoneCatalog(options = {}) {
     applyFilters();
   }
 
+  renderCatalogLines();
+  updateCatalogHeader();
   renderFilterOptions();
 
   sidebar?.addEventListener('input', (event) => {

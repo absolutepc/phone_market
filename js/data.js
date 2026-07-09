@@ -1,4 +1,4 @@
-const STORE_VERSION = 5;
+const STORE_VERSION = 6;
 const STORE_KEY = 'phonemarket_data_v1';
 const LEGACY_STORE_KEYS = [];
 const APP_BUILD = '1.0';
@@ -16,6 +16,14 @@ const CATEGORY_IMAGES = {
   'iphone-17-plus': 'img/phones/standard/black.png',
   'iphone-17-pro': 'img/phones/pro/black.png',
   'iphone-17-pro-max': 'img/phones/pro-max/black.png',
+  'macbook-air': 'img/products/macbook.svg',
+  'macbook-pro': 'img/products/macbook.svg',
+  'ipad': 'img/products/ipad.svg',
+  'ipad-air': 'img/products/ipad.svg',
+  'ipad-pro': 'img/products/ipad.svg',
+  'airpods': 'img/products/airpods.svg',
+  'airpods-pro': 'img/products/airpods.svg',
+  'airpods-max': 'img/products/airpods.svg',
 };
 
 const FILTER_STORAGE = ['128 ГБ', '256 ГБ', '512 ГБ', '1 ТБ'];
@@ -29,7 +37,53 @@ const CATEGORY_LABELS = {
   'iphone-17-plus': 'iPhone 17 Plus',
   'iphone-17-pro': 'iPhone 17 Pro',
   'iphone-17-pro-max': 'iPhone 17 Pro Max',
+  'macbook-air': 'MacBook Air',
+  'macbook-pro': 'MacBook Pro',
+  'ipad': 'iPad',
+  'ipad-air': 'iPad Air',
+  'ipad-pro': 'iPad Pro',
+  'airpods': 'AirPods',
+  'airpods-pro': 'AirPods Pro',
+  'airpods-max': 'AirPods Max',
 };
+
+const CATALOG_LINES = [
+  {
+    id: 'iphone',
+    name: 'iPhone',
+    description: 'Весь модельный ряд Apple iPhone 17',
+    categories: ['iphone-17', 'iphone-17-plus', 'iphone-17-pro', 'iphone-17-pro-max'],
+    img: 'img/phones/hero/iphone-17-hero.jpg',
+  },
+  {
+    id: 'macbook',
+    name: 'MacBook',
+    description: 'MacBook Air и MacBook Pro с чипами Apple Silicon',
+    categories: ['macbook-air', 'macbook-pro'],
+    img: 'img/products/macbook.svg',
+  },
+  {
+    id: 'ipad',
+    name: 'iPad',
+    description: 'iPad, iPad Air и iPad Pro для работы и творчества',
+    categories: ['ipad', 'ipad-air', 'ipad-pro'],
+    img: 'img/products/ipad.svg',
+  },
+  {
+    id: 'airpods',
+    name: 'AirPods',
+    description: 'Беспроводные наушники Apple — от AirPods до AirPods Max',
+    categories: ['airpods', 'airpods-pro', 'airpods-max'],
+    img: 'img/products/airpods.svg',
+  },
+];
+
+const CATEGORY_TO_LINE = CATALOG_LINES.reduce((map, line) => {
+  line.categories.forEach(category => {
+    map[category] = line.id;
+  });
+  return map;
+}, {});
 
 const ATTRIBUTE_LABELS = {
   storage: 'Память',
@@ -49,15 +103,7 @@ const PRODUCT_SPEC_LABELS = {
 const BADGE_LABELS = { sale: 'Скидка', new: 'Новинка', hit: 'Хит' };
 const STATUS_LABELS = { pending: 'В обработке', shipped: 'Отправлен', delivered: 'Доставлен', cancelled: 'Отменён' };
 
-const CATALOG_SECTIONS = [
-  {
-    id: 'iphone',
-    name: 'iPhone',
-    description: 'Весь модельный ряд Apple iPhone 17',
-    categories: ['iphone-17', 'iphone-17-plus', 'iphone-17-pro', 'iphone-17-pro-max'],
-    img: 'img/phones/hero/iphone-17-hero.jpg',
-  },
-];
+const CATALOG_SECTIONS = CATALOG_LINES;
 
 const STANDARD_COLORS = [
   { name: 'Чёрный', hex: '#1d1d1f', img: 'img/phones/standard/black.png' },
@@ -81,10 +127,50 @@ const PRO_MAX_COLORS = [
   { name: 'Чёрный', hex: '#1d1d1f', img: 'img/phones/pro-max/black.png' },
 ];
 
+const MACBOOK_COLORS = [
+  { name: 'Серый космос', hex: '#7d7e80', img: 'img/products/macbook.svg' },
+  { name: 'Серебристый', hex: '#e3e4e6', img: 'img/products/macbook.svg' },
+  { name: 'Золотой', hex: '#f4e0c8', img: 'img/products/macbook.svg' },
+];
+
+const IPAD_COLORS = [
+  { name: 'Серый космос', hex: '#7d7e80', img: 'img/products/ipad.svg' },
+  { name: 'Серебристый', hex: '#e3e4e6', img: 'img/products/ipad.svg' },
+  { name: 'Синий', hex: '#4a6fa5', img: 'img/products/ipad.svg' },
+];
+
+const AIRPODS_COLORS = [
+  { name: 'Белый', hex: '#f5f5f7', img: 'img/products/airpods.svg' },
+];
+
+const AIRPODS_MAX_COLORS = [
+  { name: 'Серый космос', hex: '#7d7e80', img: 'img/products/airpods.svg' },
+  { name: 'Серебристый', hex: '#e3e4e6', img: 'img/products/airpods.svg' },
+  { name: 'Синий', hex: '#4a6fa5', img: 'img/products/airpods.svg' },
+  { name: 'Оранжевый', hex: '#e8752a', img: 'img/products/airpods.svg' },
+];
+
 function getColorSetForCategory(category) {
   if (category === 'iphone-17-pro-max') return PRO_MAX_COLORS;
   if (category === 'iphone-17-pro') return PRO_COLORS;
+  if (category === 'macbook-air' || category === 'macbook-pro') return MACBOOK_COLORS;
+  if (category === 'ipad' || category === 'ipad-air' || category === 'ipad-pro') return IPAD_COLORS;
+  if (category === 'airpods-max') return AIRPODS_MAX_COLORS;
+  if (category === 'airpods' || category === 'airpods-pro') return AIRPODS_COLORS;
   return STANDARD_COLORS;
+}
+
+function getProductLine(product) {
+  if (!product) return 'iphone';
+  return product.line || CATEGORY_TO_LINE[product.category] || 'iphone';
+}
+
+function getCatalogLineById(id) {
+  return CATALOG_LINES.find(line => line.id === id) || null;
+}
+
+function getCategoriesForLine(lineId) {
+  return getCatalogLineById(lineId)?.categories || [];
 }
 
 function getColorPriceAdjustment(colorName) {
@@ -123,6 +209,7 @@ function createPhone({
     id,
     name,
     category,
+    line: CATEGORY_TO_LINE[category] || 'iphone',
     price,
     oldPrice,
     img,
@@ -410,6 +497,202 @@ const DEFAULT_PRODUCTS = [
       protection: 'Титан Grade 5, Ceramic Shield, IP68',
     },
   }),
+
+  createPhone({
+    id: 'mba-13-256',
+    name: 'MacBook Air 13″ M4 256 ГБ',
+    category: 'macbook-air',
+    price: 114990,
+    storage: '256 ГБ',
+    simType: '—',
+    series: 'MacBook Air 13″',
+    badge: 'new',
+    description: '13.6″ Liquid Retina, чип M4, до 18 ч автономности, без вентилятора',
+    specs: {
+      display: '13.6″ Liquid Retina',
+      chip: 'Apple M4',
+      camera: '1080p FaceTime HD',
+      battery: 'До 18 ч',
+      connectivity: 'Wi‑Fi 6E, Bluetooth 5.3, 2× Thunderbolt',
+      protection: 'Алюминиевый корпус',
+    },
+  }),
+
+  createPhone({
+    id: 'mba-15-256',
+    name: 'MacBook Air 15″ M4 256 ГБ',
+    category: 'macbook-air',
+    price: 134990,
+    storage: '256 ГБ',
+    simType: '—',
+    series: 'MacBook Air 15″',
+    description: '15.3″ Liquid Retina, чип M4, тонкий корпус, MagSafe',
+    specs: {
+      display: '15.3″ Liquid Retina',
+      chip: 'Apple M4',
+      camera: '1080p FaceTime HD',
+      battery: 'До 18 ч',
+      connectivity: 'Wi‑Fi 6E, Bluetooth 5.3, 2× Thunderbolt',
+      protection: 'Алюминиевый корпус',
+    },
+  }),
+
+  createPhone({
+    id: 'mbp-14-512',
+    name: 'MacBook Pro 14″ M4 Pro 512 ГБ',
+    category: 'macbook-pro',
+    price: 199990,
+    storage: '512 ГБ',
+    simType: '—',
+    series: 'MacBook Pro 14″',
+    badge: 'hit',
+    description: '14.2″ Liquid Retina XDR, M4 Pro, ProMotion 120 Гц, три Thunderbolt',
+    specs: {
+      display: '14.2″ Liquid Retina XDR 120 Гц',
+      chip: 'Apple M4 Pro',
+      camera: '1080p FaceTime HD',
+      battery: 'До 22 ч',
+      connectivity: 'Wi‑Fi 6E, HDMI, SD, 3× Thunderbolt',
+      protection: 'Алюминиевый корпус',
+    },
+  }),
+
+  createPhone({
+    id: 'mbp-16-1tb',
+    name: 'MacBook Pro 16″ M4 Max 1 ТБ',
+    category: 'macbook-pro',
+    price: 299990,
+    storage: '1 ТБ',
+    simType: '—',
+    series: 'MacBook Pro 16″',
+    description: '16.2″ Liquid Retina XDR, M4 Max, максимальная производительность',
+    specs: {
+      display: '16.2″ Liquid Retina XDR 120 Гц',
+      chip: 'Apple M4 Max',
+      camera: '1080p FaceTime HD',
+      battery: 'До 24 ч',
+      connectivity: 'Wi‑Fi 6E, HDMI, SD, 3× Thunderbolt',
+      protection: 'Алюминиевый корпус',
+    },
+  }),
+
+  createPhone({
+    id: 'ipad-11-128',
+    name: 'iPad 11″ 128 ГБ Wi‑Fi',
+    category: 'ipad',
+    price: 44990,
+    storage: '128 ГБ',
+    simType: 'Wi‑Fi',
+    series: 'iPad 11″',
+    badge: 'new',
+    description: '11″ Liquid Retina, чип A16, поддержка Apple Pencil USB‑C',
+    specs: {
+      display: '11″ Liquid Retina',
+      chip: 'Apple A16',
+      camera: '12 Мп Wide',
+      battery: 'До 10 ч',
+      connectivity: 'Wi‑Fi 6, USB‑C',
+      protection: 'Алюминий, стекло',
+    },
+  }),
+
+  createPhone({
+    id: 'ipad-air-256',
+    name: 'iPad Air 11″ M3 256 ГБ',
+    category: 'ipad-air',
+    price: 74990,
+    storage: '256 ГБ',
+    simType: 'Wi‑Fi',
+    series: 'iPad Air 11″',
+    description: '11″ Liquid Retina, M3, тонкий корпус, Apple Pencil Pro',
+    specs: {
+      display: '11″ Liquid Retina',
+      chip: 'Apple M3',
+      camera: '12 Мп Wide',
+      battery: 'До 10 ч',
+      connectivity: 'Wi‑Fi 6E, USB‑C',
+      protection: 'Алюминий',
+    },
+  }),
+
+  createPhone({
+    id: 'ipad-pro-256',
+    name: 'iPad Pro 11″ M4 256 ГБ',
+    category: 'ipad-pro',
+    price: 99990,
+    storage: '256 ГБ',
+    simType: 'Wi‑Fi',
+    series: 'iPad Pro 11″',
+    badge: 'hit',
+    description: '11″ Ultra Retina XDR, M4, ProMotion 120 Гц, Thunderbolt',
+    specs: {
+      display: '11″ Ultra Retina XDR 120 Гц',
+      chip: 'Apple M4',
+      camera: '12 Мп Wide + LiDAR',
+      battery: 'До 10 ч',
+      connectivity: 'Wi‑Fi 6E, Thunderbolt',
+      protection: 'Алюминий, стекло',
+    },
+  }),
+
+  createPhone({
+    id: 'airpods-4',
+    name: 'AirPods 4',
+    category: 'airpods',
+    price: 14990,
+    storage: '—',
+    simType: '—',
+    series: 'AirPods 4',
+    badge: 'new',
+    description: 'Открытый тип, пространственное аудио, USB‑C, до 30 ч с кейсом',
+    specs: {
+      display: '—',
+      chip: 'Apple H2',
+      camera: '—',
+      battery: 'До 30 ч с кейсом',
+      connectivity: 'Bluetooth 5.3',
+      protection: 'IP54',
+    },
+  }),
+
+  createPhone({
+    id: 'airpods-pro-2',
+    name: 'AirPods Pro 2 USB‑C',
+    category: 'airpods-pro',
+    price: 24990,
+    storage: '—',
+    simType: '—',
+    series: 'AirPods Pro 2',
+    badge: 'hit',
+    description: 'Активное шумоподавление, адаптивный звук, MagSafe-кейс USB‑C',
+    specs: {
+      display: '—',
+      chip: 'Apple H2',
+      camera: '—',
+      battery: 'До 30 ч с кейсом',
+      connectivity: 'Bluetooth 5.3',
+      protection: 'IP54',
+    },
+  }),
+
+  createPhone({
+    id: 'airpods-max',
+    name: 'AirPods Max USB‑C',
+    category: 'airpods-max',
+    price: 59990,
+    storage: '—',
+    simType: '—',
+    series: 'AirPods Max',
+    description: 'Накладные наушники, ANC, пространственное аудио, алюминиевые чаши',
+    specs: {
+      display: '—',
+      chip: 'Apple H2',
+      camera: '—',
+      battery: 'До 20 ч',
+      connectivity: 'Bluetooth 5.3, USB‑C',
+      protection: 'Алюминий, магнитные амбушюры',
+    },
+  }),
 ];
 
 const DEFAULT_REVIEWS = [
@@ -534,11 +817,17 @@ function initStore() {
 
 function buildFullDescription(product) {
   if (product.fullDescription) return product.fullDescription;
+  const line = getProductLine(product);
+  const lineLabel = getCatalogLineById(line)?.name || 'Apple';
+  const details = [
+    product.storage && product.storage !== '—' ? `Память: ${product.storage}.` : '',
+    product.simType && product.simType !== '—' ? `Подключение: ${product.simType}.` : '',
+  ].filter(Boolean);
   return [
-    `${product.name} — оригинальный смартфон Apple с официальной гарантией.`,
+    `${product.name} — оригинальный продукт Apple (${lineLabel}) с официальной гарантией.`,
     product.description || '',
-    `Память: ${product.storage}. SIM: ${product.simType}.`,
-    'Бесплатная доставка при заказе от ₽100 000. Trade-in старого iPhone.',
+    ...details,
+    line === 'iphone' ? 'Бесплатная доставка при заказе от ₽100 000. Trade-in старого iPhone.' : 'Бесплатная доставка при заказе от ₽100 000.',
   ].filter(Boolean).join(' ');
 }
 

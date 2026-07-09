@@ -200,7 +200,8 @@ function searchProducts(query) {
       (item.storage && item.storage.toLowerCase().includes(q)) ||
       (item.simType && item.simType.toLowerCase().includes(q)) ||
       (item.series && item.series.toLowerCase().includes(q)) ||
-      (CATEGORY_LABELS[item.category] || '').toLowerCase().includes(q)
+      (CATEGORY_LABELS[item.category] || '').toLowerCase().includes(q) ||
+      (CATALOG_LINES.find(line => line.id === getProductLine(item))?.name || '').toLowerCase().includes(q)
     );
 }
 
@@ -257,8 +258,8 @@ function renderProductCard(product, type = 'product') {
   const transitionImg = getItemTransitionImage(product);
 
   const attrTags = [
-    product.storage && `<span class="product-attr-tag">${product.storage}</span>`,
-    product.simType && `<span class="product-attr-tag">${product.simType}</span>`,
+    product.storage && product.storage !== '—' && `<span class="product-attr-tag">${product.storage}</span>`,
+    product.simType && product.simType !== '—' && `<span class="product-attr-tag">${product.simType}</span>`,
   ].filter(Boolean).join('');
 
   return `

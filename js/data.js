@@ -29,7 +29,7 @@ const CATEGORY_IMAGES = {
   'airpods-max': 'img/products/airpods.svg',
 };
 
-const FILTER_STORAGE = ['128 ГБ', '256 ГБ', '512 ГБ', '1 ТБ'];
+const FILTER_STORAGE = ['128 ГБ', '256 ГБ', '512 ГБ', '1 ТБ', '2 ТБ', '4 ТБ', '8 ТБ'];
 const FILTER_SIM = ['eSIM', 'SIM + eSIM'];
 const FILTER_SERIES = ['iPhone 17', 'iPhone 17 Plus', 'iPhone 17 Pro', 'iPhone 17 Pro Max'];
 
@@ -144,34 +144,34 @@ const PRO_MAX_COLORS = [
 ];
 
 const MACBOOK_NEO_COLORS = [
-  { name: 'Синий', hex: '#5B8FD9', img: 'img/products/macbook.svg' },
-  { name: 'Жёлтый', hex: '#F2D56B', img: 'img/products/macbook.svg' },
-  { name: 'Розовый', hex: '#F2A6C4', img: 'img/products/macbook.svg' },
-  { name: 'Белый', hex: '#F4F4F6', img: 'img/products/macbook.svg' },
+  { name: 'Синий', hex: '#5B8FD9', img: 'img/macbook/neo/MacBook Neo 13 b.webp' },
+  { name: 'Жёлтый', hex: '#F2D56B', img: 'img/macbook/neo/MacBook Neo 13 y.webp' },
+  { name: 'Розовый', hex: '#F2A6C4', img: 'img/macbook/neo/MacBook Neo 13 p.webp' },
+  { name: 'Белый', hex: '#F4F4F6', img: 'img/macbook/neo/MacBook Neo 13 s.webp' },
 ];
 
 const MACBOOK_AIR_13_COLORS = [
-  { name: 'Тёмная ночь', hex: '#3A3B3F', img: 'img/products/macbook.svg' },
-  { name: 'Сияющая звезда', hex: '#EEE5D7', img: 'img/products/macbook.svg' },
-  { name: 'Серебристый', hex: '#D9DADC', img: 'img/products/macbook.svg' },
-  { name: 'Небесно-голубой', hex: '#AFC3D8', img: 'img/products/macbook.svg' },
+  { name: 'Тёмная ночь', hex: '#3A3B3F', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 b.webp' },
+  { name: 'Сияющая звезда', hex: '#EEE5D7', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 g.webp' },
+  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5.webp' },
+  { name: 'Небесно-голубой', hex: '#AFC3D8', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 s.webp' },
 ];
 
 const MACBOOK_AIR_15_COLORS = [
-  { name: 'Тёмная ночь', hex: '#3A3B3F', img: 'img/products/macbook.svg' },
-  { name: 'Сияющая звезда', hex: '#EEE5D7', img: 'img/products/macbook.svg' },
-  { name: 'Серебристый', hex: '#D9DADC', img: 'img/products/macbook.svg' },
-  { name: 'Небесно-голубой', hex: '#AFC3D8', img: 'img/products/macbook.svg' },
+  { name: 'Тёмная ночь', hex: '#3A3B3F', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 b.webp' },
+  { name: 'Сияющая звезда', hex: '#EEE5D7', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 g.webp' },
+  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5.webp' },
+  { name: 'Небесно-голубой', hex: '#AFC3D8', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 s.webp' },
 ];
 
 const MACBOOK_PRO_14_COLORS = [
-  { name: 'Космический чёрный', hex: '#2F3034', img: 'img/products/macbook.svg' },
-  { name: 'Серебристый', hex: '#D9DADC', img: 'img/products/macbook.svg' },
+  { name: 'Космический чёрный', hex: '#2F3034', img: 'img/macbook/pro 14 m5/Apple MacBook Pro 14 2026 M5 Pro b.webp' },
+  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/pro 14 m5/Apple MacBook Pro 14 2026 M5 Pro.webp' },
 ];
 
 const MACBOOK_PRO_16_COLORS = [
-  { name: 'Космический чёрный', hex: '#2F3034', img: 'img/products/macbook.svg' },
-  { name: 'Серебристый', hex: '#D9DADC', img: 'img/products/macbook.svg' },
+  { name: 'Космический чёрный', hex: '#2F3034', img: 'img/macbook/pro 14 m5/Apple MacBook Pro 14 2026 M5 Pro b.webp' },
+  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/pro 14 m5/Apple MacBook Pro 14 2026 M5 Pro.webp' },
 ];
 
 const IPAD_COLORS = [

@@ -249,6 +249,28 @@ function showPageTransition(label, { animate = true, image = '' } = {}) {
   return overlay;
 }
 
+function isBackForwardNavigation() {
+  const nav = performance.getEntriesByType('navigation')[0];
+  return nav?.type === 'back_forward';
+}
+
+function forceDismissPageTransition() {
+  pageTransitionNavigating = false;
+  pageTransitionFinishing = false;
+
+  const overlay = getPageTransitionOverlay();
+  if (overlay) {
+    overlay.dataset.transitionMode = '';
+    resetTransitionVisuals(overlay);
+    overlay.classList.remove('page-transition--visible', 'page-transition--animate', 'page-transition--ready');
+    overlay.classList.add('page-transition--hide');
+    overlay.style.display = 'none';
+    overlay.setAttribute('aria-hidden', 'true');
+  }
+
+  document.body.classList.remove('page-transition-active');
+}
+
 function hidePageTransition(overlay) {
   if (!overlay || overlay.classList.contains('page-transition--hide')) return;
 
@@ -317,17 +339,17 @@ async function finishPageTransition(defaultLabel) {
   }
 
   try {
-    const isNavEnter = overlay.dataset.transitionMode === 'nav';
-    const labelEl = overlay.querySelector('.page-transition__label');
-    const currentLabel = labelEl?.textContent.trim() || defaultLabel || 'Phone Market';
+    const skipIntro = overlay.dataset.transitionMode === 'nav'
+      || overlay.dataset.transitionMode === 'back'
+      || isBackForwardNavigation();
 
-    if (isNavEnter) {
-      document.body.classList.remove('page-transition-active');
-      overlay.classList.add('page-transition--hide');
-      overlay.style.display = 'none';
-      overlay.setAttribute('aria-hidden', 'true');
+    if (skipIntro) {
+      forceDismissPageTransition();
       return;
     }
+
+    const labelEl = overlay.querySelector('.page-transition__label');
+    const currentLabel = labelEl?.textContent.trim() || defaultLabel || 'Phone Market';
 
     if (pageTransitionNavigating || overlay.dataset.transitionMode === 'outgoing') {
       return;
@@ -350,6 +372,8 @@ async function finishPageTransition(defaultLabel) {
   } catch (error) {
     console.warn('Phone Market: ошибка анимации перехода', error);
     if (!pageTransitionNavigating) hidePageTransition(overlay);
+  } finally {
+    pageTransitionFinishing = false;
   }
 }
 
@@ -365,3 +389,13 @@ function getPageTransitionLabel(activePage) {
 }
 
 bindPageTransitionLinks(document);
+
+window.addEventListener('pagehide', () => {
+  forceDismissPageTransition();
+});
+
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted || isBackForwardNavigation()) {
+    forceDismissPageTransition();
+  }
+});

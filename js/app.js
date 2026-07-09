@@ -205,6 +205,34 @@ function searchProducts(query) {
     );
 }
 
+function renderCatalogLineCards() {
+  return CATALOG_LINES.map(line => {
+    const minPrice = getLineMinPrice(line.id);
+    const count = getLineProductCount(line.id);
+    const imageSrc = line.pickerImg || line.img || DEFAULT_IMG;
+    const priceLabel = minPrice ? `от ${formatPrice(minPrice)}` : 'Скоро в продаже';
+
+    return `
+      <a href="catalog.html?line=${line.id}" class="catalog-picker-card catalog-picker-card--${line.id}">
+        <div class="catalog-picker-card__glow" aria-hidden="true"></div>
+        <div class="catalog-picker-card__body">
+          <span class="catalog-picker-card__eyebrow">${escapeHtml(line.pickerLabel || line.name)}</span>
+          <h2 class="catalog-picker-card__title">${escapeHtml(line.name)}</h2>
+          <p class="catalog-picker-card__tagline">${escapeHtml(line.pickerTagline || line.description)}</p>
+          <div class="catalog-picker-card__footer">
+            <span class="catalog-picker-card__price">${priceLabel}</span>
+            <span class="catalog-picker-card__count">${formatProductCount(count)}</span>
+          </div>
+        </div>
+        <div class="catalog-picker-card__visual">
+          <img src="${escapeHtml(imageSrc)}" alt="" loading="lazy">
+        </div>
+        <span class="catalog-picker-card__cta" aria-hidden="true">Смотреть →</span>
+      </a>
+    `;
+  }).join('');
+}
+
 function showToast(message, type = 'info') {
   let container = document.querySelector('.toast-container');
   if (!container) {

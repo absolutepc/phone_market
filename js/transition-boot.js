@@ -2,6 +2,15 @@
   const overlay = document.getElementById('page-transition');
   if (!overlay) return;
 
+  function dismissOverlay(mode) {
+    if (mode) overlay.dataset.transitionMode = mode;
+    document.body.classList.remove('page-transition-active');
+    overlay.classList.remove('page-transition--visible', 'page-transition--animate', 'page-transition--ready');
+    overlay.classList.add('page-transition--hide');
+    overlay.style.display = 'none';
+    overlay.setAttribute('aria-hidden', 'true');
+  }
+
   let isNavEnter = false;
   let navLabel = '';
 
@@ -11,21 +20,26 @@
     if (isNavEnter) {
       sessionStorage.removeItem('pageTransitionNav');
       sessionStorage.removeItem('pageTransitionLabel');
+      sessionStorage.removeItem('pageTransitionImage');
     }
   } catch {
     // sessionStorage недоступен
   }
 
+  const navEntry = performance.getEntriesByType('navigation')[0];
+  const isBackForward = navEntry?.type === 'back_forward';
+
   if (isNavEnter) {
-    overlay.dataset.transitionMode = 'nav';
     const labelEl = overlay.querySelector('.page-transition__label');
     if (labelEl && navLabel) {
       labelEl.textContent = navLabel;
     }
-    document.body.classList.remove('page-transition-active');
-    overlay.classList.add('page-transition--hide');
-    overlay.style.display = 'none';
-    overlay.setAttribute('aria-hidden', 'true');
+    dismissOverlay('nav');
+    return;
+  }
+
+  if (isBackForward) {
+    dismissOverlay('back');
     return;
   }
 

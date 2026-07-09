@@ -23,9 +23,18 @@ function renderProductSpecsTable(product) {
   `;
 }
 
-function renderProductDetail(product) {
+function renderProductDetailColorBadge(color) {
+  if (!color?.name) return '';
+  return `
+    <span class="pc-detail-color-badge" id="productDetailColorBadge" style="--swatch: ${color.hex}">
+      <span class="pc-detail-color-badge__dot" aria-hidden="true"></span>
+      <span class="pc-detail-color-badge__name">${escapeHtml(color.name)}</span>
+    </span>
+  `;
+}
+
+function renderProductDetail(product, initialColor = product.colors?.[0]) {
   const categoryLabel = CATEGORY_LABELS[product.category] || product.category;
-  const initialColor = product.colors?.[0];
   const attrTags = PRODUCT_ATTRIBUTE_FIELDS
     .filter(f => product[f])
     .map(f => `<span class="product-attr-tag">${escapeHtml(product[f])}</span>`)
@@ -42,7 +51,10 @@ function renderProductDetail(product) {
           <span>${escapeHtml(product.name)}</span>
         </div>
         <div class="product-category">${escapeHtml(categoryLabel)}</div>
-        <h1>${escapeHtml(product.name)}</h1>
+        <h1 class="pc-detail-title">
+          <span class="pc-detail-title__name" id="productDetailTitleName">${escapeHtml(product.name)}</span>
+          ${renderProductDetailColorBadge(initialColor)}
+        </h1>
         ${renderRatingSummary(product.id, 'product', { variant: 'hero' })}
         ${attrTags ? `<div class="product-attrs product-detail-attrs">${attrTags}</div>` : ''}
         <div class="product-price pc-detail-price">${renderProductPriceHtml(initialColor?.price ?? product.price, initialColor?.oldPrice ?? product.oldPrice ?? 0)}</div>
@@ -67,6 +79,40 @@ function renderProductDetail(product) {
 
     ${renderReviewsSection(product.id, 'product')}
   `;
+}
+
+function updateProductDetailColorLabel(container, product, color) {
+  const badge = container.querySelector('#productDetailColorBadge');
+  if (!color?.name) {
+    if (badge) badge.remove();
+    document.title = `${product.name} — Phone Market`;
+    return;
+  }
+
+  if (badge) {
+    badge.style.setProperty('--swatch', color.hex);
+    const nameEl = badge.querySelector('.pc-detail-color-badge__name');
+    if (nameEl) nameEl.textContent = color.name;
+  }
+
+  document.title = `${product.name} — ${color.name} — Phone Market`;
+
+  const params = new URLSearchParams(window.location.search);
+  params.set('color', color.name);
+  const nextUrl = `${window.location.pathname}?${params.toString()}`;
+  window.history.replaceState(null, '', nextUrl);
+}
+
+function handleProductDetailColorChange(colorIndex, currentProduct, currentContainer) {
+  const color = currentProduct.colors?.[colorIndex] || currentProduct.colors?.[0];
+  const priceEl = currentContainer.querySelector('.pc-detail-price');
+  if (priceEl && color) {
+    priceEl.innerHTML = renderProductPriceHtml(
+      color.price ?? currentProduct.price,
+      color.oldPrice ?? currentProduct.oldPrice ?? 0
+    );
+  }
+  updateProductDetailColorLabel(currentContainer, currentProduct, color);
 }
 
 function initProductDetailPage() {
@@ -95,23 +141,30 @@ function initProductDetailPage() {
     return;
   }
 
-  document.title = `${product.name} — Phone Market`;
-  if (typeof updatePageTransitionLabel === 'function') updatePageTransitionLabel(product.name);
-  if (typeof updatePageTransitionImage === 'function') updatePageTransitionImage(getItemTransitionImage(product));
+  const colorParam = params.get('color');
+  const colorIndex = getProductColorIndex(product, colorParam);
+  const initialColor = product.colors?.[colorIndex] || product.colors?.[0];
 
-  container.innerHTML = `<div class="container pc-detail-page">${renderProductDetail(product)}</div>`;
-  bindItemGalleryAndColor(container, GALLERY_UI.product, product, {
-    onColorChange(colorIndex, currentProduct, currentContainer) {
-      const color = currentProduct.colors?.[colorIndex] || currentProduct.colors?.[0];
-      const priceEl = currentContainer.querySelector('.pc-detail-price');
-      if (priceEl && color) {
-        priceEl.innerHTML = renderProductPriceHtml(
-          color.price ?? currentProduct.price,
-          color.oldPrice ?? currentProduct.oldPrice ?? 0
-        );
-      }
-    },
-  });
+  document.title = initialColor?.name
+    ? `${product.name} — ${initialColor.name} — Phone Market`
+    : `${product.name} — Phone Market`;
+  if (typeof updatePageTransitionLabel === 'function') updatePageTransitionLabel(product.name);
+  if (typeof updatePageTransitionImage === 'function') {
+    updatePageTransitionImage(initialColor?.img || getItemTransitionImage(product));
+  }
+
+  container.innerHTML = `<div class="container pc-detail-page">${renderProductDetail(product, initialColor)}</div>`;
+
+  const galleryOptions = {
+    onColorChange: handleProductDetailColorChange,
+  };
+
+  bindItemGalleryAndColor(container, GALLERY_UI.product, product, galleryOptions);
+
+  if (colorIndex > 0) {
+    switchGalleryColor(container, product, colorIndex, GALLERY_UI.product, galleryOptions);
+  }
+
   bindAddToCartButtons(container);
   bindReviewsSection(container, product.id, 'product');
   updateCartBadge();

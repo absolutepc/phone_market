@@ -306,7 +306,7 @@ function renderProductCard(product, type = 'product') {
         <div class="product-footer">
           <div class="product-price">${renderProductPriceHtml(initialColor?.price ?? product.price, initialColor?.oldPrice ?? product.oldPrice ?? 0)}</div>
           <div class="product-actions">
-            <a href="product.html?id=${product.id}" class="btn btn-secondary btn-sm" data-transition-label="${escapeHtml(product.name)}" data-transition-image="${escapeHtml(transitionImg)}">Подробнее</a>
+            <a href="${buildProductDetailHref(product.id, initialColor?.name)}" class="btn btn-secondary btn-sm product-detail-link" data-transition-label="${escapeHtml(product.name)}" data-transition-image="${escapeHtml(encodeAssetPath(initialColor?.img || transitionImg))}">Подробнее</a>
             <button class="btn btn-primary btn-sm add-to-cart-btn" data-id="${product.id}" data-type="${type}">В корзину</button>
           </div>
         </div>
@@ -337,6 +337,11 @@ function bindCardColorSwatches(container) {
             Number(btn.dataset.price || 0),
             Number(btn.dataset.oldPrice || 0)
           );
+        }
+        const detailLink = card?.querySelector('.product-detail-link');
+        if (detailLink && product && color) {
+          detailLink.href = buildProductDetailHref(product.id, color.name);
+          detailLink.dataset.transitionImage = encodeAssetPath(color.img || getProductImg(product));
         }
       });
     });

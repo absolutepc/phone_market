@@ -1009,7 +1009,21 @@ function enrichProduct(product, def) {
 
 function getProductColorByName(product, colorName = '') {
   if (!product?.colors?.length) return null;
+  if (!colorName) return product.colors[0];
   return product.colors.find(color => color.name === colorName) || product.colors[0];
+}
+
+function getProductColorIndex(product, colorName = '') {
+  if (!product?.colors?.length) return 0;
+  if (!colorName) return 0;
+  const index = product.colors.findIndex(color => color.name === colorName);
+  return index >= 0 ? index : 0;
+}
+
+function buildProductDetailHref(productId, colorName = '') {
+  const params = new URLSearchParams({ id: productId });
+  if (colorName) params.set('color', colorName);
+  return `product.html?${params.toString()}`;
 }
 
 function getProducts() {

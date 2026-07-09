@@ -209,7 +209,7 @@ function renderCatalogLineCards() {
   return CATALOG_LINES.map(line => {
     const minPrice = getLineMinPrice(line.id);
     const count = getLineProductCount(line.id);
-    const imageSrc = line.pickerImg || line.img || DEFAULT_IMG;
+    const imageSrc = encodeAssetPath(line.pickerImg || line.img || DEFAULT_IMG);
     const priceLabel = minPrice ? `от ${formatPrice(minPrice)}` : 'Скоро в продаже';
 
     return `
@@ -225,7 +225,7 @@ function renderCatalogLineCards() {
           </div>
         </div>
         <div class="catalog-picker-card__visual">
-          <img src="${escapeHtml(imageSrc)}" alt="" loading="lazy">
+          <img src="${imageSrc}" alt="" loading="lazy">
         </div>
         <span class="catalog-picker-card__cta" aria-hidden="true">Смотреть →</span>
       </a>

@@ -1027,7 +1027,8 @@ main {
 }
 
 .catalog-picker-card--macbook .catalog-picker-card__visual img {
-  max-height: 92px;
+  max-height: 156px;
+  width: 100%;
 }
 
 .catalog-picker-card--ipad .catalog-picker-card__visual img {

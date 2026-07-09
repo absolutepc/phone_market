@@ -1,4 +1,4 @@
-const STORE_VERSION = 7;
+const STORE_VERSION = 8;
 const STORE_KEY = 'phonemarket_data_v1';
 const LEGACY_STORE_KEYS = [];
 const APP_BUILD = '1.0';
@@ -16,11 +16,11 @@ const CATEGORY_IMAGES = {
   'iphone-17-plus': 'img/phones/standard/black.png',
   'iphone-17-pro': 'img/phones/pro/black.png',
   'iphone-17-pro-max': 'img/phones/pro-max/black.png',
-  'macbook-neo': 'img/macbooks/neo/blue.png',
-  'macbook-air-13': 'img/macbooks/air-13/silver.png',
-  'macbook-air-15': 'img/macbooks/air-15/silver.png',
-  'macbook-pro-14': 'img/macbooks/pro-14/space-black.png',
-  'macbook-pro-16': 'img/macbooks/pro-16/space-black.png',
+  'macbook-neo': 'img/products/macbook.svg',
+  'macbook-air-13': 'img/products/macbook.svg',
+  'macbook-air-15': 'img/products/macbook.svg',
+  'macbook-pro-14': 'img/products/macbook.svg',
+  'macbook-pro-16': 'img/products/macbook.svg',
   'ipad': 'img/products/ipad.svg',
   'ipad-air': 'img/products/ipad.svg',
   'ipad-pro': 'img/products/ipad.svg',
@@ -70,9 +70,9 @@ const CATALOG_LINES = [
     description: 'MacBook Neo, Air и Pro на чипе Apple M5',
     pickerLabel: 'Ноутбуки',
     pickerTagline: 'Neo, Air 13/15 и Pro 14/16',
-    pickerImg: 'img/macbooks/air-13/sky-blue.png',
+    pickerImg: 'img/products/macbook.svg',
     categories: ['macbook-neo', 'macbook-air-13', 'macbook-air-15', 'macbook-pro-14', 'macbook-pro-16'],
-    img: 'img/macbooks/air-13/silver.png',
+    img: 'img/products/macbook.svg',
   },
   {
     id: 'ipad',
@@ -144,34 +144,34 @@ const PRO_MAX_COLORS = [
 ];
 
 const MACBOOK_NEO_COLORS = [
-  { name: 'Синий', hex: '#5B8FD9', img: 'img/macbooks/neo/blue.png' },
-  { name: 'Жёлтый', hex: '#F2D56B', img: 'img/macbooks/neo/yellow.png' },
-  { name: 'Розовый', hex: '#F2A6C4', img: 'img/macbooks/neo/pink.png' },
-  { name: 'Белый', hex: '#F4F4F6', img: 'img/macbooks/neo/white.png' },
+  { name: 'Синий', hex: '#5B8FD9', img: 'img/products/macbook.svg' },
+  { name: 'Жёлтый', hex: '#F2D56B', img: 'img/products/macbook.svg' },
+  { name: 'Розовый', hex: '#F2A6C4', img: 'img/products/macbook.svg' },
+  { name: 'Белый', hex: '#F4F4F6', img: 'img/products/macbook.svg' },
 ];
 
 const MACBOOK_AIR_13_COLORS = [
-  { name: 'Тёмная ночь', hex: '#3A3B3F', img: 'img/macbooks/air-13/midnight.png' },
-  { name: 'Сияющая звезда', hex: '#EEE5D7', img: 'img/macbooks/air-13/starlight.png' },
-  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbooks/air-13/silver.png' },
-  { name: 'Небесно-голубой', hex: '#AFC3D8', img: 'img/macbooks/air-13/sky-blue.png' },
+  { name: 'Тёмная ночь', hex: '#3A3B3F', img: 'img/products/macbook.svg' },
+  { name: 'Сияющая звезда', hex: '#EEE5D7', img: 'img/products/macbook.svg' },
+  { name: 'Серебристый', hex: '#D9DADC', img: 'img/products/macbook.svg' },
+  { name: 'Небесно-голубой', hex: '#AFC3D8', img: 'img/products/macbook.svg' },
 ];
 
 const MACBOOK_AIR_15_COLORS = [
-  { name: 'Тёмная ночь', hex: '#3A3B3F', img: 'img/macbooks/air-15/midnight.png' },
-  { name: 'Сияющая звезда', hex: '#EEE5D7', img: 'img/macbooks/air-15/starlight.png' },
-  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbooks/air-15/silver.png' },
-  { name: 'Небесно-голубой', hex: '#AFC3D8', img: 'img/macbooks/air-15/sky-blue.png' },
+  { name: 'Тёмная ночь', hex: '#3A3B3F', img: 'img/products/macbook.svg' },
+  { name: 'Сияющая звезда', hex: '#EEE5D7', img: 'img/products/macbook.svg' },
+  { name: 'Серебристый', hex: '#D9DADC', img: 'img/products/macbook.svg' },
+  { name: 'Небесно-голубой', hex: '#AFC3D8', img: 'img/products/macbook.svg' },
 ];
 
 const MACBOOK_PRO_14_COLORS = [
-  { name: 'Космический чёрный', hex: '#2F3034', img: 'img/macbooks/pro-14/space-black.png' },
-  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbooks/pro-14/silver.png' },
+  { name: 'Космический чёрный', hex: '#2F3034', img: 'img/products/macbook.svg' },
+  { name: 'Серебристый', hex: '#D9DADC', img: 'img/products/macbook.svg' },
 ];
 
 const MACBOOK_PRO_16_COLORS = [
-  { name: 'Космический чёрный', hex: '#2F3034', img: 'img/macbooks/pro-16/space-black.png' },
-  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbooks/pro-16/silver.png' },
+  { name: 'Космический чёрный', hex: '#2F3034', img: 'img/products/macbook.svg' },
+  { name: 'Серебристый', hex: '#D9DADC', img: 'img/products/macbook.svg' },
 ];
 
 const IPAD_COLORS = [

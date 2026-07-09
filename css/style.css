@@ -890,6 +890,41 @@ main {
   color: var(--accent-light);
 }
 
+.catalog-lines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: -8px 0 28px;
+}
+
+.catalog-line-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.catalog-line-tab:hover {
+  border-color: var(--border-hover);
+  color: var(--accent-light);
+}
+
+.catalog-line-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
 .catalog-toolbar select {
   padding: 8px 12px;
   background: var(--bg-card);

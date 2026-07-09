@@ -70,9 +70,9 @@ const CATALOG_LINES = [
     description: 'MacBook Neo, Air и Pro на чипе Apple M5',
     pickerLabel: 'Ноутбуки',
     pickerTagline: 'Neo, Air 13/15 и Pro 14/16',
-    pickerImg: 'img/products/macbook.svg',
+    pickerImg: 'img/macbook/MacBook Pro 14 16 512GB.png',
     categories: ['macbook-neo', 'macbook-air-13', 'macbook-air-15', 'macbook-pro-14', 'macbook-pro-16'],
-    img: 'img/products/macbook.svg',
+    img: 'img/macbook/MacBook Pro 14 16 512GB.png',
   },
   {
     id: 'ipad',

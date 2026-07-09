@@ -44,7 +44,6 @@ function renderProductDetail(product) {
         <div class="product-category">${escapeHtml(categoryLabel)}</div>
         <h1>${escapeHtml(product.name)}</h1>
         ${renderRatingSummary(product.id, 'product', { variant: 'hero' })}
-        <p class="pc-detail-desc">${escapeHtml(product.description || '')}</p>
         ${attrTags ? `<div class="product-attrs product-detail-attrs">${attrTags}</div>` : ''}
         <div class="product-price pc-detail-price">${renderProductPriceHtml(initialColor?.price ?? product.price, initialColor?.oldPrice ?? product.oldPrice ?? 0)}</div>
         <div class="product-stock-badge ${product.stock > 0 ? 'in-stock' : 'out-of-stock'}">
@@ -54,13 +53,12 @@ function renderProductDetail(product) {
           <button class="btn btn-primary btn-lg add-to-cart-btn" data-id="${escapeHtml(product.id)}" data-type="product">Добавить в корзину</button>
           <a href="catalog.html?cat=${escapeHtml(product.category)}" class="btn btn-secondary btn-lg">← К каталогу</a>
         </div>
+        <div class="pc-detail-description">
+          <h2>Описание</h2>
+          <p class="pc-full-desc">${escapeHtml(product.fullDescription || product.description || '')}</p>
+        </div>
       </div>
     </div>
-
-    <section class="pc-detail-section">
-      <h2>Описание</h2>
-      <p class="pc-full-desc">${escapeHtml(product.fullDescription || product.description || '')}</p>
-    </section>
 
     <section class="pc-detail-section">
       <h2>Характеристики</h2>

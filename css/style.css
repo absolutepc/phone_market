@@ -2618,6 +2618,18 @@ main {
   font-size: 1.05rem;
 }
 
+.pc-detail-description {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.pc-detail-description h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
 .pc-detail-price {
   font-size: 2rem !important;
   margin-bottom: 20px;
@@ -2649,7 +2661,7 @@ main {
   color: var(--text-secondary);
   line-height: 1.8;
   font-size: 1.05rem;
-  max-width: 900px;
+  max-width: none;
 }
 
 .pc-components-zigzag {

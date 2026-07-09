@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Каталог — Phone Market</title>
-  <link rel="stylesheet" href="css/style.css?v=2.9">
+  <link rel="stylesheet" href="css/style.css?v=2.11">
   <style>#page-transition{position:fixed;inset:0;z-index:10000;background:#0a0e17}body.page-transition-active>:not(#page-transition){visibility:hidden}</style>
 </head>
 <body class="page-transition-active">
@@ -27,15 +27,20 @@
           <a href="index.html">Главная</a> / <span id="catalogBreadcrumbCurrent">Каталог</span>
         </div>
         <h1 id="catalogTitle">Каталог</h1>
-        <p id="catalogSubtitle">Оригинальная техника Apple</p>
+        <p id="catalogSubtitle">Выберите категорию</p>
       </div>
     </div>
 
-    <div class="container">
-      <nav class="catalog-lines" id="catalogLines" aria-label="Категории каталога"></nav>
+    <div class="container catalog-category-picker-wrap" id="catalogCategoryPicker" hidden>
+      <div class="catalog-sections-grid catalog-category-picker" id="catalogCategoryPickerGrid"></div>
     </div>
 
-    <div class="container page-layout" id="catalogPageLayout">
+    <div id="catalogProductsView" hidden>
+      <div class="container">
+        <nav class="catalog-lines" id="catalogLines" aria-label="Категории каталога"></nav>
+      </div>
+
+      <div class="container page-layout" id="catalogPageLayout">
       <aside class="filters-sidebar" id="filtersSidebar">
         <div class="filters-sidebar-header">
           <h3>Фильтры</h3>
@@ -104,6 +109,7 @@
         <div id="catalogGrid"></div>
       </div>
     </div>
+    </div>
   </main>
 
   <div id="site-footer"></div>
@@ -113,8 +119,8 @@
   <script src="js/layout.js"></script>
   <script src="js/transition.js"></script>
   <script src="js/reviews.js"></script>
-  <script src="js/filters.js?v=1.4"></script>
-  <script src="js/catalog.js?v=2.1"></script>
+  <script src="js/filters.js?v=1.5"></script>
+  <script src="js/catalog.js?v=2.2"></script>
   <script>initLayout('catalog');</script>
 </body>
 </html>

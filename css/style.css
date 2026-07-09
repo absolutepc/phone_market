@@ -378,6 +378,112 @@ main {
   opacity: 0.5;
 }
 
+.hero-carousel__viewport {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-carousel__track {
+  display: grid;
+  align-items: stretch;
+}
+
+.hero-carousel__slide {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.55s ease, transform 0.55s ease, visibility 0.55s;
+  pointer-events: none;
+}
+
+.hero-carousel__slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.hero-carousel__dots {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 36px;
+  padding: 0 20px;
+}
+
+.hero-carousel__dot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  cursor: pointer;
+  overflow: hidden;
+  transition: width 0.25s ease, background 0.25s ease;
+}
+
+.hero-carousel__dot.is-active {
+  width: 52px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.hero-carousel__dot-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--gradient-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.hero-carousel__dot.is-active .hero-carousel__dot-fill {
+  opacity: 1;
+}
+
+@keyframes hero-carousel-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.hero-pc--phone img {
+  object-fit: cover;
+}
+
+.hero-pc--macbook img,
+.hero-pc--ipad img,
+.hero-pc--airpods img {
+  margin-left: 0;
+  width: 88%;
+  height: 88%;
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+}
+
+.hero-pc--macbook {
+  aspect-ratio: 16 / 11;
+}
+
+.hero-pc--ipad {
+  aspect-ratio: 4 / 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-carousel__slide {
+    transform: none;
+    transition: opacity 0.2s ease, visibility 0.2s;
+  }
+}
+
 /* ===== BUTTONS ===== */
 .btn {
   display: inline-flex;
@@ -3212,6 +3318,7 @@ main {
   .hero-buttons { justify-content: center; }
   .hero-visual { order: -1; }
   .hero-pc { max-width: 280px; font-size: 5rem; }
+  .hero-carousel__dots { margin-top: 28px; }
   .features-grid { grid-template-columns: repeat(2, 1fr); }
   .catalog-sections-grid { grid-template-columns: 1fr; }
   .page-layout { grid-template-columns: 1fr; }

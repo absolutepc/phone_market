@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Phone Market — Официальные iPhone</title>
-  <link rel="stylesheet" href="css/style.css?v=2.16">
+  <title>Phone Market — Официальная техника Apple</title>
+  <link rel="stylesheet" href="css/style.css?v=2.19">
   <style>#page-transition{position:fixed;inset:0;z-index:10000;background:#0a0e17}body.page-transition-active>:not(#page-transition){visibility:hidden}</style>
 </head>
 <body class="page-transition-active">
@@ -21,20 +21,17 @@
   <div id="site-header"></div>
 
   <main>
-    <section class="hero">
-      <div class="container hero-content">
-        <div class="hero-text">
-          <h1>iPhone 17 <span class="highlight">уже здесь</span></h1>
-          <p>Официальные смартфоны Apple — весь модельный ряд iPhone 17, Pro и Pro Max. Оригинальная гарантия, trade-in и доставка по России.</p>
-          <div class="hero-buttons">
-            <a href="catalog.html" class="btn btn-primary btn-lg">Смотреть каталог</a>
-            <a href="catalog.html?cat=iphone-17-pro" class="btn btn-secondary btn-lg">iPhone 17 Pro</a>
-          </div>
-        </div>
-        <div class="hero-visual">
-          <div class="hero-pc hero-phone"><img src="img/phones/iphone 17 pro max.png" alt="iPhone 17 Pro Max"></div>
-        </div>
+    <section
+      class="hero hero-carousel"
+      id="heroCarousel"
+      aria-roledescription="carousel"
+      aria-label="Категории каталога"
+      tabindex="0"
+    >
+      <div class="hero-carousel__viewport">
+        <div class="hero-carousel__track"></div>
       </div>
+      <div class="hero-carousel__dots" role="tablist" aria-label="Выбор категории"></div>
     </section>
 
     <section class="section">
@@ -93,11 +90,12 @@
 
   <div id="site-footer"></div>
 
-  <script src="js/data.js?v=1.8"></script>
+  <script src="js/data.js?v=1.9"></script>
   <script src="js/app.js?v=1.5"></script>
   <script src="js/layout.js"></script>
   <script src="js/transition.js?v=1.1"></script>
   <script src="js/reviews.js"></script>
+  <script src="js/hero-carousel.js?v=1.0"></script>
   <script>
     initLayout('home');
     const popularIds = ['ip17', 'ip17-pro-256', 'ip17-pro-max-512', 'ip17-plus'];

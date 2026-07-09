@@ -1,4 +1,4 @@
-const STORE_VERSION = 12;
+const STORE_VERSION = 13;
 const STORE_KEY = 'phonemarket_data_v1';
 const LEGACY_STORE_KEYS = [];
 const APP_BUILD = '1.0';
@@ -140,82 +140,6 @@ const IPHONE_PRO_MAX_LIFESTYLE = 'img/phones/iphone 17 pro max.png';
 const IPAD_AIR_DIR = 'img/ipad/ipad air';
 const IPAD_PRO_DIR = 'img/ipad/ipad pro';
 
-const IPAD_AIR_11_GRAY_IMAGES = [
-  'img/ipad/ipad air/Apple iPad Air (M4) 11 g.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 11 g 1.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 11 g 2.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 11 g 3.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 11 g 4.webp',
-];
-
-const IPAD_AIR_11_SILVER_IMAGES = [
-  'img/ipad/ipad air/Apple iPad Air (M4) s.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) s 1.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) s 2.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) s 3.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) s 4.webp',
-];
-
-const IPAD_AIR_11_BLUE_IMAGES = [
-  'img/ipad/ipad air/Apple iPad Air (M4) 11 t.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 11 t  1.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 11 t  2.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 11 t  3.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 11 t  4.webp',
-];
-
-const IPAD_AIR_13_GRAY_IMAGES = [
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 g.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 g 1.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 g 2.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 g 3.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 g 4.jpg',
-];
-
-const IPAD_AIR_13_SILVER_IMAGES = [
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 s.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 s 1.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 s 2.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 s 3.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 s 4.jpg',
-];
-
-const IPAD_AIR_13_BLUE_IMAGES = [
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 t.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 t 1.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 t 2.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 t 3.webp',
-  'img/ipad/ipad air/Apple iPad Air (M4) 13 t 4.jpg',
-];
-
-const IPAD_PRO_13_BLACK_IMAGES = [
-  'img/ipad/ipad pro/Apple iPad Pro (M5) 5G.webp',
-  'img/ipad/ipad pro/Apple iPad Pro (M5) 5G 1.webp',
-  'img/ipad/ipad pro/Apple iPad Pro (M5) 5G 2.webp',
-  'img/ipad/ipad pro/Apple iPad Pro (M5) 5G 3.webp',
-];
-
-const IPAD_PRO_13_SILVER_IMAGES = [
-  'img/ipad/ipad pro/Apple iPad Pro (M5) 5G s.webp',
-  'img/ipad/ipad pro/Apple iPad Pro (M5) 5G s 1.webp',
-  'img/ipad/ipad pro/Apple iPad Pro (M5) 5G s 2.webp',
-  'img/ipad/ipad pro/Apple iPad Pro (M5) 5G s 3.webp',
-];
-
-const IPAD_PRO_11_BLACK_IMAGES = [
-  'img/ipad/ipad pro/Планшет Apple iPad Pro (M5) 5G 11.webp',
-  'img/ipad/ipad pro/Планшет Apple iPad Pro (M5) 5G 11 1.webp',
-  'img/ipad/ipad pro/Планшет Apple iPad Pro (M5) 5G 11 2.webp',
-  'img/ipad/ipad pro/Планшет Apple iPad Pro (M5) 5G 11 3.webp',
-];
-
-const IPAD_PRO_11_SILVER_IMAGES = [
-  'img/ipad/ipad pro/Планшет Apple iPad Pro (M5) 5G 11 s.webp',
-  'img/ipad/ipad pro/Планшет Apple iPad Pro (M5) 5G 11 s 1.webp',
-  'img/ipad/ipad pro/Планшет Apple iPad Pro (M5) 5G 11 s 2.webp',
-  'img/ipad/ipad pro/Планшет Apple iPad Pro (M5) 5G 11 s 3.webp',
-];
-
 const MACBOOK_NEO_DIR = 'img/macbook/neo';
 const MACBOOK_AIR_DIR = 'img/macbook/air 13 15';
 const MACBOOK_PRO_14_DIR = 'img/macbook/pro 14 m5';
@@ -248,13 +172,18 @@ function macbookGallery(dir, baseName, extraCount = 0) {
   return images;
 }
 
-function iphoneGallery(img, hero) {
-  return uniqueColorImages([img, hero]);
+function ipadGallery(dir, baseName, extraCount = 0, options = {}) {
+  const extraSpace = options.extraSpace ?? ' ';
+  const images = [`${dir}/${baseName}.webp`];
+  for (let i = 1; i <= extraCount; i += 1) {
+    const ext = i === extraCount && options.lastExtraExt ? options.lastExtraExt : 'webp';
+    images.push(`${dir}/${baseName}${extraSpace}${i}.${ext}`);
+  }
+  return images;
 }
 
-function ipadColor(name, hex, images) {
-  const gallery = uniqueColorImages(images);
-  return colorWithGallery({ name, hex, img: gallery[0], images: gallery });
+function iphoneGallery(img, hero) {
+  return uniqueColorImages([img, hero]);
 }
 
 const IPHONE_17_COLORS = [
@@ -319,25 +248,28 @@ const MACBOOK_PRO_16_COLORS = [
 ];
 
 const IPAD_AIR_11_COLORS = [
-  ipadColor('Серый космос', '#7d7e80', IPAD_AIR_11_GRAY_IMAGES),
-  ipadColor('Серебристый', '#e3e4e6', IPAD_AIR_11_SILVER_IMAGES),
-  ipadColor('Синий', '#4a6fa5', IPAD_AIR_11_BLUE_IMAGES),
+  colorWithGallery({ name: 'Серый космос', hex: '#7d7e80', img: 'img/ipad/ipad air/Apple iPad Air (M4) 11 g.webp', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 11 g', 4) }),
+  colorWithGallery({ name: 'Серебристый', hex: '#e3e4e6', img: 'img/ipad/ipad air/Apple iPad Air (M4) s.webp', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) s', 4) }),
+  colorWithGallery({ name: 'Синий', hex: '#4a6fa5', img: 'img/ipad/ipad air/Apple iPad Air (M4) 11 t.webp', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 11 t', 4, { extraSpace: '  ' }) }),
 ];
 
+const IPAD_11_GEN_COLORS = IPAD_AIR_11_COLORS;
+const IPAD_MINI_7_COLORS = IPAD_AIR_11_COLORS;
+
 const IPAD_AIR_13_COLORS = [
-  ipadColor('Серый космос', '#7d7e80', IPAD_AIR_13_GRAY_IMAGES),
-  ipadColor('Серебристый', '#e3e4e6', IPAD_AIR_13_SILVER_IMAGES),
-  ipadColor('Синий', '#4a6fa5', IPAD_AIR_13_BLUE_IMAGES),
+  colorWithGallery({ name: 'Серый космос', hex: '#7d7e80', img: 'img/ipad/ipad air/Apple iPad Air (M4) 13 g.webp', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 13 g', 4, { lastExtraExt: 'jpg' }) }),
+  colorWithGallery({ name: 'Серебристый', hex: '#e3e4e6', img: 'img/ipad/ipad air/Apple iPad Air (M4) 13 s.webp', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 13 s', 4, { lastExtraExt: 'jpg' }) }),
+  colorWithGallery({ name: 'Синий', hex: '#4a6fa5', img: 'img/ipad/ipad air/Apple iPad Air (M4) 13 t.webp', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 13 t', 4, { lastExtraExt: 'jpg' }) }),
 ];
 
 const IPAD_PRO_11_COLORS = [
-  ipadColor('Серый космос', '#7d7e80', IPAD_PRO_11_BLACK_IMAGES),
-  ipadColor('Серебристый', '#e3e4e6', IPAD_PRO_11_SILVER_IMAGES),
+  colorWithGallery({ name: 'Серый космос', hex: '#7d7e80', img: 'img/ipad/ipad pro/Планшет Apple iPad Pro (M5) 5G 11.webp', images: ipadGallery(IPAD_PRO_DIR, 'Планшет Apple iPad Pro (M5) 5G 11', 3) }),
+  colorWithGallery({ name: 'Серебристый', hex: '#e3e4e6', img: 'img/ipad/ipad pro/Планшет Apple iPad Pro (M5) 5G 11 s.webp', images: ipadGallery(IPAD_PRO_DIR, 'Планшет Apple iPad Pro (M5) 5G 11 s', 3) }),
 ];
 
 const IPAD_PRO_13_COLORS = [
-  ipadColor('Серый космос', '#7d7e80', IPAD_PRO_13_BLACK_IMAGES),
-  ipadColor('Серебристый', '#e3e4e6', IPAD_PRO_13_SILVER_IMAGES),
+  colorWithGallery({ name: 'Серый космос', hex: '#7d7e80', img: 'img/ipad/ipad pro/Apple iPad Pro (M5) 5G.webp', images: ipadGallery(IPAD_PRO_DIR, 'Apple iPad Pro (M5) 5G', 3) }),
+  colorWithGallery({ name: 'Серебристый', hex: '#e3e4e6', img: 'img/ipad/ipad pro/Apple iPad Pro (M5) 5G s.webp', images: ipadGallery(IPAD_PRO_DIR, 'Apple iPad Pro (M5) 5G s', 3) }),
 ];
 
 const AIRPODS_COLORS = [
@@ -361,7 +293,9 @@ function getColorSetForCategory(category) {
   if (category === 'macbook-air-15') return MACBOOK_AIR_15_COLORS;
   if (category === 'macbook-pro-14') return MACBOOK_PRO_14_COLORS;
   if (category === 'macbook-pro-16') return MACBOOK_PRO_16_COLORS;
-  if (category === 'ipad-11-gen' || category === 'ipad-mini-7' || category === 'ipad-air-11') return IPAD_AIR_11_COLORS;
+  if (category === 'ipad-11-gen') return IPAD_11_GEN_COLORS;
+  if (category === 'ipad-mini-7') return IPAD_MINI_7_COLORS;
+  if (category === 'ipad-air-11') return IPAD_AIR_11_COLORS;
   if (category === 'ipad-air-13') return IPAD_AIR_13_COLORS;
   if (category === 'ipad-pro-11') return IPAD_PRO_11_COLORS;
   if (category === 'ipad-pro-13') return IPAD_PRO_13_COLORS;

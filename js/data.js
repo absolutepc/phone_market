@@ -1,4 +1,4 @@
-const STORE_VERSION = 10;
+const STORE_VERSION = 11;
 const STORE_KEY = 'phonemarket_data_v1';
 const LEGACY_STORE_KEYS = [];
 const APP_BUILD = '1.0';
@@ -21,16 +21,19 @@ const CATEGORY_IMAGES = {
   'macbook-air-15': 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5.webp',
   'macbook-pro-14': 'img/macbook/pro 14 m5/Apple MacBook Pro 14 2026 M5 Pro.webp',
   'macbook-pro-16': 'img/macbook/pro 16 m5/Apple MacBook Pro 16 2026 M5 Pro.webp',
-  'ipad': 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
-  'ipad-air': 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
-  'ipad-pro': 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
+  'ipad-11-gen': 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
+  'ipad-mini-7': 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
+  'ipad-air-11': 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
+  'ipad-air-13': 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
+  'ipad-pro-11': 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
+  'ipad-pro-13': 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
   'airpods': 'img/products/airpods.svg',
   'airpods-pro': 'img/products/airpods.svg',
   'airpods-max': 'img/products/airpods.svg',
 };
 
 const FILTER_STORAGE = ['128 ГБ', '256 ГБ', '512 ГБ', '1 ТБ', '2 ТБ', '4 ТБ', '8 ТБ'];
-const FILTER_SIM = ['eSIM', 'SIM + eSIM'];
+const FILTER_SIM = ['eSIM', 'SIM + eSIM', 'Wi‑Fi', 'Wi‑Fi + Cellular'];
 const FILTER_SERIES = ['iPhone 17', 'iPhone 17 Plus', 'iPhone 17 Pro', 'iPhone 17 Pro Max'];
 
 const PRODUCT_ATTRIBUTE_FIELDS = ['storage', 'simType', 'series'];
@@ -45,9 +48,12 @@ const CATEGORY_LABELS = {
   'macbook-air-15': 'MacBook Air 15″',
   'macbook-pro-14': 'MacBook Pro 14″',
   'macbook-pro-16': 'MacBook Pro 16″',
-  'ipad': 'iPad',
-  'ipad-air': 'iPad Air',
-  'ipad-pro': 'iPad Pro',
+  'ipad-11-gen': 'iPad 11-го поколения',
+  'ipad-mini-7': 'iPad mini 7',
+  'ipad-air-11': 'iPad Air 11″',
+  'ipad-air-13': 'iPad Air 13″',
+  'ipad-pro-11': 'iPad Pro 11″',
+  'ipad-pro-13': 'iPad Pro 13″',
   'airpods': 'AirPods',
   'airpods-pro': 'AirPods Pro',
   'airpods-max': 'AirPods Max',
@@ -77,10 +83,17 @@ const CATALOG_LINES = [
   {
     id: 'ipad',
     name: 'iPad',
-    description: 'iPad, iPad Air и iPad Pro для работы и творчества',
+    description: 'iPad 11-го поколения, mini, Air 11/13 и Pro 11/13',
     pickerLabel: 'Планшеты',
-    pickerTagline: 'iPad, Air и Pro',
-    categories: ['ipad', 'ipad-air', 'ipad-pro'],
+    pickerTagline: 'iPad, mini, Air и Pro',
+    categories: [
+      'ipad-11-gen',
+      'ipad-mini-7',
+      'ipad-air-11',
+      'ipad-air-13',
+      'ipad-pro-11',
+      'ipad-pro-13',
+    ],
     img: 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
   },
   {
@@ -227,19 +240,7 @@ const MACBOOK_PRO_16_COLORS = [
   colorWithGallery({ name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/pro 16 m5/Apple MacBook Pro 16 2026 M5 Pro.webp', images: macbookGallery(MACBOOK_PRO_16_DIR, 'Apple MacBook Pro 16 2026 M5 Pro', 5) }),
 ];
 
-const IPAD_11_COLORS = [
-  colorWithGallery({ name: 'Серый космос', hex: '#7d7e80', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
-  colorWithGallery({ name: 'Серебристый', hex: '#e3e4e6', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
-  colorWithGallery({ name: 'Синий', hex: '#4a6fa5', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
-];
-
-const IPAD_AIR_COLORS = [
-  colorWithGallery({ name: 'Серый космос', hex: '#7d7e80', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
-  colorWithGallery({ name: 'Серебристый', hex: '#e3e4e6', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
-  colorWithGallery({ name: 'Синий', hex: '#4a6fa5', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
-];
-
-const IPAD_PRO_COLORS = [
+const IPAD_COLORS = [
   colorWithGallery({ name: 'Серый космос', hex: '#7d7e80', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
   colorWithGallery({ name: 'Серебристый', hex: '#e3e4e6', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
   colorWithGallery({ name: 'Синий', hex: '#4a6fa5', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
@@ -266,9 +267,12 @@ function getColorSetForCategory(category) {
   if (category === 'macbook-air-15') return MACBOOK_AIR_15_COLORS;
   if (category === 'macbook-pro-14') return MACBOOK_PRO_14_COLORS;
   if (category === 'macbook-pro-16') return MACBOOK_PRO_16_COLORS;
-  if (category === 'ipad') return IPAD_11_COLORS;
-  if (category === 'ipad-air') return IPAD_AIR_COLORS;
-  if (category === 'ipad-pro') return IPAD_PRO_COLORS;
+  if (category === 'ipad-11-gen'
+    || category === 'ipad-mini-7'
+    || category === 'ipad-air-11'
+    || category === 'ipad-air-13'
+    || category === 'ipad-pro-11'
+    || category === 'ipad-pro-13') return IPAD_COLORS;
   if (category === 'airpods-max') return AIRPODS_MAX_COLORS;
   if (category === 'airpods' || category === 'airpods-pro') return AIRPODS_COLORS;
   return IPHONE_17_COLORS;
@@ -309,7 +313,9 @@ function formatProductCount(count) {
 function getColorPriceAdjustment(colorName) {
   const adjustments = {
     'Чёрный': 0,
+    'Серый космос': 0,
     'Белый': 1990,
+    'Серебристый': 1990,
     'Розовый': 2990,
     'Бирюзовый': 2490,
     'Ультрамарин': 3490,
@@ -412,6 +418,32 @@ function createMacBookProSku(size, storageKey, storage, price, chip, badge = nul
       connectivity: 'Wi‑Fi 6E, HDMI, SD, 3× Thunderbolt',
       protection: 'Алюминиевый корпус',
     },
+  });
+}
+
+function createIpadSku({
+  id,
+  name,
+  category,
+  price,
+  storage,
+  simType = 'Wi‑Fi',
+  series,
+  description,
+  specs,
+  badge = null,
+}) {
+  return createPhone({
+    id,
+    name,
+    category,
+    price,
+    storage,
+    simType,
+    series,
+    badge,
+    description,
+    specs,
   });
 }
 
@@ -728,16 +760,15 @@ const DEFAULT_PRODUCTS = [
   createMacBookProSku(16, '4tb', '4 ТБ', 309990, 'M5 Max'),
   createMacBookProSku(16, '8tb', '8 ТБ', 309990, 'M5 Max'),
 
-  createPhone({
-    id: 'ipad-11-128',
-    name: 'iPad 11″ 128 ГБ Wi‑Fi',
-    category: 'ipad',
+  createIpadSku({
+    id: 'ipad11-128',
+    name: 'iPad 11-го поколения 128 ГБ Wi‑Fi',
+    category: 'ipad-11-gen',
     price: 44990,
     storage: '128 ГБ',
-    simType: 'Wi‑Fi',
-    series: 'iPad 11″',
+    series: 'iPad 11-го поколения',
     badge: 'new',
-    description: '11″ Liquid Retina, чип A16, поддержка Apple Pencil USB‑C',
+    description: '11″ Liquid Retina, чип A16, Apple Pencil USB‑C и яркие цвета корпуса',
     specs: {
       display: '11″ Liquid Retina',
       chip: 'Apple A16',
@@ -748,15 +779,70 @@ const DEFAULT_PRODUCTS = [
     },
   }),
 
-  createPhone({
-    id: 'ipad-air-256',
-    name: 'iPad Air 11″ M3 256 ГБ',
-    category: 'ipad-air',
-    price: 74990,
+  createIpadSku({
+    id: 'ipad11-256',
+    name: 'iPad 11-го поколения 256 ГБ Wi‑Fi',
+    category: 'ipad-11-gen',
+    price: 54990,
     storage: '256 ГБ',
-    simType: 'Wi‑Fi',
+    series: 'iPad 11-го поколения',
+    description: '11″ Liquid Retina, чип A16, Apple Pencil USB‑C и яркие цвета корпуса',
+    specs: {
+      display: '11″ Liquid Retina',
+      chip: 'Apple A16',
+      camera: '12 Мп Wide',
+      battery: 'До 10 ч',
+      connectivity: 'Wi‑Fi 6, USB‑C',
+      protection: 'Алюминий, стекло',
+    },
+  }),
+
+  createIpadSku({
+    id: 'ipadmini7-128',
+    name: 'iPad mini 7 128 ГБ Wi‑Fi',
+    category: 'ipad-mini-7',
+    price: 54990,
+    storage: '128 ГБ',
+    series: 'iPad mini 7',
+    badge: 'new',
+    description: '8.3″ Liquid Retina, A17 Pro, компактный формат и поддержка Apple Pencil Pro',
+    specs: {
+      display: '8.3″ Liquid Retina',
+      chip: 'Apple A17 Pro',
+      camera: '12 Мп Wide',
+      battery: 'До 10 ч',
+      connectivity: 'Wi‑Fi 6E, USB‑C',
+      protection: 'Алюминий',
+    },
+  }),
+
+  createIpadSku({
+    id: 'ipadmini7-256',
+    name: 'iPad mini 7 256 ГБ Wi‑Fi',
+    category: 'ipad-mini-7',
+    price: 64990,
+    storage: '256 ГБ',
+    series: 'iPad mini 7',
+    description: '8.3″ Liquid Retina, A17 Pro, компактный формат и поддержка Apple Pencil Pro',
+    specs: {
+      display: '8.3″ Liquid Retina',
+      chip: 'Apple A17 Pro',
+      camera: '12 Мп Wide',
+      battery: 'До 10 ч',
+      connectivity: 'Wi‑Fi 6E, USB‑C',
+      protection: 'Алюминий',
+    },
+  }),
+
+  createIpadSku({
+    id: 'ipadair11-128',
+    name: 'iPad Air 11″ M3 128 ГБ Wi‑Fi',
+    category: 'ipad-air-11',
+    price: 69990,
+    storage: '128 ГБ',
     series: 'iPad Air 11″',
-    description: '11″ Liquid Retina, M3, тонкий корпус, Apple Pencil Pro',
+    badge: 'hit',
+    description: '11″ Liquid Retina, чип M3, тонкий корпус и Apple Pencil Pro',
     specs: {
       display: '11″ Liquid Retina',
       chip: 'Apple M3',
@@ -767,22 +853,131 @@ const DEFAULT_PRODUCTS = [
     },
   }),
 
-  createPhone({
-    id: 'ipad-pro-256',
-    name: 'iPad Pro 11″ M4 256 ГБ',
-    category: 'ipad-pro',
+  createIpadSku({
+    id: 'ipadair11-256',
+    name: 'iPad Air 11″ M3 256 ГБ Wi‑Fi',
+    category: 'ipad-air-11',
+    price: 79990,
+    storage: '256 ГБ',
+    series: 'iPad Air 11″',
+    description: '11″ Liquid Retina, чип M3, тонкий корпус и Apple Pencil Pro',
+    specs: {
+      display: '11″ Liquid Retina',
+      chip: 'Apple M3',
+      camera: '12 Мп Wide',
+      battery: 'До 10 ч',
+      connectivity: 'Wi‑Fi 6E, USB‑C',
+      protection: 'Алюминий',
+    },
+  }),
+
+  createIpadSku({
+    id: 'ipadair13-128',
+    name: 'iPad Air 13″ M3 128 ГБ Wi‑Fi',
+    category: 'ipad-air-13',
+    price: 89990,
+    storage: '128 ГБ',
+    series: 'iPad Air 13″',
+    badge: 'new',
+    description: '13″ Liquid Retina, чип M3, большой экран и Apple Pencil Pro',
+    specs: {
+      display: '13″ Liquid Retina',
+      chip: 'Apple M3',
+      camera: '12 Мп Wide',
+      battery: 'До 12 ч',
+      connectivity: 'Wi‑Fi 6E, USB‑C',
+      protection: 'Алюминий',
+    },
+  }),
+
+  createIpadSku({
+    id: 'ipadair13-256',
+    name: 'iPad Air 13″ M3 256 ГБ Wi‑Fi',
+    category: 'ipad-air-13',
     price: 99990,
     storage: '256 ГБ',
-    simType: 'Wi‑Fi',
+    series: 'iPad Air 13″',
+    description: '13″ Liquid Retina, чип M3, большой экран и Apple Pencil Pro',
+    specs: {
+      display: '13″ Liquid Retina',
+      chip: 'Apple M3',
+      camera: '12 Мп Wide',
+      battery: 'До 12 ч',
+      connectivity: 'Wi‑Fi 6E, USB‑C',
+      protection: 'Алюминий',
+    },
+  }),
+
+  createIpadSku({
+    id: 'ipadpro11-256',
+    name: 'iPad Pro 11″ M4 256 ГБ Wi‑Fi',
+    category: 'ipad-pro-11',
+    price: 99990,
+    storage: '256 ГБ',
     series: 'iPad Pro 11″',
     badge: 'hit',
-    description: '11″ Ultra Retina XDR, M4, ProMotion 120 Гц, Thunderbolt',
+    description: '11″ Ultra Retina XDR, M4, ProMotion 120 Гц и Thunderbolt',
     specs: {
       display: '11″ Ultra Retina XDR 120 Гц',
       chip: 'Apple M4',
       camera: '12 Мп Wide + LiDAR',
       battery: 'До 10 ч',
       connectivity: 'Wi‑Fi 6E, Thunderbolt',
+      protection: 'Алюминий, стекло',
+    },
+  }),
+
+  createIpadSku({
+    id: 'ipadpro11-512',
+    name: 'iPad Pro 11″ M4 512 ГБ Wi‑Fi',
+    category: 'ipad-pro-11',
+    price: 119990,
+    storage: '512 ГБ',
+    series: 'iPad Pro 11″',
+    description: '11″ Ultra Retina XDR, M4, ProMotion 120 Гц и Thunderbolt',
+    specs: {
+      display: '11″ Ultra Retina XDR 120 Гц',
+      chip: 'Apple M4',
+      camera: '12 Мп Wide + LiDAR',
+      battery: 'До 10 ч',
+      connectivity: 'Wi‑Fi 6E, Thunderbolt',
+      protection: 'Алюминий, стекло',
+    },
+  }),
+
+  createIpadSku({
+    id: 'ipadpro13-256',
+    name: 'iPad Pro 13″ M5 256 ГБ Wi‑Fi',
+    category: 'ipad-pro-13',
+    price: 119990,
+    storage: '256 ГБ',
+    series: 'iPad Pro 13″',
+    badge: 'new',
+    description: '13″ Ultra Retina XDR, M5, ProMotion 120 Гц и профессиональная производительность',
+    specs: {
+      display: '13″ Ultra Retina XDR 120 Гц',
+      chip: 'Apple M5',
+      camera: '12 Мп Wide + LiDAR',
+      battery: 'До 12 ч',
+      connectivity: 'Wi‑Fi 7, Thunderbolt',
+      protection: 'Алюминий, стекло',
+    },
+  }),
+
+  createIpadSku({
+    id: 'ipadpro13-512',
+    name: 'iPad Pro 13″ M5 512 ГБ Wi‑Fi',
+    category: 'ipad-pro-13',
+    price: 139990,
+    storage: '512 ГБ',
+    series: 'iPad Pro 13″',
+    description: '13″ Ultra Retina XDR, M5, ProMotion 120 Гц и профессиональная производительность',
+    specs: {
+      display: '13″ Ultra Retina XDR 120 Гц',
+      chip: 'Apple M5',
+      camera: '12 Мп Wide + LiDAR',
+      battery: 'До 12 ч',
+      connectivity: 'Wi‑Fi 7, Thunderbolt',
       protection: 'Алюминий, стекло',
     },
   }),

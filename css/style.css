@@ -526,7 +526,7 @@ main {
 }
 
 .product-image {
-  height: 200px;
+  height: 240px;
   background: var(--bg-secondary);
   display: flex;
   align-items: center;
@@ -539,7 +539,7 @@ main {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 16px;
+  padding: 8px 12px;
 }
 
 .product-badge {
@@ -2532,7 +2532,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 12px;
 }
 
 .pc-detail-main-img {
@@ -2762,7 +2762,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 12px;
 }
 
 .product-detail-main-img {
@@ -3064,7 +3064,7 @@ main {
     height: 100%;
     object-fit: contain;
     object-position: center top;
-    padding: 12px 8px 0;
+    padding: 6px 8px 0;
     transition: opacity 0.3s ease, transform 0.35s ease;
     filter: none !important;
   }

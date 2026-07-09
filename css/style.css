@@ -358,7 +358,8 @@ main {
 .hero-pc img {
   position: absolute;
   inset: 0;
-  width: 100%;
+  margin-left: 50px;
+  width: 80%;
   height: 100%;
   object-fit: cover;
   display: block;

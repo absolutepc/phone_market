@@ -1,4 +1,4 @@
-const STORE_VERSION = 6;
+const STORE_VERSION = 7;
 const STORE_KEY = 'phonemarket_data_v1';
 const LEGACY_STORE_KEYS = [];
 const APP_BUILD = '1.0';
@@ -16,8 +16,11 @@ const CATEGORY_IMAGES = {
   'iphone-17-plus': 'img/phones/standard/black.png',
   'iphone-17-pro': 'img/phones/pro/black.png',
   'iphone-17-pro-max': 'img/phones/pro-max/black.png',
-  'macbook-air': 'img/products/macbook.svg',
-  'macbook-pro': 'img/products/macbook.svg',
+  'macbook-neo': 'img/macbooks/neo/blue.png',
+  'macbook-air-13': 'img/macbooks/air-13/silver.png',
+  'macbook-air-15': 'img/macbooks/air-15/silver.png',
+  'macbook-pro-14': 'img/macbooks/pro-14/space-black.png',
+  'macbook-pro-16': 'img/macbooks/pro-16/space-black.png',
   'ipad': 'img/products/ipad.svg',
   'ipad-air': 'img/products/ipad.svg',
   'ipad-pro': 'img/products/ipad.svg',
@@ -37,8 +40,11 @@ const CATEGORY_LABELS = {
   'iphone-17-plus': 'iPhone 17 Plus',
   'iphone-17-pro': 'iPhone 17 Pro',
   'iphone-17-pro-max': 'iPhone 17 Pro Max',
-  'macbook-air': 'MacBook Air',
-  'macbook-pro': 'MacBook Pro',
+  'macbook-neo': 'MacBook Neo',
+  'macbook-air-13': 'MacBook Air 13″',
+  'macbook-air-15': 'MacBook Air 15″',
+  'macbook-pro-14': 'MacBook Pro 14″',
+  'macbook-pro-16': 'MacBook Pro 16″',
   'ipad': 'iPad',
   'ipad-air': 'iPad Air',
   'ipad-pro': 'iPad Pro',
@@ -61,11 +67,12 @@ const CATALOG_LINES = [
   {
     id: 'macbook',
     name: 'MacBook',
-    description: 'MacBook Air и MacBook Pro с чипами Apple Silicon',
+    description: 'MacBook Neo, Air и Pro на чипе Apple M5',
     pickerLabel: 'Ноутбуки',
-    pickerTagline: 'MacBook Air и MacBook Pro',
-    categories: ['macbook-air', 'macbook-pro'],
-    img: 'img/products/macbook.svg',
+    pickerTagline: 'Neo, Air 13/15 и Pro 14/16',
+    pickerImg: 'img/macbooks/air-13/sky-blue.png',
+    categories: ['macbook-neo', 'macbook-air-13', 'macbook-air-15', 'macbook-pro-14', 'macbook-pro-16'],
+    img: 'img/macbooks/air-13/silver.png',
   },
   {
     id: 'ipad',
@@ -136,10 +143,35 @@ const PRO_MAX_COLORS = [
   { name: 'Чёрный', hex: '#1d1d1f', img: 'img/phones/pro-max/black.png' },
 ];
 
-const MACBOOK_COLORS = [
-  { name: 'Серый космос', hex: '#7d7e80', img: 'img/products/macbook.svg' },
-  { name: 'Серебристый', hex: '#e3e4e6', img: 'img/products/macbook.svg' },
-  { name: 'Золотой', hex: '#f4e0c8', img: 'img/products/macbook.svg' },
+const MACBOOK_NEO_COLORS = [
+  { name: 'Синий', hex: '#5B8FD9', img: 'img/macbooks/neo/blue.png' },
+  { name: 'Жёлтый', hex: '#F2D56B', img: 'img/macbooks/neo/yellow.png' },
+  { name: 'Розовый', hex: '#F2A6C4', img: 'img/macbooks/neo/pink.png' },
+  { name: 'Белый', hex: '#F4F4F6', img: 'img/macbooks/neo/white.png' },
+];
+
+const MACBOOK_AIR_13_COLORS = [
+  { name: 'Тёмная ночь', hex: '#3A3B3F', img: 'img/macbooks/air-13/midnight.png' },
+  { name: 'Сияющая звезда', hex: '#EEE5D7', img: 'img/macbooks/air-13/starlight.png' },
+  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbooks/air-13/silver.png' },
+  { name: 'Небесно-голубой', hex: '#AFC3D8', img: 'img/macbooks/air-13/sky-blue.png' },
+];
+
+const MACBOOK_AIR_15_COLORS = [
+  { name: 'Тёмная ночь', hex: '#3A3B3F', img: 'img/macbooks/air-15/midnight.png' },
+  { name: 'Сияющая звезда', hex: '#EEE5D7', img: 'img/macbooks/air-15/starlight.png' },
+  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbooks/air-15/silver.png' },
+  { name: 'Небесно-голубой', hex: '#AFC3D8', img: 'img/macbooks/air-15/sky-blue.png' },
+];
+
+const MACBOOK_PRO_14_COLORS = [
+  { name: 'Космический чёрный', hex: '#2F3034', img: 'img/macbooks/pro-14/space-black.png' },
+  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbooks/pro-14/silver.png' },
+];
+
+const MACBOOK_PRO_16_COLORS = [
+  { name: 'Космический чёрный', hex: '#2F3034', img: 'img/macbooks/pro-16/space-black.png' },
+  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbooks/pro-16/silver.png' },
 ];
 
 const IPAD_COLORS = [
@@ -162,7 +194,11 @@ const AIRPODS_MAX_COLORS = [
 function getColorSetForCategory(category) {
   if (category === 'iphone-17-pro-max') return PRO_MAX_COLORS;
   if (category === 'iphone-17-pro') return PRO_COLORS;
-  if (category === 'macbook-air' || category === 'macbook-pro') return MACBOOK_COLORS;
+  if (category === 'macbook-neo') return MACBOOK_NEO_COLORS;
+  if (category === 'macbook-air-13') return MACBOOK_AIR_13_COLORS;
+  if (category === 'macbook-air-15') return MACBOOK_AIR_15_COLORS;
+  if (category === 'macbook-pro-14') return MACBOOK_PRO_14_COLORS;
+  if (category === 'macbook-pro-16') return MACBOOK_PRO_16_COLORS;
   if (category === 'ipad' || category === 'ipad-air' || category === 'ipad-pro') return IPAD_COLORS;
   if (category === 'airpods-max') return AIRPODS_MAX_COLORS;
   if (category === 'airpods' || category === 'airpods-pro') return AIRPODS_COLORS;
@@ -209,6 +245,11 @@ function getColorPriceAdjustment(colorName) {
     'Бирюзовый': 2490,
     'Ультрамарин': 3490,
     'Синий': 3990,
+    'Жёлтый': 2490,
+    'Космический чёрный': 2990,
+    'Тёмная ночь': 0,
+    'Сияющая звезда': 1990,
+    'Небесно-голубой': 3490,
     'Оранжевый': 4990,
   };
   return adjustments[colorName] ?? 0;
@@ -251,6 +292,54 @@ function createPhone({
     specs,
     colors,
   };
+}
+
+function createMacBookAirSku(size, storageKey, storage, price, badge = null) {
+  const category = size === 13 ? 'macbook-air-13' : 'macbook-air-15';
+  const display = size === 13 ? '13.6″' : '15.3″';
+  return createPhone({
+    id: `mba${size}-${storageKey}`,
+    name: `MacBook Air ${size}″ M5 ${storage}`,
+    category,
+    price,
+    storage,
+    simType: '—',
+    series: `MacBook Air ${size}″ M5`,
+    badge,
+    description: `${display} Liquid Retina, чип M5, без вентилятора, MagSafe и до 18 ч автономности`,
+    specs: {
+      display: `${display} Liquid Retina`,
+      chip: 'Apple M5',
+      camera: '1080p FaceTime HD',
+      battery: size === 13 ? 'До 18 ч' : 'До 20 ч',
+      connectivity: 'Wi‑Fi 6E, Bluetooth 5.3, 2× Thunderbolt',
+      protection: 'Алюминиевый корпус',
+    },
+  });
+}
+
+function createMacBookProSku(size, storageKey, storage, price, chip, badge = null) {
+  const category = size === 14 ? 'macbook-pro-14' : 'macbook-pro-16';
+  const display = size === 14 ? '14.2″' : '16.2″';
+  return createPhone({
+    id: `mbp${size}-${storageKey}`,
+    name: `MacBook Pro ${size}″ ${chip} ${storage}`,
+    category,
+    price,
+    storage,
+    simType: '—',
+    series: `MacBook Pro ${size}″`,
+    badge,
+    description: `${display} Liquid Retina XDR, ${chip}, ProMotion 120 Гц и профессиональная автономность`,
+    specs: {
+      display: `${display} Liquid Retina XDR 120 Гц`,
+      chip,
+      camera: '1080p FaceTime HD',
+      battery: size === 14 ? 'До 22 ч' : 'До 24 ч',
+      connectivity: 'Wi‑Fi 6E, HDMI, SD, 3× Thunderbolt',
+      protection: 'Алюминиевый корпус',
+    },
+  });
 }
 
 const DEFAULT_PRODUCTS = [
@@ -527,82 +616,42 @@ const DEFAULT_PRODUCTS = [
   }),
 
   createPhone({
-    id: 'mba-13-256',
-    name: 'MacBook Air 13″ M4 256 ГБ',
-    category: 'macbook-air',
-    price: 114990,
+    id: 'mbn-256',
+    name: 'MacBook Neo 256 ГБ',
+    category: 'macbook-neo',
+    price: 89990,
     storage: '256 ГБ',
     simType: '—',
-    series: 'MacBook Air 13″',
+    series: 'MacBook Neo',
     badge: 'new',
-    description: '13.6″ Liquid Retina, чип M4, до 18 ч автономности, без вентилятора',
+    description: 'Компактный MacBook Neo на чипе M5 — лёгкий корпус и яркие цвета',
     specs: {
-      display: '13.6″ Liquid Retina',
-      chip: 'Apple M4',
+      display: '13″ Retina',
+      chip: 'Apple M5',
       camera: '1080p FaceTime HD',
-      battery: 'До 18 ч',
+      battery: 'До 16 ч',
       connectivity: 'Wi‑Fi 6E, Bluetooth 5.3, 2× Thunderbolt',
       protection: 'Алюминиевый корпус',
     },
   }),
 
-  createPhone({
-    id: 'mba-15-256',
-    name: 'MacBook Air 15″ M4 256 ГБ',
-    category: 'macbook-air',
-    price: 134990,
-    storage: '256 ГБ',
-    simType: '—',
-    series: 'MacBook Air 15″',
-    description: '15.3″ Liquid Retina, чип M4, тонкий корпус, MagSafe',
-    specs: {
-      display: '15.3″ Liquid Retina',
-      chip: 'Apple M4',
-      camera: '1080p FaceTime HD',
-      battery: 'До 18 ч',
-      connectivity: 'Wi‑Fi 6E, Bluetooth 5.3, 2× Thunderbolt',
-      protection: 'Алюминиевый корпус',
-    },
-  }),
+  createMacBookAirSku(13, '256', '256 ГБ', 114990, 'new'),
+  createMacBookAirSku(13, '512', '512 ГБ', 134990),
+  createMacBookAirSku(13, '1tb', '1 ТБ', 154990),
+  createMacBookAirSku(13, '2tb', '2 ТБ', 194990),
 
-  createPhone({
-    id: 'mbp-14-512',
-    name: 'MacBook Pro 14″ M4 Pro 512 ГБ',
-    category: 'macbook-pro',
-    price: 199990,
-    storage: '512 ГБ',
-    simType: '—',
-    series: 'MacBook Pro 14″',
-    badge: 'hit',
-    description: '14.2″ Liquid Retina XDR, M4 Pro, ProMotion 120 Гц, три Thunderbolt',
-    specs: {
-      display: '14.2″ Liquid Retina XDR 120 Гц',
-      chip: 'Apple M4 Pro',
-      camera: '1080p FaceTime HD',
-      battery: 'До 22 ч',
-      connectivity: 'Wi‑Fi 6E, HDMI, SD, 3× Thunderbolt',
-      protection: 'Алюминиевый корпус',
-    },
-  }),
+  createMacBookAirSku(15, '256', '256 ГБ', 134990, 'new'),
+  createMacBookAirSku(15, '512', '512 ГБ', 154990),
+  createMacBookAirSku(15, '1tb', '1 ТБ', 174990),
+  createMacBookAirSku(15, '2tb', '2 ТБ', 214990),
 
-  createPhone({
-    id: 'mbp-16-1tb',
-    name: 'MacBook Pro 16″ M4 Max 1 ТБ',
-    category: 'macbook-pro',
-    price: 299990,
-    storage: '1 ТБ',
-    simType: '—',
-    series: 'MacBook Pro 16″',
-    description: '16.2″ Liquid Retina XDR, M4 Max, максимальная производительность',
-    specs: {
-      display: '16.2″ Liquid Retina XDR 120 Гц',
-      chip: 'Apple M4 Max',
-      camera: '1080p FaceTime HD',
-      battery: 'До 24 ч',
-      connectivity: 'Wi‑Fi 6E, HDMI, SD, 3× Thunderbolt',
-      protection: 'Алюминиевый корпус',
-    },
-  }),
+  createMacBookProSku(14, '512', '512 ГБ', 199990, 'M5 Pro', 'hit'),
+  createMacBookProSku(14, '1tb', '1 ТБ', 219990, 'M5 Pro'),
+  createMacBookProSku(14, '2tb', '2 ТБ', 259990, 'M5 Pro'),
+
+  createMacBookProSku(16, '512', '512 ГБ', 249990, 'M5 Max'),
+  createMacBookProSku(16, '1tb', '1 ТБ', 269990, 'M5 Max', 'hit'),
+  createMacBookProSku(16, '2tb', '2 ТБ', 309990, 'M5 Max'),
 
   createPhone({
     id: 'ipad-11-128',

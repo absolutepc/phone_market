@@ -2830,28 +2830,23 @@ main {
   pointer-events: none;
 }
 
-.pc-detail-info h1 {
-  font-size: 2rem;
-  font-weight: 700;
+.pc-detail-heading {
   margin-bottom: 12px;
 }
 
+.pc-detail-info h1,
 .pc-detail-title {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 14px;
+  font-size: 2rem;
+  font-weight: 700;
   line-height: 1.2;
-}
-
-.pc-detail-title__name {
-  min-width: 0;
+  margin: 0;
 }
 
 .pc-detail-color-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  margin-top: 10px;
   padding: 6px 12px 6px 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
@@ -2877,11 +2872,8 @@ main {
 }
 
 @media (max-width: 520px) {
-  .pc-detail-title {
-    gap: 10px;
-  }
-
   .pc-detail-color-badge {
+    margin-top: 8px;
     font-size: 0.78rem;
     padding: 5px 10px 5px 8px;
   }

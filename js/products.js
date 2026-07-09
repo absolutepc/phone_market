@@ -51,10 +51,10 @@ function renderProductDetail(product, initialColor = product.colors?.[0]) {
           <span>${escapeHtml(product.name)}</span>
         </div>
         <div class="product-category">${escapeHtml(categoryLabel)}</div>
-        <h1 class="pc-detail-title">
-          <span class="pc-detail-title__name" id="productDetailTitleName">${escapeHtml(product.name)}</span>
+        <div class="pc-detail-heading">
+          <h1 class="pc-detail-title" id="productDetailTitleName">${escapeHtml(product.name)}</h1>
           ${renderProductDetailColorBadge(initialColor)}
-        </h1>
+        </div>
         ${renderRatingSummary(product.id, 'product', { variant: 'hero' })}
         ${attrTags ? `<div class="product-attrs product-detail-attrs">${attrTags}</div>` : ''}
         <div class="product-price pc-detail-price">${renderProductPriceHtml(initialColor?.price ?? product.price, initialColor?.oldPrice ?? product.oldPrice ?? 0)}</div>

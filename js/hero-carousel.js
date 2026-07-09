@@ -6,8 +6,7 @@ const HERO_CAROUSEL_SLIDES = [
     title: 'iPhone 17',
     highlight: 'уже здесь',
     description: 'Официальные смартфоны Apple — весь модельный ряд iPhone 17, Plus, Pro и Pro Max. Оригинальная гарантия, trade-in и доставка по России.',
-    primaryCta: { label: 'Смотреть iPhone', href: 'catalog.html?line=iphone' },
-    secondaryCta: { label: 'iPhone 17 Pro', href: 'catalog.html?cat=iphone-17-pro' },
+    primaryCta: { label: 'Выбрать iPhone', href: 'catalog.html?line=iphone' },
     image: 'img/phones/iphone 17 pro max.png',
     imageAlt: 'iPhone 17 Pro Max',
     visualClass: 'hero-pc--phone',
@@ -17,8 +16,7 @@ const HERO_CAROUSEL_SLIDES = [
     title: 'MacBook',
     highlight: 'на чипе M5',
     description: 'MacBook Neo, Air 13/15 и Pro 14/16 — лёгкие корпуса, яркие цвета и профессиональная мощность для работы и творчества.',
-    primaryCta: { label: 'Смотреть MacBook', href: 'catalog.html?line=macbook' },
-    secondaryCta: { label: 'MacBook Pro 14″', href: 'catalog.html?cat=macbook-pro-14' },
+    primaryCta: { label: 'Выбрать MacBook', href: 'catalog.html?line=macbook' },
     image: 'img/macbook/MacBook Pro 14 16 512GB.png',
     imageAlt: 'MacBook Pro',
     visualClass: 'hero-pc--macbook',
@@ -28,8 +26,7 @@ const HERO_CAROUSEL_SLIDES = [
     title: 'iPad',
     highlight: 'для любых задач',
     description: 'iPad 11-го поколения, mini 7, Air 11/13 и Pro 11/13 — от учёбы до профессионального монтажа. Apple Pencil и чипы A/M-серии.',
-    primaryCta: { label: 'Смотреть iPad', href: 'catalog.html?line=ipad' },
-    secondaryCta: { label: 'iPad Pro 13″', href: 'catalog.html?cat=ipad-pro-13' },
+    primaryCta: { label: 'Выбрать iPad', href: 'catalog.html?line=ipad' },
     image: 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
     imageAlt: 'iPad Pro',
     visualClass: 'hero-pc--ipad',
@@ -39,8 +36,7 @@ const HERO_CAROUSEL_SLIDES = [
     title: 'AirPods',
     highlight: 'чистый звук',
     description: 'AirPods 4, AirPods Pro и AirPods Max — пространственное аудио, шумоподавление и мгновенное подключение к экосистеме Apple.',
-    primaryCta: { label: 'Смотреть AirPods', href: 'catalog.html?line=airpods' },
-    secondaryCta: { label: 'AirPods Pro', href: 'catalog.html?cat=airpods-pro' },
+    primaryCta: { label: 'Выбрать AirPods', href: 'catalog.html?line=airpods' },
     image: 'img/pods/Apple AirPods Max 2 (2026).png',
     imageAlt: 'AirPods Max',
     visualClass: 'hero-pc--airpods',
@@ -67,7 +63,6 @@ function renderHeroCarouselSlide(slide, index, total) {
           <p>${escapeHtml(slide.description)}</p>
           <div class="hero-buttons">
             <a href="${escapeHtml(slide.primaryCta.href)}" class="btn btn-primary btn-lg">${escapeHtml(slide.primaryCta.label)}</a>
-            <a href="${escapeHtml(slide.secondaryCta.href)}" class="btn btn-secondary btn-lg">${escapeHtml(slide.secondaryCta.label)}</a>
           </div>
         </div>
         <div class="hero-visual">

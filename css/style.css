@@ -904,9 +904,9 @@ main {
 .catalog-picker-card {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 148px;
+  grid-template-columns: minmax(0, 1fr) 174px;
   align-items: stretch;
-  min-height: 220px;
+  min-height: 258px;
   padding: 26px 24px 26px 28px;
   border-radius: var(--radius-xl);
   border: 1px solid var(--border);
@@ -1023,20 +1023,20 @@ main {
 }
 
 .catalog-picker-card--iphone .catalog-picker-card__visual img {
-  max-height: 156px;
+  max-height: 184px;
 }
 
 .catalog-picker-card--macbook .catalog-picker-card__visual img {
-  max-height: 156px;
+  max-height: 184px;
   width: 100%;
 }
 
 .catalog-picker-card--ipad .catalog-picker-card__visual img {
-  max-height: 118px;
+  max-height: 139px;
 }
 
 .catalog-picker-card--airpods .catalog-picker-card__visual img {
-  max-height: 108px;
+  max-height: 128px;
 }
 
 .catalog-picker-card__cta {
@@ -1083,8 +1083,8 @@ main {
   }
 
   .catalog-picker-card {
-    min-height: 200px;
-    grid-template-columns: minmax(0, 1fr) 128px;
+    min-height: 236px;
+    grid-template-columns: minmax(0, 1fr) 150px;
     padding: 22px 20px 22px 24px;
   }
 }
@@ -1099,7 +1099,7 @@ main {
 
   .catalog-picker-card__visual {
     order: -1;
-    min-height: 132px;
+    min-height: 156px;
   }
 
   .catalog-picker-card__tagline {

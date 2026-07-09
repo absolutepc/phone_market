@@ -904,9 +904,9 @@ main {
 .catalog-picker-card {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 148px;
+  grid-template-columns: minmax(0, 1fr) 174px;
   align-items: stretch;
-  min-height: 220px;
+  min-height: 258px;
   padding: 26px 24px 26px 28px;
   border-radius: var(--radius-xl);
   border: 1px solid var(--border);

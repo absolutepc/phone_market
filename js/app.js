@@ -324,9 +324,12 @@ function bindCardColorSwatches(container) {
         btn.classList.add('active');
         const card = picker.closest('.product-card');
         const img = card?.querySelector('.product-image img');
-        if (img) {
-          img.src = encodeAssetPath(btn.dataset.img);
-          img.style.filter = 'none';
+        const product = getProducts().find(item => item.id === picker.dataset.productId);
+        const color = product?.colors?.[Number(btn.dataset.index) || 0];
+        if (img && color?.img) {
+          img.src = encodeAssetPath(color.img);
+          const filter = color.filter && color.filter !== 'none' ? color.filter : '';
+          img.style.filter = filter;
         }
         const priceEl = card?.querySelector('.product-price');
         if (priceEl) {

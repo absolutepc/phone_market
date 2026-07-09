@@ -1,4 +1,4 @@
-const STORE_VERSION = 8;
+const STORE_VERSION = 9;
 const STORE_KEY = 'phonemarket_data_v1';
 const LEGACY_STORE_KEYS = [];
 const APP_BUILD = '1.0';
@@ -16,11 +16,11 @@ const CATEGORY_IMAGES = {
   'iphone-17-plus': 'img/phones/standard/black.png',
   'iphone-17-pro': 'img/phones/pro/black.png',
   'iphone-17-pro-max': 'img/phones/pro-max/black.png',
-  'macbook-neo': 'img/products/macbook.svg',
-  'macbook-air-13': 'img/products/macbook.svg',
-  'macbook-air-15': 'img/products/macbook.svg',
-  'macbook-pro-14': 'img/products/macbook.svg',
-  'macbook-pro-16': 'img/products/macbook.svg',
+  'macbook-neo': 'img/macbook/neo/MacBook Neo 13 b.webp',
+  'macbook-air-13': 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5.webp',
+  'macbook-air-15': 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5.webp',
+  'macbook-pro-14': 'img/macbook/pro 14 m5/Apple MacBook Pro 14 2026 M5 Pro.webp',
+  'macbook-pro-16': 'img/macbook/pro 16 m5/Apple MacBook Pro 16 2026 M5 Pro.webp',
   'ipad': 'img/products/ipad.svg',
   'ipad-air': 'img/products/ipad.svg',
   'ipad-pro': 'img/products/ipad.svg',
@@ -170,8 +170,8 @@ const MACBOOK_PRO_14_COLORS = [
 ];
 
 const MACBOOK_PRO_16_COLORS = [
-  { name: 'Космический чёрный', hex: '#2F3034', img: 'img/macbook/pro 14 m5/Apple MacBook Pro 14 2026 M5 Pro b.webp' },
-  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/pro 14 m5/Apple MacBook Pro 14 2026 M5 Pro.webp' },
+  { name: 'Космический чёрный', hex: '#2F3034', img: 'img/macbook/pro 16 m5/Apple MacBook Pro 16 2026 M5 Pro b.webp' },
+  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/pro 16 m5/Apple MacBook Pro 16 2026 M5 Pro.webp' },
 ];
 
 const IPAD_COLORS = [
@@ -798,7 +798,13 @@ function formatPrice(price) {
 
 function encodeAssetPath(src) {
   if (!src || /^(https?:\/\/|data:)/i.test(src)) return src;
-  return src.split('/').map(segment => encodeURIComponent(segment)).join('/');
+  return src.split('/').map(segment => {
+    try {
+      return encodeURIComponent(decodeURIComponent(segment));
+    } catch {
+      return encodeURIComponent(segment);
+    }
+  }).join('/');
 }
 
 function getProductImg(item) {

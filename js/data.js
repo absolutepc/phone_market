@@ -1,4 +1,4 @@
-const STORE_VERSION = 9;
+const STORE_VERSION = 10;
 const STORE_KEY = 'phonemarket_data_v1';
 const LEGACY_STORE_KEYS = [];
 const APP_BUILD = '1.0';
@@ -21,9 +21,9 @@ const CATEGORY_IMAGES = {
   'macbook-air-15': 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5.webp',
   'macbook-pro-14': 'img/macbook/pro 14 m5/Apple MacBook Pro 14 2026 M5 Pro.webp',
   'macbook-pro-16': 'img/macbook/pro 16 m5/Apple MacBook Pro 16 2026 M5 Pro.webp',
-  'ipad': 'img/products/ipad.svg',
-  'ipad-air': 'img/products/ipad.svg',
-  'ipad-pro': 'img/products/ipad.svg',
+  'ipad': 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
+  'ipad-air': 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
+  'ipad-pro': 'img/ipad/Apple iPad Pro 13 M5 (2026).png',
   'airpods': 'img/products/airpods.svg',
   'airpods-pro': 'img/products/airpods.svg',
   'airpods-max': 'img/products/airpods.svg',
@@ -121,63 +121,128 @@ const STATUS_LABELS = { pending: 'В обработке', shipped: 'Отправ
 
 const CATALOG_SECTIONS = CATALOG_LINES;
 
-const STANDARD_COLORS = [
-  { name: 'Чёрный', hex: '#1d1d1f', img: 'img/phones/standard/black.png' },
-  { name: 'Белый', hex: '#f5f5f7', img: 'img/phones/standard/white.png' },
-  { name: 'Розовый', hex: '#c8b4d8', img: 'img/phones/standard/lavender.png' },
-  { name: 'Бирюзовый', hex: '#9bb89f', img: 'img/phones/standard/sage.png' },
-  { name: 'Ультрамарин', hex: '#7ba3c9', img: 'img/phones/standard/mist-blue.png' },
+const IPHONE_17_HERO = 'img/phones/hero/iphone-17-hero.jpg';
+const IPHONE_PRO_HERO = 'img/phones/hero/iphone-17-pro-hero.jpg';
+const IPHONE_PRO_MAX_LIFESTYLE = 'img/phones/iphone 17 pro max.png';
+const IPAD_PRODUCT_IMG = 'img/ipad/Apple iPad Pro 13 M5 (2026).png';
+
+const MACBOOK_NEO_DIR = 'img/macbook/neo';
+const MACBOOK_AIR_DIR = 'img/macbook/air 13 15';
+const MACBOOK_PRO_14_DIR = 'img/macbook/pro 14 m5';
+const MACBOOK_PRO_16_DIR = 'img/macbook/pro 16 m5';
+
+function uniqueColorImages(list) {
+  const seen = new Set();
+  return list.filter(src => {
+    if (!src || seen.has(src)) return false;
+    seen.add(src);
+    return true;
+  });
+}
+
+function colorWithGallery({ name, hex, img, images }) {
+  const gallery = uniqueColorImages(images?.length ? images : [img]);
+  return {
+    name,
+    hex,
+    img: img || gallery[0],
+    images: gallery,
+  };
+}
+
+function macbookGallery(dir, baseName, extraCount = 0) {
+  const images = [`${dir}/${baseName}.webp`];
+  for (let i = 1; i <= extraCount; i += 1) {
+    images.push(`${dir}/${baseName} ${i}.webp`);
+  }
+  return images;
+}
+
+function iphoneGallery(img, hero) {
+  return uniqueColorImages([img, hero]);
+}
+
+function ipadGallery(img = IPAD_PRODUCT_IMG) {
+  return [img];
+}
+
+const IPHONE_17_COLORS = [
+  colorWithGallery({ name: 'Чёрный', hex: '#1d1d1f', img: 'img/phones/standard/black.png', images: iphoneGallery('img/phones/standard/black.png', IPHONE_17_HERO) }),
+  colorWithGallery({ name: 'Белый', hex: '#f5f5f7', img: 'img/phones/standard/white.png', images: iphoneGallery('img/phones/standard/white.png', IPHONE_17_HERO) }),
+  colorWithGallery({ name: 'Розовый', hex: '#c8b4d8', img: 'img/phones/standard/lavender.png', images: iphoneGallery('img/phones/standard/lavender.png', IPHONE_17_HERO) }),
+  colorWithGallery({ name: 'Бирюзовый', hex: '#9bb89f', img: 'img/phones/standard/sage.png', images: iphoneGallery('img/phones/standard/sage.png', IPHONE_17_HERO) }),
+  colorWithGallery({ name: 'Ультрамарин', hex: '#7ba3c9', img: 'img/phones/standard/mist-blue.png', images: iphoneGallery('img/phones/standard/mist-blue.png', IPHONE_17_HERO) }),
 ];
 
-const PRO_COLORS = [
-  { name: 'Белый', hex: '#e8e8ed', img: 'img/phones/pro/white.png' },
-  { name: 'Синий', hex: '#3d5a9e', img: 'img/phones/pro/blue.png' },
-  { name: 'Оранжевый', hex: '#e8752a', img: 'img/phones/pro/orange.png' },
-  { name: 'Чёрный', hex: '#1d1d1f', img: 'img/phones/pro/black.png' },
+const IPHONE_17_PLUS_COLORS = [
+  colorWithGallery({ name: 'Чёрный', hex: '#1d1d1f', img: 'img/phones/standard/black.png', images: iphoneGallery('img/phones/standard/black.png', IPHONE_17_HERO) }),
+  colorWithGallery({ name: 'Белый', hex: '#f5f5f7', img: 'img/phones/standard/white.png', images: iphoneGallery('img/phones/standard/white.png', IPHONE_17_HERO) }),
+  colorWithGallery({ name: 'Розовый', hex: '#c8b4d8', img: 'img/phones/standard/lavender.png', images: iphoneGallery('img/phones/standard/lavender.png', IPHONE_17_HERO) }),
+  colorWithGallery({ name: 'Бирюзовый', hex: '#9bb89f', img: 'img/phones/standard/sage.png', images: iphoneGallery('img/phones/standard/sage.png', IPHONE_17_HERO) }),
+  colorWithGallery({ name: 'Ультрамарин', hex: '#7ba3c9', img: 'img/phones/standard/mist-blue.png', images: iphoneGallery('img/phones/standard/mist-blue.png', IPHONE_17_HERO) }),
 ];
 
-const PRO_MAX_COLORS = [
-  { name: 'Белый', hex: '#e8e8ed', img: 'img/phones/pro-max/white.png' },
-  { name: 'Синий', hex: '#3d5a9e', img: 'img/phones/pro-max/blue.png' },
-  { name: 'Оранжевый', hex: '#e8752a', img: 'img/phones/pro-max/orange.png' },
-  { name: 'Чёрный', hex: '#1d1d1f', img: 'img/phones/pro-max/black.png' },
+const IPHONE_17_PRO_COLORS = [
+  colorWithGallery({ name: 'Белый', hex: '#e8e8ed', img: 'img/phones/pro/white.png', images: iphoneGallery('img/phones/pro/white.png', IPHONE_PRO_HERO) }),
+  colorWithGallery({ name: 'Синий', hex: '#3d5a9e', img: 'img/phones/pro/blue.png', images: iphoneGallery('img/phones/pro/blue.png', IPHONE_PRO_HERO) }),
+  colorWithGallery({ name: 'Оранжевый', hex: '#e8752a', img: 'img/phones/pro/orange.png', images: iphoneGallery('img/phones/pro/orange.png', IPHONE_PRO_HERO) }),
+  colorWithGallery({ name: 'Чёрный', hex: '#1d1d1f', img: 'img/phones/pro/black.png', images: iphoneGallery('img/phones/pro/black.png', IPHONE_PRO_HERO) }),
+];
+
+const IPHONE_17_PRO_MAX_COLORS = [
+  colorWithGallery({ name: 'Белый', hex: '#e8e8ed', img: 'img/phones/pro-max/white.png', images: iphoneGallery('img/phones/pro-max/white.png', IPHONE_PRO_MAX_LIFESTYLE) }),
+  colorWithGallery({ name: 'Синий', hex: '#3d5a9e', img: 'img/phones/pro-max/blue.png', images: iphoneGallery('img/phones/pro-max/blue.png', IPHONE_PRO_MAX_LIFESTYLE) }),
+  colorWithGallery({ name: 'Оранжевый', hex: '#e8752a', img: 'img/phones/pro-max/orange.png', images: iphoneGallery('img/phones/pro-max/orange.png', IPHONE_PRO_MAX_LIFESTYLE) }),
+  colorWithGallery({ name: 'Чёрный', hex: '#1d1d1f', img: 'img/phones/pro-max/black.png', images: iphoneGallery('img/phones/pro-max/black.png', IPHONE_PRO_MAX_LIFESTYLE) }),
 ];
 
 const MACBOOK_NEO_COLORS = [
-  { name: 'Синий', hex: '#5B8FD9', img: 'img/macbook/neo/MacBook Neo 13 b.webp' },
-  { name: 'Жёлтый', hex: '#F2D56B', img: 'img/macbook/neo/MacBook Neo 13 y.webp' },
-  { name: 'Розовый', hex: '#F2A6C4', img: 'img/macbook/neo/MacBook Neo 13 p.webp' },
-  { name: 'Белый', hex: '#F4F4F6', img: 'img/macbook/neo/MacBook Neo 13 s.webp' },
+  colorWithGallery({ name: 'Синий', hex: '#5B8FD9', img: 'img/macbook/neo/MacBook Neo 13 b.webp', images: macbookGallery(MACBOOK_NEO_DIR, 'MacBook Neo 13 b', 3) }),
+  colorWithGallery({ name: 'Жёлтый', hex: '#F2D56B', img: 'img/macbook/neo/MacBook Neo 13 y.webp', images: macbookGallery(MACBOOK_NEO_DIR, 'MacBook Neo 13 y', 3) }),
+  colorWithGallery({ name: 'Розовый', hex: '#F2A6C4', img: 'img/macbook/neo/MacBook Neo 13 p.webp', images: macbookGallery(MACBOOK_NEO_DIR, 'MacBook Neo 13 p', 3) }),
+  colorWithGallery({ name: 'Белый', hex: '#F4F4F6', img: 'img/macbook/neo/MacBook Neo 13 s.webp', images: macbookGallery(MACBOOK_NEO_DIR, 'MacBook Neo 13 s', 3) }),
 ];
 
 const MACBOOK_AIR_13_COLORS = [
-  { name: 'Тёмная ночь', hex: '#3A3B3F', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 b.webp' },
-  { name: 'Сияющая звезда', hex: '#EEE5D7', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 g.webp' },
-  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5.webp' },
-  { name: 'Небесно-голубой', hex: '#AFC3D8', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 s.webp' },
+  colorWithGallery({ name: 'Тёмная ночь', hex: '#3A3B3F', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 b.webp', images: macbookGallery(MACBOOK_AIR_DIR, 'Apple MacBook air 13 15 2026 M5 b', 5) }),
+  colorWithGallery({ name: 'Сияющая звезда', hex: '#EEE5D7', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 g.webp', images: macbookGallery(MACBOOK_AIR_DIR, 'Apple MacBook air 13 15 2026 M5 g', 5) }),
+  colorWithGallery({ name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5.webp', images: macbookGallery(MACBOOK_AIR_DIR, 'Apple MacBook air 13 15 2026 M5', 5) }),
+  colorWithGallery({ name: 'Небесно-голубой', hex: '#AFC3D8', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 s.webp', images: macbookGallery(MACBOOK_AIR_DIR, 'Apple MacBook air 13 15 2026 M5 s', 5) }),
 ];
 
 const MACBOOK_AIR_15_COLORS = [
-  { name: 'Тёмная ночь', hex: '#3A3B3F', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 b.webp' },
-  { name: 'Сияющая звезда', hex: '#EEE5D7', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 g.webp' },
-  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5.webp' },
-  { name: 'Небесно-голубой', hex: '#AFC3D8', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 s.webp' },
+  colorWithGallery({ name: 'Тёмная ночь', hex: '#3A3B3F', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 b.webp', images: macbookGallery(MACBOOK_AIR_DIR, 'Apple MacBook air 13 15 2026 M5 b', 5) }),
+  colorWithGallery({ name: 'Сияющая звезда', hex: '#EEE5D7', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 g.webp', images: macbookGallery(MACBOOK_AIR_DIR, 'Apple MacBook air 13 15 2026 M5 g', 5) }),
+  colorWithGallery({ name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5.webp', images: macbookGallery(MACBOOK_AIR_DIR, 'Apple MacBook air 13 15 2026 M5', 5) }),
+  colorWithGallery({ name: 'Небесно-голубой', hex: '#AFC3D8', img: 'img/macbook/air 13 15/Apple MacBook air 13 15 2026 M5 s.webp', images: macbookGallery(MACBOOK_AIR_DIR, 'Apple MacBook air 13 15 2026 M5 s', 5) }),
 ];
 
 const MACBOOK_PRO_14_COLORS = [
-  { name: 'Космический чёрный', hex: '#2F3034', img: 'img/macbook/pro 14 m5/Apple MacBook Pro 14 2026 M5 Pro b.webp' },
-  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/pro 14 m5/Apple MacBook Pro 14 2026 M5 Pro.webp' },
+  colorWithGallery({ name: 'Космический чёрный', hex: '#2F3034', img: 'img/macbook/pro 14 m5/Apple MacBook Pro 14 2026 M5 Pro b.webp', images: macbookGallery(MACBOOK_PRO_14_DIR, 'Apple MacBook Pro 14 2026 M5 Pro b', 6) }),
+  colorWithGallery({ name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/pro 14 m5/Apple MacBook Pro 14 2026 M5 Pro.webp', images: macbookGallery(MACBOOK_PRO_14_DIR, 'Apple MacBook Pro 14 2026 M5 Pro', 6) }),
 ];
 
 const MACBOOK_PRO_16_COLORS = [
-  { name: 'Космический чёрный', hex: '#2F3034', img: 'img/macbook/pro 16 m5/Apple MacBook Pro 16 2026 M5 Pro b.webp' },
-  { name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/pro 16 m5/Apple MacBook Pro 16 2026 M5 Pro.webp' },
+  colorWithGallery({ name: 'Космический чёрный', hex: '#2F3034', img: 'img/macbook/pro 16 m5/Apple MacBook Pro 16 2026 M5 Pro b.webp', images: macbookGallery(MACBOOK_PRO_16_DIR, 'Apple MacBook Pro 16 2026 M5 Pro b', 5) }),
+  colorWithGallery({ name: 'Серебристый', hex: '#D9DADC', img: 'img/macbook/pro 16 m5/Apple MacBook Pro 16 2026 M5 Pro.webp', images: macbookGallery(MACBOOK_PRO_16_DIR, 'Apple MacBook Pro 16 2026 M5 Pro', 5) }),
 ];
 
-const IPAD_COLORS = [
-  { name: 'Серый космос', hex: '#7d7e80', img: 'img/products/ipad.svg' },
-  { name: 'Серебристый', hex: '#e3e4e6', img: 'img/products/ipad.svg' },
-  { name: 'Синий', hex: '#4a6fa5', img: 'img/products/ipad.svg' },
+const IPAD_11_COLORS = [
+  colorWithGallery({ name: 'Серый космос', hex: '#7d7e80', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
+  colorWithGallery({ name: 'Серебристый', hex: '#e3e4e6', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
+  colorWithGallery({ name: 'Синий', hex: '#4a6fa5', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
+];
+
+const IPAD_AIR_COLORS = [
+  colorWithGallery({ name: 'Серый космос', hex: '#7d7e80', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
+  colorWithGallery({ name: 'Серебристый', hex: '#e3e4e6', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
+  colorWithGallery({ name: 'Синий', hex: '#4a6fa5', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
+];
+
+const IPAD_PRO_COLORS = [
+  colorWithGallery({ name: 'Серый космос', hex: '#7d7e80', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
+  colorWithGallery({ name: 'Серебристый', hex: '#e3e4e6', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
+  colorWithGallery({ name: 'Синий', hex: '#4a6fa5', img: IPAD_PRODUCT_IMG, images: ipadGallery() }),
 ];
 
 const AIRPODS_COLORS = [
@@ -192,17 +257,21 @@ const AIRPODS_MAX_COLORS = [
 ];
 
 function getColorSetForCategory(category) {
-  if (category === 'iphone-17-pro-max') return PRO_MAX_COLORS;
-  if (category === 'iphone-17-pro') return PRO_COLORS;
+  if (category === 'iphone-17') return IPHONE_17_COLORS;
+  if (category === 'iphone-17-plus') return IPHONE_17_PLUS_COLORS;
+  if (category === 'iphone-17-pro') return IPHONE_17_PRO_COLORS;
+  if (category === 'iphone-17-pro-max') return IPHONE_17_PRO_MAX_COLORS;
   if (category === 'macbook-neo') return MACBOOK_NEO_COLORS;
   if (category === 'macbook-air-13') return MACBOOK_AIR_13_COLORS;
   if (category === 'macbook-air-15') return MACBOOK_AIR_15_COLORS;
   if (category === 'macbook-pro-14') return MACBOOK_PRO_14_COLORS;
   if (category === 'macbook-pro-16') return MACBOOK_PRO_16_COLORS;
-  if (category === 'ipad' || category === 'ipad-air' || category === 'ipad-pro') return IPAD_COLORS;
+  if (category === 'ipad') return IPAD_11_COLORS;
+  if (category === 'ipad-air') return IPAD_AIR_COLORS;
+  if (category === 'ipad-pro') return IPAD_PRO_COLORS;
   if (category === 'airpods-max') return AIRPODS_MAX_COLORS;
   if (category === 'airpods' || category === 'airpods-pro') return AIRPODS_COLORS;
-  return STANDARD_COLORS;
+  return IPHONE_17_COLORS;
 }
 
 function getProductLine(product) {
@@ -258,12 +327,16 @@ function getColorPriceAdjustment(colorName) {
 function buildColors(colorSet, basePrice, baseOldPrice = null) {
   return colorSet.map(c => {
     const adjustment = getColorPriceAdjustment(c.name);
+    const images = uniqueColorImages((c.images || []).filter(Boolean));
+    const fallbackImages = c.img ? [c.img] : [];
+    const gallery = images.length ? images : fallbackImages;
     return {
       ...c,
       price: basePrice + adjustment,
       oldPrice: baseOldPrice != null ? baseOldPrice + adjustment : null,
       filter: 'none',
-      images: [c.img],
+      images: gallery,
+      img: c.img || gallery[0],
     };
   });
 }

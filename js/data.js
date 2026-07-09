@@ -52,6 +52,9 @@ const CATALOG_LINES = [
     id: 'iphone',
     name: 'iPhone',
     description: 'Весь модельный ряд Apple iPhone 17',
+    pickerLabel: 'Смартфоны',
+    pickerTagline: 'iPhone 17, Plus, Pro и Pro Max',
+    pickerImg: 'img/phones/pro/blue.png',
     categories: ['iphone-17', 'iphone-17-plus', 'iphone-17-pro', 'iphone-17-pro-max'],
     img: 'img/phones/hero/iphone-17-hero.jpg',
   },
@@ -59,6 +62,8 @@ const CATALOG_LINES = [
     id: 'macbook',
     name: 'MacBook',
     description: 'MacBook Air и MacBook Pro с чипами Apple Silicon',
+    pickerLabel: 'Ноутбуки',
+    pickerTagline: 'MacBook Air и MacBook Pro',
     categories: ['macbook-air', 'macbook-pro'],
     img: 'img/products/macbook.svg',
   },
@@ -66,6 +71,8 @@ const CATALOG_LINES = [
     id: 'ipad',
     name: 'iPad',
     description: 'iPad, iPad Air и iPad Pro для работы и творчества',
+    pickerLabel: 'Планшеты',
+    pickerTagline: 'iPad, Air и Pro',
     categories: ['ipad', 'ipad-air', 'ipad-pro'],
     img: 'img/products/ipad.svg',
   },
@@ -73,6 +80,8 @@ const CATALOG_LINES = [
     id: 'airpods',
     name: 'AirPods',
     description: 'Беспроводные наушники Apple — от AirPods до AirPods Max',
+    pickerLabel: 'Аудио',
+    pickerTagline: 'AirPods 4, Pro и Max',
     categories: ['airpods', 'airpods-pro', 'airpods-max'],
     img: 'img/products/airpods.svg',
   },
@@ -171,6 +180,25 @@ function getCatalogLineById(id) {
 
 function getCategoriesForLine(lineId) {
   return getCatalogLineById(lineId)?.categories || [];
+}
+
+function getLineMinPrice(lineId) {
+  const prices = getProducts()
+    .filter(product => getProductLine(product) === lineId)
+    .map(product => product.price)
+    .filter(price => Number.isFinite(price));
+
+  return prices.length ? Math.min(...prices) : 0;
+}
+
+function getLineProductCount(lineId) {
+  return getProducts().filter(product => getProductLine(product) === lineId).length;
+}
+
+function formatProductCount(count) {
+  if (count === 1) return '1 товар';
+  if (count >= 2 && count <= 4) return `${count} товара`;
+  return `${count} товаров`;
 }
 
 function getColorPriceAdjustment(colorName) {

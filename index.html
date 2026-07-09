@@ -86,32 +86,15 @@
         <div class="section-header">
           <h2>Категории каталога</h2>
         </div>
-        <div class="catalog-sections-grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
-          <a href="catalog.html?line=iphone" class="catalog-section-card">
-            <div class="catalog-section-card__media"><img src="img/phones/standard/black.png" alt="iPhone"></div>
-            <div class="catalog-section-card__body"><h2>iPhone</h2><p>от 89 990 ₽</p></div>
-          </a>
-          <a href="catalog.html?line=macbook" class="catalog-section-card">
-            <div class="catalog-section-card__media"><img src="img/products/macbook.svg" alt="MacBook"></div>
-            <div class="catalog-section-card__body"><h2>MacBook</h2><p>от 114 990 ₽</p></div>
-          </a>
-          <a href="catalog.html?line=ipad" class="catalog-section-card">
-            <div class="catalog-section-card__media"><img src="img/products/ipad.svg" alt="iPad"></div>
-            <div class="catalog-section-card__body"><h2>iPad</h2><p>от 44 990 ₽</p></div>
-          </a>
-          <a href="catalog.html?line=airpods" class="catalog-section-card">
-            <div class="catalog-section-card__media"><img src="img/products/airpods.svg" alt="AirPods"></div>
-            <div class="catalog-section-card__body"><h2>AirPods</h2><p>от 14 990 ₽</p></div>
-          </a>
-        </div>
+        <div class="catalog-picker-grid" id="homeCatalogCategories"></div>
       </div>
     </section>
   </main>
 
   <div id="site-footer"></div>
 
-  <script src="js/data.js?v=1.3"></script>
-  <script src="js/app.js?v=1.2"></script>
+  <script src="js/data.js?v=1.4"></script>
+  <script src="js/app.js?v=1.3"></script>
   <script src="js/layout.js"></script>
   <script src="js/transition.js"></script>
   <script src="js/reviews.js"></script>
@@ -122,6 +105,8 @@
     const products = popularIds.map(id => getEnrichedProductById(id)).filter(Boolean);
     grid.innerHTML = products.map(p => renderProductCard(p)).join('');
     bindProductCards(grid);
+    const homeCatalog = document.getElementById('homeCatalogCategories');
+    if (homeCatalog) homeCatalog.innerHTML = renderCatalogLineCards();
     updateCartBadge();
   </script>
 </body>

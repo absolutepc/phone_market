@@ -1,5 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 220" fill="none">
-  <rect x="18" y="12" width="124" height="196" rx="14" fill="#2a3142" stroke="#4b5568" stroke-width="2"/>
-  <rect x="28" y="24" width="104" height="172" rx="4" fill="#111827"/>
-  <circle cx="80" cy="206" r="4" fill="#4b5568"/>
+  <defs>
+    <linearGradient id="ipad-body" x1="18" y1="12" x2="142" y2="208" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#52525b"/>
+      <stop offset="1" stop-color="#18181b"/>
+    </linearGradient>
+    <linearGradient id="ipad-screen" x1="28" y1="24" x2="132" y2="196" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+  <rect x="18" y="12" width="124" height="196" rx="16" fill="url(#ipad-body)" stroke="#71717a" stroke-width="1.5"/>
+  <rect x="28" y="24" width="104" height="172" rx="5" fill="url(#ipad-screen)"/>
+  <circle cx="80" cy="206" r="4" fill="#52525b"/>
 </svg>

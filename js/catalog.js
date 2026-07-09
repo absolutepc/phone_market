@@ -10,19 +10,6 @@ function resolveCatalogLine(params) {
   return null;
 }
 
-function getLineMinPrice(lineId) {
-  const prices = getProducts()
-    .filter(product => getProductLine(product) === lineId)
-    .map(product => product.price)
-    .filter(price => Number.isFinite(price));
-
-  return prices.length ? Math.min(...prices) : 0;
-}
-
-function getLineProductCount(lineId) {
-  return getProducts().filter(product => getProductLine(product) === lineId).length;
-}
-
 function updateCatalogBreadcrumbs(mode, lineName = '') {
   const breadcrumbsEl = document.getElementById('catalogBreadcrumbs');
   if (!breadcrumbsEl) return;
@@ -51,25 +38,7 @@ function renderCatalogCategoryPicker() {
   updateCatalogBreadcrumbs('picker');
 
   if (pickerGrid) {
-    pickerGrid.innerHTML = CATALOG_LINES.map(line => {
-      const minPrice = getLineMinPrice(line.id);
-      const count = getLineProductCount(line.id);
-      const priceLabel = minPrice ? `от ${formatPrice(minPrice)}` : 'Скоро в продаже';
-      const imageSrc = line.id === 'iphone' ? 'img/phones/standard/black.png' : line.img;
-
-      return `
-        <a href="catalog.html?line=${line.id}" class="catalog-section-card">
-          <div class="catalog-section-card__media">
-            <img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(line.name)}">
-          </div>
-          <div class="catalog-section-card__body">
-            <h2>${escapeHtml(line.name)}</h2>
-            <p>${escapeHtml(line.description)}</p>
-            <span class="catalog-section-card__count">${priceLabel} · ${count} ${count === 1 ? 'товар' : count < 5 ? 'товара' : 'товаров'}</span>
-          </div>
-        </a>
-      `;
-    }).join('');
+    pickerGrid.innerHTML = renderCatalogLineCards();
   }
 
   if (pickerWrap) pickerWrap.hidden = false;

@@ -891,11 +891,227 @@ main {
 }
 
 .catalog-category-picker-wrap {
-  padding-bottom: 80px;
+  padding: 8px 0 88px;
 }
 
-.catalog-category-picker {
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+.catalog-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.catalog-picker-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 148px;
+  align-items: stretch;
+  min-height: 220px;
+  padding: 26px 24px 26px 28px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.catalog-picker-card__glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0.9;
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+
+.catalog-picker-card--iphone .catalog-picker-card__glow {
+  background:
+    radial-gradient(circle at 88% 42%, rgba(99, 102, 241, 0.34) 0%, transparent 52%),
+    linear-gradient(135deg, rgba(30, 41, 59, 0.2) 0%, rgba(15, 23, 42, 0.92) 100%);
+}
+
+.catalog-picker-card--macbook .catalog-picker-card__glow {
+  background:
+    radial-gradient(circle at 86% 38%, rgba(56, 189, 248, 0.22) 0%, transparent 54%),
+    linear-gradient(135deg, rgba(30, 41, 59, 0.2) 0%, rgba(15, 23, 42, 0.92) 100%);
+}
+
+.catalog-picker-card--ipad .catalog-picker-card__glow {
+  background:
+    radial-gradient(circle at 86% 40%, rgba(45, 212, 191, 0.22) 0%, transparent 54%),
+    linear-gradient(135deg, rgba(30, 41, 59, 0.2) 0%, rgba(15, 23, 42, 0.92) 100%);
+}
+
+.catalog-picker-card--airpods .catalog-picker-card__glow {
+  background:
+    radial-gradient(circle at 86% 42%, rgba(244, 114, 182, 0.2) 0%, transparent 54%),
+    linear-gradient(135deg, rgba(30, 41, 59, 0.2) 0%, rgba(15, 23, 42, 0.92) 100%);
+}
+
+.catalog-picker-card__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.catalog-picker-card__eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+}
+
+.catalog-picker-card__title {
+  font-size: clamp(1.55rem, 2.4vw, 1.9rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.catalog-picker-card__tagline {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  max-width: 26ch;
+}
+
+.catalog-picker-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-top: 8px;
+}
+
+.catalog-picker-card__price {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.catalog-picker-card__count {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+}
+
+.catalog-picker-card__visual {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+
+.catalog-picker-card__visual img {
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.42));
+  transition: transform var(--transition);
+}
+
+.catalog-picker-card--iphone .catalog-picker-card__visual img {
+  max-height: 156px;
+}
+
+.catalog-picker-card--macbook .catalog-picker-card__visual img {
+  max-height: 92px;
+}
+
+.catalog-picker-card--ipad .catalog-picker-card__visual img {
+  max-height: 118px;
+}
+
+.catalog-picker-card--airpods .catalog-picker-card__visual img {
+  max-height: 108px;
+}
+
+.catalog-picker-card__cta {
+  position: absolute;
+  right: 22px;
+  bottom: 18px;
+  z-index: 1;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent-light);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.catalog-picker-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md);
+}
+
+.catalog-picker-card:hover .catalog-picker-card__glow {
+  opacity: 1;
+}
+
+.catalog-picker-card:hover .catalog-picker-card__visual img {
+  transform: scale(1.05) translateY(-2px);
+}
+
+.catalog-picker-card:hover .catalog-picker-card__cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.catalog-picker-card:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .catalog-picker-grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+
+  .catalog-picker-card {
+    min-height: 200px;
+    grid-template-columns: minmax(0, 1fr) 128px;
+    padding: 22px 20px 22px 24px;
+  }
+}
+
+@media (max-width: 520px) {
+  .catalog-picker-card {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    min-height: 0;
+    padding: 22px 20px 54px;
+  }
+
+  .catalog-picker-card__visual {
+    order: -1;
+    min-height: 132px;
+  }
+
+  .catalog-picker-card__tagline {
+    max-width: none;
+  }
+
+  .catalog-picker-card__cta {
+    opacity: 1;
+    transform: none;
+    left: 20px;
+    right: auto;
+  }
 }
 
 .catalog-lines {

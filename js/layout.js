@@ -60,6 +60,7 @@ function renderFooter() {
             <li><a href="catalog.html?line=macbook">MacBook</a></li>
             <li><a href="catalog.html?line=ipad">iPad</a></li>
             <li><a href="catalog.html?line=airpods">AirPods</a></li>
+            <li><a href="catalog.html?line=apple-watch">Apple Watch</a></li>
           </ul>
         </div>
         <div class="footer-col">

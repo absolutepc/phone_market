@@ -1,4 +1,4 @@
-const STORE_VERSION = 13;
+const STORE_VERSION = 14;
 const STORE_KEY = 'phonemarket_data_v1';
 const LEGACY_STORE_KEYS = [];
 const APP_BUILD = '1.0';
@@ -30,6 +30,9 @@ const CATEGORY_IMAGES = {
   'airpods': 'img/products/airpods.svg',
   'airpods-pro': 'img/products/airpods.svg',
   'airpods-max': 'img/products/airpods.svg',
+  'apple-watch-se': 'img/products/apple-watch.svg',
+  'apple-watch-series-11': 'img/products/apple-watch.svg',
+  'apple-watch-ultra-3': 'img/products/apple-watch.svg',
 };
 
 const FILTER_STORAGE = ['128 ГБ', '256 ГБ', '512 ГБ', '1 ТБ', '2 ТБ', '4 ТБ', '8 ТБ'];
@@ -57,6 +60,9 @@ const CATEGORY_LABELS = {
   'airpods': 'AirPods',
   'airpods-pro': 'AirPods Pro',
   'airpods-max': 'AirPods Max',
+  'apple-watch-se': 'Apple Watch SE',
+  'apple-watch-series-11': 'Apple Watch Series 11',
+  'apple-watch-ultra-3': 'Apple Watch Ultra 3',
 };
 
 const CATALOG_LINES = [
@@ -104,6 +110,16 @@ const CATALOG_LINES = [
     pickerTagline: 'AirPods 4, Pro и Max',
     categories: ['airpods', 'airpods-pro', 'airpods-max'],
     img: 'img/pods/Apple AirPods Max 2 (2026).png',
+  },
+  {
+    id: 'apple-watch',
+    name: 'Apple Watch',
+    description: 'Apple Watch SE, Series 11 и Ultra 3 — здоровье, фитнес и автономность',
+    pickerLabel: 'Часы',
+    pickerTagline: 'SE, Series 11 и Ultra 3',
+    pickerImg: 'img/products/apple-watch.svg',
+    categories: ['apple-watch-se', 'apple-watch-series-11', 'apple-watch-ultra-3'],
+    img: 'img/products/apple-watch.svg',
   },
 ];
 
@@ -283,6 +299,23 @@ const AIRPODS_MAX_COLORS = [
   { name: 'Оранжевый', hex: '#e8752a', img: 'img/products/airpods.svg' },
 ];
 
+const APPLE_WATCH_SE_COLORS = [
+  { name: 'Полночь', hex: '#1d1d1f', img: 'img/products/apple-watch.svg' },
+  { name: 'Сияющая звезда', hex: '#f5f5f7', img: 'img/products/apple-watch.svg' },
+];
+
+const APPLE_WATCH_SERIES_11_COLORS = [
+  { name: 'Обсидиан', hex: '#2F3034', img: 'img/products/apple-watch.svg' },
+  { name: 'Серебристый', hex: '#e3e4e6', img: 'img/products/apple-watch.svg' },
+  { name: 'Розовое золото', hex: '#e8c4b8', img: 'img/products/apple-watch.svg' },
+  { name: 'Сланцевый', hex: '#4a5568', img: 'img/products/apple-watch.svg' },
+];
+
+const APPLE_WATCH_ULTRA_COLORS = [
+  { name: 'Натуральный титан', hex: '#d4cfc7', img: 'img/products/apple-watch.svg' },
+  { name: 'Чёрный титан', hex: '#2F3034', img: 'img/products/apple-watch.svg' },
+];
+
 function getColorSetForCategory(category) {
   if (category === 'iphone-17') return IPHONE_17_COLORS;
   if (category === 'iphone-17-plus') return IPHONE_17_PLUS_COLORS;
@@ -301,6 +334,9 @@ function getColorSetForCategory(category) {
   if (category === 'ipad-pro-13') return IPAD_PRO_13_COLORS;
   if (category === 'airpods-max') return AIRPODS_MAX_COLORS;
   if (category === 'airpods' || category === 'airpods-pro') return AIRPODS_COLORS;
+  if (category === 'apple-watch-se') return APPLE_WATCH_SE_COLORS;
+  if (category === 'apple-watch-series-11') return APPLE_WATCH_SERIES_11_COLORS;
+  if (category === 'apple-watch-ultra-3') return APPLE_WATCH_ULTRA_COLORS;
   return IPHONE_17_COLORS;
 }
 
@@ -1064,6 +1100,103 @@ const DEFAULT_PRODUCTS = [
       battery: 'До 20 ч',
       connectivity: 'Bluetooth 5.3, USB‑C',
       protection: 'Алюминий, магнитные амбушюры',
+    },
+  }),
+
+  createPhone({
+    id: 'watch-se-40',
+    name: 'Apple Watch SE 3 40 мм GPS',
+    category: 'apple-watch-se',
+    price: 24990,
+    storage: '40 мм',
+    simType: 'GPS',
+    series: 'Apple Watch SE 3',
+    badge: 'new',
+    description: 'Retina-дисплей, датчики здоровья, Crash Detection и автономность до 18 ч',
+    specs: {
+      display: '40 мм Retina OLED',
+      chip: 'Apple S10',
+      camera: '—',
+      battery: 'До 18 ч',
+      connectivity: 'GPS, Bluetooth 5.3, Wi‑Fi',
+      protection: 'WR50, алюминий',
+    },
+  }),
+
+  createPhone({
+    id: 'watch-se-44',
+    name: 'Apple Watch SE 3 44 мм GPS',
+    category: 'apple-watch-se',
+    price: 26990,
+    storage: '44 мм',
+    simType: 'GPS',
+    series: 'Apple Watch SE 3',
+    description: 'Увеличенный 44 мм корпус, те же функции здоровья и фитнеса, до 18 ч работы',
+    specs: {
+      display: '44 мм Retina OLED',
+      chip: 'Apple S10',
+      camera: '—',
+      battery: 'До 18 ч',
+      connectivity: 'GPS, Bluetooth 5.3, Wi‑Fi',
+      protection: 'WR50, алюминий',
+    },
+  }),
+
+  createPhone({
+    id: 'watch-s11-42',
+    name: 'Apple Watch Series 11 42 мм GPS',
+    category: 'apple-watch-series-11',
+    price: 44990,
+    storage: '42 мм',
+    simType: 'GPS',
+    series: 'Apple Watch Series 11',
+    badge: 'hit',
+    description: 'Always-On Retina, ЭКГ, измерение температуры и расширенные тренировки',
+    specs: {
+      display: '42 мм Always-On Retina',
+      chip: 'Apple S11',
+      camera: '—',
+      battery: 'До 24 ч',
+      connectivity: 'GPS, Bluetooth 5.3, Wi‑Fi',
+      protection: 'WR50, сапфир (версии)',
+    },
+  }),
+
+  createPhone({
+    id: 'watch-s11-46',
+    name: 'Apple Watch Series 11 46 мм GPS',
+    category: 'apple-watch-series-11',
+    price: 47990,
+    storage: '46 мм',
+    simType: 'GPS',
+    series: 'Apple Watch Series 11',
+    description: 'Самый крупный экран в линейке Series 11, до 24 ч автономности и быстрая зарядка',
+    specs: {
+      display: '46 мм Always-On Retina',
+      chip: 'Apple S11',
+      camera: '—',
+      battery: 'До 24 ч',
+      connectivity: 'GPS, Bluetooth 5.3, Wi‑Fi',
+      protection: 'WR50, сапфир (версии)',
+    },
+  }),
+
+  createPhone({
+    id: 'watch-ultra-3',
+    name: 'Apple Watch Ultra 3 49 мм GPS',
+    category: 'apple-watch-ultra-3',
+    price: 89990,
+    storage: '49 мм',
+    simType: 'GPS',
+    series: 'Apple Watch Ultra 3',
+    description: 'Титановый корпус, яркий дисплей 3000 нит, дайверские функции и до 36 ч работы',
+    specs: {
+      display: '49 мм Always-On Retina 3000 нит',
+      chip: 'Apple S11',
+      camera: '—',
+      battery: 'До 36 ч',
+      connectivity: 'GPS, LTE (опция), Bluetooth 5.3',
+      protection: 'WR100, MIL-STD, титан',
     },
   }),
 ];

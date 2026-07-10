@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" fill="none">
+  <defs>
+    <linearGradient id="aw-case" x1="48" y1="36" x2="152" y2="156" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3f3f46"/>
+      <stop offset="1" stop-color="#18181b"/>
+    </linearGradient>
+    <linearGradient id="aw-screen" x1="62" y1="52" x2="138" y2="140" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="aw-band" x1="72" y1="156" x2="128" y2="208" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#52525b"/>
+      <stop offset="1" stop-color="#27272a"/>
+    </linearGradient>
+  </defs>
+  <rect x="48" y="36" width="104" height="120" rx="28" fill="url(#aw-case)" stroke="#52525b" stroke-width="1.5"/>
+  <rect x="62" y="52" width="76" height="88" rx="18" fill="url(#aw-screen)"/>
+  <circle cx="100" cy="96" r="18" fill="#ef4444" opacity="0.9"/>
+  <path d="M72 156 C72 184 84 196 100 196 C116 196 128 184 128 156" stroke="url(#aw-band)" stroke-width="14" stroke-linecap="round"/>
+  <path d="M56 156 C56 188 76 204 100 204 C124 204 144 188 144 156" stroke="#3f3f46" stroke-width="5" stroke-linecap="round"/>
+</svg>

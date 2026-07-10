@@ -23,7 +23,7 @@ const CATEGORY_IMAGES = {
   'macbook-pro-16': 'img/macbook/pro 16 m5/Apple MacBook Pro 16 2026 M5 Pro.webp',
   'ipad-11-gen': 'img/ipad/ipad air/Apple iPad Air (M4) 11 g.webp',
   'ipad-mini-7': 'img/ipad/ipad air/Apple iPad Air (M4) 11 g.webp',
-  'ipad-air-11': 'img/ipad/ipad air/Apple iPad Air (M4) 11 g.webp',
+  'ipad-air-11': 'img/ipad/ipad air/Apple iPad Air (M4) 11 s.png',
   'ipad-air-13': 'img/ipad/ipad air/Apple iPad Air (M4) 13 g.webp',
   'ipad-pro-11': 'img/ipad/ipad pro/Планшет Apple iPad Pro (M5) 5G 11.webp',
   'ipad-pro-13': 'img/ipad/ipad pro/Apple iPad Pro (M5) 5G.webp',
@@ -264,18 +264,20 @@ const MACBOOK_PRO_16_COLORS = [
 ];
 
 const IPAD_AIR_11_COLORS = [
-  colorWithGallery({ name: 'Серый космос', hex: '#7d7e80', img: 'img/ipad/ipad air/Apple iPad Air (M4) 11 g.webp', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 11 g', 4) }),
-  colorWithGallery({ name: 'Серебристый', hex: '#e3e4e6', img: 'img/ipad/ipad air/Apple iPad Air (M4) s.webp', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) s', 4) }),
-  colorWithGallery({ name: 'Синий', hex: '#4a6fa5', img: 'img/ipad/ipad air/Apple iPad Air (M4) 11 t.webp', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 11 t', 4, { extraSpace: '  ' }) }),
+  colorWithGallery({ name: 'Серый космос', hex: '#7d7e80', img: 'img/ipad/ipad air/Apple iPad Air (M4) 11 s.png', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 11 s', 4) }),
+  colorWithGallery({ name: 'Серебристый', hex: '#0cc4d1', img: 'img/ipad/ipad air/Apple iPad Air (M4) 11 s.png', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) t', 4) }),
+  colorWithGallery({ name: 'Синий', hex: '#9a03d6', img: 'img/ipad/ipad air/Apple iPad Air (M4) 11 s.png', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 11 p', 4, { extraSpace: '  ' }) }),
+  colorWithGallery({ name: 'Синий', hex: '#e0af10', img: 'img/ipad/ipad air/Apple iPad Air (M4) 11 s.png', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 11 g', 4, { extraSpace: '  ' }) }),
 ];
 
 const IPAD_11_GEN_COLORS = IPAD_AIR_11_COLORS;
 const IPAD_MINI_7_COLORS = IPAD_AIR_11_COLORS;
 
 const IPAD_AIR_13_COLORS = [
-  colorWithGallery({ name: 'Серый космос', hex: '#7d7e80', img: 'img/ipad/ipad air/Apple iPad Air (M4) 13 g.webp', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 13 g', 4, { lastExtraExt: 'jpg' }) }),
-  colorWithGallery({ name: 'Серебристый', hex: '#e3e4e6', img: 'img/ipad/ipad air/Apple iPad Air (M4) 13 s.webp', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 13 s', 4, { lastExtraExt: 'jpg' }) }),
-  colorWithGallery({ name: 'Синий', hex: '#4a6fa5', img: 'img/ipad/ipad air/Apple iPad Air (M4) 13 t.webp', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 13 t', 4, { lastExtraExt: 'jpg' }) }),
+  colorWithGallery({ name: 'Серый космос', hex: '#7d7e80', img: 'img/ipad/ipad air/Apple iPad Air (M4) 11 s.png', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 13 s', 4) }),
+  colorWithGallery({ name: 'Серебристый', hex: '#0cc4d1', img: 'img/ipad/ipad air/Apple iPad Air (M4) 11 s.png', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 13 t', 4) }),
+  colorWithGallery({ name: 'Синий', hex: '#9a03d6', img: 'img/ipad/ipad air/Apple iPad Air (M4) 11 s.png', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 13 p', 4, { extraSpace: '  ' }) }),
+  colorWithGallery({ name: 'Синий', hex: '#e0af10', img: 'img/ipad/ipad air/Apple iPad Air (M4) 11 s.png', images: ipadGallery(IPAD_AIR_DIR, 'Apple iPad Air (M4) 13 g', 4, { extraSpace: '  ' }) }),
 ];
 
 const IPAD_PRO_11_COLORS = [
@@ -935,7 +937,7 @@ const DEFAULT_PRODUCTS = [
 
   createIpadSku({
     id: 'ipadair13-128',
-    name: 'iPad Air 13″ M3 128 ГБ Wi‑Fi',
+    name: 'iPad Air 13″ M4 128 ГБ Wi‑Fi',
     category: 'ipad-air-13',
     price: 89990,
     storage: '128 ГБ',
@@ -944,7 +946,7 @@ const DEFAULT_PRODUCTS = [
     description: '13″ Liquid Retina, чип M3, большой экран и Apple Pencil Pro',
     specs: {
       display: '13″ Liquid Retina',
-      chip: 'Apple M3',
+      chip: 'Apple M4',
       camera: '12 Мп Wide',
       battery: 'До 12 ч',
       connectivity: 'Wi‑Fi 6E, USB‑C',
@@ -954,7 +956,7 @@ const DEFAULT_PRODUCTS = [
 
   createIpadSku({
     id: 'ipadair13-256',
-    name: 'iPad Air 13″ M3 256 ГБ Wi‑Fi',
+    name: 'iPad Air 13″ M4 256 ГБ Wi‑Fi',
     category: 'ipad-air-13',
     price: 99990,
     storage: '256 ГБ',
@@ -962,7 +964,7 @@ const DEFAULT_PRODUCTS = [
     description: '13″ Liquid Retina, чип M3, большой экран и Apple Pencil Pro',
     specs: {
       display: '13″ Liquid Retina',
-      chip: 'Apple M3',
+      chip: 'Apple M4',
       camera: '12 Мп Wide',
       battery: 'До 12 ч',
       connectivity: 'Wi‑Fi 6E, USB‑C',

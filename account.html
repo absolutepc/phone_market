@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Профиль — Phone Market</title>
-  <link rel="stylesheet" href="css/style.css?v=2.23">
+  <link rel="stylesheet" href="css/style.css?v=2.24">
 </head>
 <body>
   <div id="site-header"></div>
@@ -17,7 +17,8 @@
               <button type="button" class="form-tab active" data-tab="login">Вход</button>
               <button type="button" class="form-tab" data-tab="register">Регистрация</button>
             </div>
-            <div id="loginForm">
+            <div class="auth-panels">
+            <div id="loginForm" class="auth-panel is-active">
               <h2>С возвращением</h2>
               <p class="subtitle">Войдите по email, телефону или через iCloud</p>
               <form id="loginFormEl">
@@ -37,7 +38,7 @@
                 <span>Войти через iCloud</span>
               </button>
             </div>
-            <div id="registerForm" style="display:none">
+            <div id="registerForm" class="auth-panel">
               <h2>Регистрация</h2>
               <p class="subtitle">Выберите способ подтверждения аккаунта</p>
               <div class="auth-contact-toggle" role="tablist" aria-label="Способ регистрации">
@@ -68,6 +69,7 @@
                 <span class="btn-icloud__icon" aria-hidden="true"></span>
                 <span>Зарегистрироваться через iCloud</span>
               </button>
+            </div>
             </div>
           </div>
         </div>
@@ -125,7 +127,7 @@
   <script src="js/data.js?v=2.4"></script>
   <script src="js/app.js?v=1.8"></script>
   <script src="js/layout.js"></script>
-  <script src="js/account.js?v=1.0"></script>
+  <script src="js/account.js?v=1.1"></script>
   <script>initLayout('account');</script>
 </body>
 </html>

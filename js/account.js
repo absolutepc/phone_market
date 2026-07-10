@@ -76,8 +76,9 @@ function initAccountPage() {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.form-tab').forEach(item => item.classList.remove('active'));
       tab.classList.add('active');
-      document.getElementById('loginForm').style.display = tab.dataset.tab === 'login' ? 'block' : 'none';
-      document.getElementById('registerForm').style.display = tab.dataset.tab === 'register' ? 'block' : 'none';
+      const isLogin = tab.dataset.tab === 'login';
+      document.getElementById('loginForm')?.classList.toggle('is-active', isLogin);
+      document.getElementById('registerForm')?.classList.toggle('is-active', !isLogin);
     });
   });
 

@@ -160,8 +160,7 @@ function logoutUser() {
 function updateAccountButton() {
   const btn = document.querySelector('.account-btn-text');
   if (!btn) return;
-  const user = getCurrentUser();
-  btn.textContent = user ? user.name.split(' ')[0] : 'Аккаунт';
+  btn.textContent = 'Профиль';
 }
 
 function getOrders() {

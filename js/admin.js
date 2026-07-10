@@ -134,6 +134,7 @@ function renderAdminSection(section) {
   switch (section) {
     case 'dashboard':
       main.innerHTML = renderDashboard();
+      bindOrdersAdmin();
       break;
     case 'products':
       main.innerHTML = renderProductsAdmin();
@@ -359,18 +360,120 @@ function renderOrdersTable(orders) {
             <td>${formatPrice(order.total)}</td>
             <td><span class="status-badge ${order.status}">${STATUS_LABELS[order.status] || order.status}</span></td>
             <td>${new Date(order.createdAt).toLocaleDateString('ru-RU')}</td>
-            <td>
+            <td class="admin-table-actions">
+              <button type="button" class="btn btn-secondary btn-sm view-order" data-id="${escapeHtml(order.id)}">Подробнее</button>
               ${order.status === 'pending' ? `
-                <button class="btn btn-primary btn-sm ship-order" data-id="${order.id}">Отправить</button>
-                <button class="btn btn-danger btn-sm cancel-order" data-id="${order.id}">Отменить</button>
+                <button type="button" class="btn btn-primary btn-sm ship-order" data-id="${escapeHtml(order.id)}">Отправить</button>
+                <button type="button" class="btn btn-danger btn-sm cancel-order" data-id="${escapeHtml(order.id)}">Отменить</button>
               ` : ''}
-              ${order.status === 'shipped' ? `<button class="btn btn-primary btn-sm deliver-order" data-id="${order.id}">Доставлен</button>` : ''}
+              ${order.status === 'shipped' ? `<button type="button" class="btn btn-primary btn-sm deliver-order" data-id="${escapeHtml(order.id)}">Доставлен</button>` : ''}
             </td>
           </tr>
         `).join('')}
       </tbody>
     </table>
   `;
+}
+
+function renderOrderDetailContent(order) {
+  const user = getUsers().find(item => item.id === order.userId);
+  const items = order.items || [];
+  const itemsHtml = items.length
+    ? items.map(item => `
+      <div class="admin-order-item">
+        <img src="${encodeAssetPath(item.img || DEFAULT_IMG)}" alt="" class="admin-order-item__img" onerror="this.src='${DEFAULT_IMG}'">
+        <div class="admin-order-item__info">
+          <strong>${escapeHtml(item.name || 'Товар')}</strong>
+          ${item.colorName ? `<div class="admin-order-item__meta">Цвет: ${escapeHtml(item.colorName)}</div>` : ''}
+          ${item.category ? `<div class="admin-order-item__meta">${escapeHtml(item.category)}</div>` : ''}
+        </div>
+        <div class="admin-order-item__qty">${item.qty || 1} шт.</div>
+        <div class="admin-order-item__price">${formatPrice(item.price || 0)}</div>
+        <div class="admin-order-item__sum">${formatPrice((item.price || 0) * (item.qty || 1))}</div>
+      </div>
+    `).join('')
+    : '<p class="admin-order-empty">Позиции в заказе не найдены.</p>';
+
+  return `
+    <div class="admin-order-detail">
+      <div class="admin-order-detail__header">
+        <div>
+          <h2 id="adminOrderModalTitle">Заказ ${escapeHtml(order.id)}</h2>
+          <p class="admin-order-detail__date">${new Date(order.createdAt).toLocaleString('ru-RU')}</p>
+        </div>
+        <span class="status-badge ${order.status}">${STATUS_LABELS[order.status] || order.status}</span>
+      </div>
+      <div class="admin-order-detail__grid">
+        <section class="admin-order-detail__card">
+          <h3>Клиент</h3>
+          <p><strong>${escapeHtml(order.userName || 'Гость')}</strong></p>
+          <p>${escapeHtml(order.userEmail || 'Email не указан')}</p>
+          <p class="admin-order-detail__muted">ID: ${escapeHtml(order.userId || 'guest')}</p>
+          ${user ? `<p class="admin-order-detail__muted">Зарегистрирован: ${new Date(user.createdAt).toLocaleDateString('ru-RU')}</p>` : ''}
+        </section>
+        <section class="admin-order-detail__card">
+          <h3>Оплата</h3>
+          <p><strong>Итого:</strong> ${formatPrice(order.total)}</p>
+          <p class="admin-order-detail__muted">Позиций: ${items.length}</p>
+          <p class="admin-order-detail__muted">Товаров: ${items.reduce((sum, item) => sum + (item.qty || 1), 0)} шт.</p>
+        </section>
+      </div>
+      <section class="admin-order-detail__items">
+        <h3>Состав заказа</h3>
+        <div class="admin-order-items">${itemsHtml}</div>
+      </section>
+    </div>
+  `;
+}
+
+function ensureOrderDetailModal() {
+  let modal = document.getElementById('adminOrderModal');
+  if (modal) return modal;
+
+  modal = document.createElement('div');
+  modal.id = 'adminOrderModal';
+  modal.className = 'admin-modal';
+  modal.innerHTML = `
+    <div class="admin-modal__backdrop" data-close-order-modal></div>
+    <div class="admin-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="adminOrderModalTitle">
+      <button type="button" class="admin-modal__close" data-close-order-modal aria-label="Закрыть">×</button>
+      <div id="adminOrderModalBody"></div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  modal.addEventListener('click', (event) => {
+    if (event.target.matches('[data-close-order-modal]')) {
+      closeOrderDetailModal();
+    }
+  });
+
+  if (!document.body.dataset.orderModalBound) {
+    document.body.dataset.orderModalBound = '1';
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeOrderDetailModal();
+    });
+  }
+
+  return modal;
+}
+
+function showOrderDetailModal(orderId) {
+  const order = getOrders().find(item => item.id === orderId);
+  if (!order) return;
+
+  const modal = ensureOrderDetailModal();
+  const body = document.getElementById('adminOrderModalBody');
+  if (body) body.innerHTML = renderOrderDetailContent(order);
+  modal.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeOrderDetailModal() {
+  const modal = document.getElementById('adminOrderModal');
+  if (!modal) return;
+  modal.classList.remove('is-open');
+  document.body.style.overflow = '';
 }
 
 function renderOrdersAdmin() {
@@ -391,6 +494,9 @@ function updateOrderStatus(id, status) {
 }
 
 function bindOrdersAdmin() {
+  document.querySelectorAll('.view-order').forEach(btn => {
+    btn.addEventListener('click', () => showOrderDetailModal(btn.dataset.id));
+  });
   document.querySelectorAll('.ship-order').forEach(btn => {
     btn.addEventListener('click', () => updateOrderStatus(btn.dataset.id, 'shipped'));
   });

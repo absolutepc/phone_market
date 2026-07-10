@@ -9,7 +9,7 @@ function renderHeader(activePage) {
     `<a href="${item.href}" class="${item.page === activePage ? 'active' : ''}">${item.label}</a>`
   ).join('');
 
-  const accountLink = `<a href="account.html" class="main-nav-account ${activePage === 'account' ? 'active' : ''}"><span class="main-nav-account-icon" aria-hidden="true">👤</span><span class="account-btn-text">Аккаунт</span></a>`;
+  const accountLink = `<a href="account.html" class="main-nav-account ${activePage === 'account' ? 'active' : ''}"><span class="main-nav-account-icon" aria-hidden="true">👤</span><span class="account-btn-text">Профиль</span></a>`;
 
   return `
     <header class="site-header">

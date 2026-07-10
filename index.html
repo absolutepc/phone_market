@@ -98,7 +98,7 @@
   <script src="js/hero-carousel.js?v=1.2"></script>
   <script>
     initLayout('home');
-    const popularIds = ['mbp16-1tb', 'ip17-pro-256', 'ip17-pro-max-512', 'ip17-plus'];
+    const popularIds = ['mbp16-1tb', 'ip17-pro-256', 'ip17-pro-max-512', 'ipadmini7-128'];
     const grid = document.getElementById('popularProducts');
     const products = popularIds.map(id => getEnrichedProductById(id)).filter(Boolean);
     grid.innerHTML = products.map(p => renderProductCard(p)).join('');

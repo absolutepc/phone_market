@@ -169,18 +169,18 @@ function renderItemGallery(item, ui) {
 function setGalleryMainImage(container, src, filter, colorName, ui) {
   const main = container.querySelector(`#${ui.mainImgId}`);
   if (!main) return;
-  const normalizedSrc = normalizeGallerySrc(encodeAssetPath(src));
-  main.src = normalizedSrc;
+  const encodedSrc = encodeAssetPath(src);
+  main.src = encodedSrc;
   main.style.filter = filter || '';
 
   container.querySelectorAll('.pc-gallery-thumb').forEach(btn => {
-    const matchesSrc = normalizeGallerySrc(btn.dataset.src) === normalizedSrc;
+    const matchesSrc = isSameGalleryImage(btn.dataset.src, src) || isSameGalleryImage(btn.dataset.src, encodedSrc);
     const matchesFilter = (btn.dataset.filter || '') === (filter || '');
     btn.classList.toggle('active', matchesSrc && matchesFilter);
   });
 
   if (colorName) {
-    syncColorPickerWithGalleryImage(container, normalizedSrc, colorName, ui);
+    syncColorPickerWithGalleryImage(container, src, colorName, ui);
   }
 }
 
@@ -193,7 +193,7 @@ function syncColorPickerWithGalleryImage(container, src, preferredColorName, ui)
   picker.querySelectorAll('.color-btn').forEach(btn => {
     const isMatch = preferredColorName
       ? btn.dataset.name === preferredColorName
-      : normalizeGallerySrc(btn.dataset.img) === normalizeGallerySrc(src);
+      : isSameGalleryImage(btn.dataset.img, src);
     btn.classList.toggle('active', isMatch);
     if (isMatch) {
       matched = true;

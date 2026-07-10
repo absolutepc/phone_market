@@ -316,7 +316,8 @@ function renderProductCard(product, type = 'product') {
 }
 
 function bindCardColorSwatches(container) {
-  (container || document).querySelectorAll('.product-card-colors').forEach(picker => {
+  (container || document).querySelectorAll('.product-card-colors:not([data-colors-bound])').forEach(picker => {
+    picker.dataset.colorsBound = 'true';
     picker.querySelectorAll('.product-card-color-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -325,10 +326,12 @@ function bindCardColorSwatches(container) {
         const card = picker.closest('.product-card');
         const img = card?.querySelector('.product-image img');
         const product = getProducts().find(item => item.id === picker.dataset.productId);
-        const color = product?.colors?.[Number(btn.dataset.index) || 0];
-        if (img && color?.img) {
-          img.src = encodeAssetPath(color.img);
-          const filter = color.filter && color.filter !== 'none' ? color.filter : '';
+        const colorIndex = Number(btn.dataset.index) || 0;
+        const color = product?.colors?.[colorIndex];
+        const imgPath = color?.img || btn.dataset.img;
+        if (img && imgPath) {
+          img.src = encodeAssetPath(imgPath);
+          const filter = color?.filter && color.filter !== 'none' ? color.filter : '';
           img.style.filter = filter;
         }
         const priceEl = card?.querySelector('.product-price');

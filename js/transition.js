@@ -12,7 +12,7 @@ const PAGE_LABELS_BY_HREF = {
   'reviews.html': 'Отзывы',
   'about.html': 'О нас',
   'cart.html': 'Корзина',
-  'account.html': 'Аккаунт',
+  'account.html': 'Профиль',
   'admin.html': 'Админ-панель',
   'search.html': 'Поиск',
 };
@@ -24,7 +24,7 @@ const PAGE_LABELS_BY_PAGE = {
   reviews: 'Отзывы',
   about: 'О нас',
   cart: 'Корзина',
-  account: 'Аккаунт',
+  account: 'Профиль',
   admin: 'Админ-панель',
   search: 'Поиск',
 };

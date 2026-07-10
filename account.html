@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Личный кабинет — Phone Market</title>
+  <title>Профиль — Phone Market</title>
   <link rel="stylesheet" href="css/style.css?v=2.16">
 </head>
 <body>
@@ -56,6 +56,7 @@
             </div>
             <nav class="account-nav">
               <button class="active" data-section="orders">📦 Заказы</button>
+              <a href="admin.html" id="adminPanelLink" class="btn btn-secondary btn-sm account-admin-link" style="display:none">⚙️ Админ-панель</a>
               <button id="logoutBtn">🚪 Выйти</button>
             </nav>
           </aside>
@@ -74,13 +75,14 @@
     const dashboardView = document.getElementById('dashboardView');
     function showDashboard() {
       const user = getCurrentUser();
-      if (user?.role === 'admin') { window.location.href = 'admin.html'; return; }
       if (!user) { authView.style.display = 'block'; dashboardView.style.display = 'none'; return; }
       authView.style.display = 'none';
       dashboardView.style.display = 'block';
       document.getElementById('userName').textContent = user.name;
       document.getElementById('userEmail').textContent = user.email;
       document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+      const adminLink = document.getElementById('adminPanelLink');
+      if (adminLink) adminLink.style.display = user.role === 'admin' ? 'inline-flex' : 'none';
       renderOrders();
     }
     document.querySelectorAll('.form-tab').forEach(tab => tab.addEventListener('click', () => {
@@ -94,12 +96,8 @@
       const fd = new FormData(e.target);
       const r = loginUser(fd.get('email'), fd.get('password'));
       if (r.success) {
-        if (r.isAdmin) {
-          window.location.href = 'admin.html';
-        } else {
-          showToast('Добро пожаловать!', 'success');
-          showDashboard();
-        }
+        showToast('Добро пожаловать!', 'success');
+        showDashboard();
       } else {
         showToast(r.message, 'error');
       }

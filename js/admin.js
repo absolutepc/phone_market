@@ -408,6 +408,7 @@ function renderOrderDetailContent(order) {
           <h3>Клиент</h3>
           <p><strong>${escapeHtml(order.userName || 'Гость')}</strong></p>
           <p>${escapeHtml(order.userEmail || 'Email не указан')}</p>
+          ${order.userPhone ? `<p>${escapeHtml(formatPhoneDisplay(order.userPhone))}</p>` : ''}
           <p class="admin-order-detail__muted">ID: ${escapeHtml(order.userId || 'guest')}</p>
           ${user ? `<p class="admin-order-detail__muted">Зарегистрирован: ${new Date(user.createdAt).toLocaleDateString('ru-RU')}</p>` : ''}
         </section>
@@ -513,15 +514,15 @@ function renderUsersAdmin() {
   return `
     <div class="admin-header"><h1>Клиенты</h1></div>
     <table class="admin-table">
-      <thead><tr><th>Имя</th><th>Email</th><th>Дата регистрации</th><th>Роль</th></tr></thead>
+      <thead><tr><th>Имя</th><th>Контакт</th><th>Дата регистрации</th><th>Роль</th></tr></thead>
       <tbody>
         ${users.length
           ? users.map(user => `
             <tr>
               <td>${escapeHtml(user.name)}</td>
-              <td>${escapeHtml(user.email)}</td>
+              <td>${escapeHtml(user.provider === 'icloud' ? `${user.email} (iCloud)` : (user.phone ? formatPhoneDisplay(user.phone) : user.email || '—'))}</td>
               <td>${new Date(user.createdAt).toLocaleDateString('ru-RU')}</td>
-              <td>${user.role === 'admin' ? 'Администратор' : 'Клиент'}</td>
+              <td>${user.role === 'admin' ? 'Администратор' : user.provider === 'icloud' ? 'iCloud' : 'Клиент'}</td>
             </tr>
           `).join('')
           : '<tr><td colspan="4" style="text-align:center;color:var(--text-secondary)">Пока нет зарегистрированных пользователей</td></tr>'}

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Профиль — Phone Market</title>
-  <link rel="stylesheet" href="css/style.css?v=2.16">
+  <link rel="stylesheet" href="css/style.css?v=2.23">
 </head>
 <body>
   <div id="site-header"></div>
@@ -14,25 +14,60 @@
         <div class="auth-form-panel">
           <div class="auth-form">
             <div class="form-tabs">
-              <button class="form-tab active" data-tab="login">Вход</button>
-              <button class="form-tab" data-tab="register">Регистрация</button>
+              <button type="button" class="form-tab active" data-tab="login">Вход</button>
+              <button type="button" class="form-tab" data-tab="register">Регистрация</button>
             </div>
             <div id="loginForm">
               <h2>С возвращением</h2>
+              <p class="subtitle">Войдите по email, телефону или через iCloud</p>
               <form id="loginFormEl">
-                <div class="form-group"><label>Email</label><input type="email" name="email" required></div>
-                <div class="form-group"><label>Пароль</label><input type="password" name="password" required></div>
+                <div class="form-group">
+                  <label for="loginIdentifier">Email или телефон</label>
+                  <input id="loginIdentifier" type="text" name="login" required placeholder="name@mail.ru или +7 900 000-00-00" autocomplete="username">
+                </div>
+                <div class="form-group">
+                  <label for="loginPassword">Пароль</label>
+                  <input id="loginPassword" type="password" name="password" required autocomplete="current-password">
+                </div>
                 <button type="submit" class="btn btn-primary" style="width:100%">Войти</button>
               </form>
+              <div class="auth-divider"><span>или</span></div>
+              <button type="button" class="btn-icloud" id="icloudLoginBtn">
+                <span class="btn-icloud__icon" aria-hidden="true"></span>
+                <span>Войти через iCloud</span>
+              </button>
             </div>
             <div id="registerForm" style="display:none">
               <h2>Регистрация</h2>
+              <p class="subtitle">Выберите способ подтверждения аккаунта</p>
+              <div class="auth-contact-toggle" role="tablist" aria-label="Способ регистрации">
+                <button type="button" class="auth-contact-toggle__btn active" data-register-contact="email">Email</button>
+                <button type="button" class="auth-contact-toggle__btn" data-register-contact="phone">Телефон</button>
+              </div>
               <form id="registerFormEl">
-                <div class="form-group"><label>Имя</label><input type="text" name="name" required></div>
-                <div class="form-group"><label>Email</label><input type="email" name="email" required></div>
-                <div class="form-group"><label>Пароль</label><input type="password" name="password" required minlength="6"></div>
+                <div class="form-group">
+                  <label for="registerName">Имя</label>
+                  <input id="registerName" type="text" name="name" required autocomplete="name">
+                </div>
+                <div class="form-group" id="registerEmailGroup">
+                  <label for="registerEmail">Email</label>
+                  <input id="registerEmail" type="email" name="email" autocomplete="email" placeholder="name@mail.ru">
+                </div>
+                <div class="form-group" id="registerPhoneGroup" hidden>
+                  <label for="registerPhone">Телефон</label>
+                  <input id="registerPhone" type="tel" name="phone" autocomplete="tel" placeholder="+7 (900) 000-00-00">
+                </div>
+                <div class="form-group">
+                  <label for="registerPassword">Пароль</label>
+                  <input id="registerPassword" type="password" name="password" required minlength="6" autocomplete="new-password">
+                </div>
                 <button type="submit" class="btn btn-primary" style="width:100%">Создать аккаунт</button>
               </form>
+              <div class="auth-divider"><span>или</span></div>
+              <button type="button" class="btn-icloud" id="icloudRegisterBtn">
+                <span class="btn-icloud__icon" aria-hidden="true"></span>
+                <span>Зарегистрироваться через iCloud</span>
+              </button>
             </div>
           </div>
         </div>
@@ -66,58 +101,31 @@
     </div>
   </main>
   <div id="site-footer"></div>
+
+  <div class="auth-modal" id="icloudAuthModal" aria-hidden="true">
+    <div class="auth-modal__backdrop" data-close-icloud-modal></div>
+    <div class="auth-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="icloudAuthTitle">
+      <button type="button" class="auth-modal__close" data-close-icloud-modal aria-label="Закрыть">×</button>
+      <div class="auth-modal__brand" aria-hidden="true"></div>
+      <h2 id="icloudAuthTitle">Вход с Apple ID</h2>
+      <p class="auth-modal__subtitle">Используйте Apple ID для быстрого входа в Phone Market</p>
+      <form id="icloudAuthForm">
+        <div class="form-group">
+          <label for="icloudAppleId">Apple ID</label>
+          <input id="icloudAppleId" type="email" name="appleId" required placeholder="name@icloud.com" autocomplete="username">
+        </div>
+        <button type="submit" class="btn-icloud" style="width:100%">
+          <span class="btn-icloud__icon" aria-hidden="true"></span>
+          <span>Продолжить с iCloud</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
   <script src="js/data.js?v=2.4"></script>
-  <script src="js/app.js?v=1.7"></script>
+  <script src="js/app.js?v=1.8"></script>
   <script src="js/layout.js"></script>
-  <script>
-    initLayout('account');
-    const authView = document.getElementById('authView');
-    const dashboardView = document.getElementById('dashboardView');
-    function showDashboard() {
-      const user = getCurrentUser();
-      if (!user) { authView.style.display = 'block'; dashboardView.style.display = 'none'; return; }
-      authView.style.display = 'none';
-      dashboardView.style.display = 'block';
-      document.getElementById('userName').textContent = user.name;
-      document.getElementById('userEmail').textContent = user.email;
-      document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
-      const adminLink = document.getElementById('adminPanelLink');
-      if (adminLink) adminLink.style.display = user.role === 'admin' ? 'inline-flex' : 'none';
-      renderOrders();
-    }
-    document.querySelectorAll('.form-tab').forEach(tab => tab.addEventListener('click', () => {
-      document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById('loginForm').style.display = tab.dataset.tab === 'login' ? 'block' : 'none';
-      document.getElementById('registerForm').style.display = tab.dataset.tab === 'register' ? 'block' : 'none';
-    }));
-    document.getElementById('loginFormEl').addEventListener('submit', e => {
-      e.preventDefault();
-      const fd = new FormData(e.target);
-      const r = loginUser(fd.get('email'), fd.get('password'));
-      if (r.success) {
-        showToast('Добро пожаловать!', 'success');
-        showDashboard();
-      } else {
-        showToast(r.message, 'error');
-      }
-    });
-    document.getElementById('registerFormEl').addEventListener('submit', e => {
-      e.preventDefault();
-      const fd = new FormData(e.target);
-      const r = registerUser(fd.get('name'), fd.get('email'), fd.get('password'));
-      r.success ? (showToast('Аккаунт создан!', 'success'), showDashboard()) : showToast(r.message, 'error');
-    });
-    document.getElementById('logoutBtn').addEventListener('click', () => { logoutUser(); showDashboard(); });
-    function renderOrders() {
-      const user = getCurrentUser();
-      const orders = getOrders().filter(o => o.userId === user.id);
-      document.getElementById('accountContent').innerHTML = `<h2>Мои заказы</h2>${orders.length ? orders.map(o => `
-        <div class="order-card" style="margin-bottom:16px;padding:16px;background:var(--bg-card);border-radius:var(--radius-md)">
-          <strong>${o.id}</strong> — ${formatPrice(o.total)} — ${new Date(o.createdAt).toLocaleDateString('ru-RU')}
-        </div>`).join('') : '<p style="color:var(--text-secondary)">Заказов пока нет</p>'}`;
-    }
-    showDashboard();
-  </script>
+  <script src="js/account.js?v=1.0"></script>
+  <script>initLayout('account');</script>
 </body>
 </html>

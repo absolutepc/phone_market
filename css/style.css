@@ -2270,6 +2270,158 @@ main {
   color: white;
 }
 
+.auth-contact-toggle {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 4px;
+}
+
+.auth-contact-toggle__btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.auth-contact-toggle__btn.active {
+  background: rgba(59, 130, 246, 0.16);
+  color: var(--accent-light);
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.btn-icloud {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn-icloud:hover {
+  background: #111;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  transform: translateY(-1px);
+}
+
+.btn-icloud__icon {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.auth-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s;
+}
+
+.auth-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.auth-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.auth-modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: min(420px, 100%);
+  padding: 28px 24px 24px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+}
+
+.auth-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.auth-modal__brand {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 14px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #000;
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.auth-modal__subtitle {
+  margin-bottom: 20px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.auth-modal h2 {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.account-admin-link {
+  width: 100%;
+  justify-content: center;
+  margin-top: 4px;
+}
+
 .account-dashboard {
   padding: 40px 0 80px;
 }

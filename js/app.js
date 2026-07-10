@@ -127,30 +127,142 @@ function saveUsers(users) {
   localStorage.setItem('phonemarket_users', JSON.stringify(users));
 }
 
-function registerUser(name, email, password) {
+function normalizePhone(phone) {
+  const digits = String(phone || '').replace(/\D/g, '');
+  if (!digits) return '';
+  if (digits.length === 11 && digits.startsWith('8')) return `+7${digits.slice(1)}`;
+  if (digits.length === 11 && digits.startsWith('7')) return `+${digits}`;
+  if (digits.length === 10) return `+7${digits}`;
+  return `+${digits}`;
+}
+
+function formatPhoneDisplay(phone) {
+  const normalized = normalizePhone(phone);
+  const match = normalized.match(/^\+7(\d{3})(\d{3})(\d{2})(\d{2})$/);
+  if (!match) return phone || '';
+  return `+7 (${match[1]}) ${match[2]}-${match[3]}-${match[4]}`;
+}
+
+function isPhoneLogin(value) {
+  const digits = String(value || '').replace(/\D/g, '');
+  return digits.length >= 10;
+}
+
+function getUserContactLabel(user) {
+  if (!user) return '';
+  if (user.provider === 'icloud') return user.email || 'Apple ID';
+  if (user.phone) return formatPhoneDisplay(user.phone);
+  return user.email || '';
+}
+
+function buildSessionUser(user) {
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email || '',
+    phone: user.phone || '',
+    provider: user.provider || 'local',
+    role: user.role,
+  };
+}
+
+function registerUser({ name, password, email = '', phone = '', contactType = 'email' }) {
   const users = getUsers();
-  if (users.find(u => u.email === email)) {
-    return { success: false, message: 'Email уже зарегистрирован' };
+  const trimmedName = String(name || '').trim();
+  const normalizedEmail = String(email || '').trim().toLowerCase();
+  const normalizedPhone = phone ? normalizePhone(phone) : '';
+
+  if (!trimmedName) {
+    return { success: false, message: 'Введите имя' };
   }
-  const user = { id: 'u' + Date.now(), name, email, password, createdAt: new Date().toISOString() };
+  if (!password || password.length < 6) {
+    return { success: false, message: 'Пароль должен быть не короче 6 символов' };
+  }
+
+  if (contactType === 'phone') {
+    if (!normalizedPhone) return { success: false, message: 'Введите корректный номер телефона' };
+    if (users.find(u => u.phone === normalizedPhone)) {
+      return { success: false, message: 'Этот номер уже зарегистрирован' };
+    }
+  } else {
+    if (!normalizedEmail) return { success: false, message: 'Введите email' };
+    if (users.find(u => u.email === normalizedEmail)) {
+      return { success: false, message: 'Email уже зарегистрирован' };
+    }
+  }
+
+  const user = {
+    id: 'u' + Date.now(),
+    name: trimmedName,
+    email: contactType === 'email' ? normalizedEmail : '',
+    phone: contactType === 'phone' ? normalizedPhone : '',
+    contactType,
+    password,
+    provider: 'local',
+    createdAt: new Date().toISOString(),
+  };
   users.push(user);
   saveUsers(users);
-  setCurrentUser({ id: user.id, name: user.name, email: user.email });
+  setCurrentUser(buildSessionUser(user));
   return { success: true };
 }
 
-function loginUser(email, password) {
-  if (email === ADMIN_CREDENTIALS.email && password === ADMIN_CREDENTIALS.password) {
-    setCurrentUser({ id: 'admin', name: 'Администратор', email, role: 'admin' });
+function loginUser(login, password) {
+  const value = String(login || '').trim();
+  if (!value || !password) {
+    return { success: false, message: 'Введите email или телефон и пароль' };
+  }
+
+  if (value.toLowerCase() === ADMIN_CREDENTIALS.email && password === ADMIN_CREDENTIALS.password) {
+    setCurrentUser({ id: 'admin', name: 'Администратор', email: ADMIN_CREDENTIALS.email, role: 'admin', provider: 'local' });
     return { success: true, isAdmin: true };
   }
+
   const users = getUsers();
-  const user = users.find(u => u.email === email && u.password === password);
+  const user = users.find((item) => {
+    if (item.provider === 'icloud' || !item.password || item.password !== password) return false;
+    if (isPhoneLogin(value)) return item.phone && normalizePhone(item.phone) === normalizePhone(value);
+    return item.email && item.email.toLowerCase() === value.toLowerCase();
+  });
+
   if (user) {
-    setCurrentUser({ id: user.id, name: user.name, email: user.email });
+    setCurrentUser(buildSessionUser(user));
     return { success: true };
   }
-  return { success: false, message: 'Неверный email или пароль' };
+
+  return { success: false, message: 'Неверный email, телефон или пароль' };
+}
+
+function loginWithICloud(appleIdEmail) {
+  const email = String(appleIdEmail || '').trim().toLowerCase();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return { success: false, message: 'Введите корректный Apple ID (email)' };
+  }
+
+  const users = getUsers();
+  let user = users.find(item => item.provider === 'icloud' && item.email === email);
+  if (!user) {
+    const localName = email.split('@')[0].replace(/[._-]+/g, ' ');
+    const displayName = localName
+      .split(' ')
+      .filter(Boolean)
+      .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(' ') || 'Пользователь iCloud';
+
+    user = {
+      id: 'icloud-' + Date.now(),
+      name: displayName,
+      email,
+      phone: '',
+      provider: 'icloud',
+      createdAt: new Date().toISOString(),
+    };
+    users.push(user);
+    saveUsers(users);
+  }
+
+  setCurrentUser(buildSessionUser(user));
+  return { success: true };
 }
 
 function logoutUser() {
@@ -180,6 +292,7 @@ function createOrder(cart, user) {
     userId: user?.id || 'guest',
     userName: user?.name || 'Гость',
     userEmail: user?.email || '',
+    userPhone: user?.phone || '',
     status: 'pending',
     createdAt: new Date().toISOString(),
   };

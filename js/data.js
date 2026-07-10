@@ -514,7 +514,7 @@ function createIpadSku({
 const DEFAULT_PRODUCTS = [
   createPhone({
     id: 'ip17',
-    name: 'Apple iPhone 17',
+    name: 'iPhone 17',
     category: 'iphone-17',
     price: 89990,
     storage: '128 ГБ',
@@ -534,7 +534,7 @@ const DEFAULT_PRODUCTS = [
 
   createPhone({
     id: 'ip17-plus',
-    name: 'Apple iPhone 17 Plus',
+    name: 'iPhone 17 Plus',
     category: 'iphone-17-plus',
     price: 99990,
     storage: '128 ГБ',
@@ -554,7 +554,7 @@ const DEFAULT_PRODUCTS = [
 
   createPhone({
     id: 'ip17-pro-esim-128',
-    name: 'Apple iPhone 17 Pro eSIM 128 ГБ',
+    name: 'iPhone 17 Pro eSIM 128 ГБ',
     category: 'iphone-17-pro',
     price: 109990,
     storage: '128 ГБ',
@@ -574,7 +574,7 @@ const DEFAULT_PRODUCTS = [
 
   createPhone({
     id: 'ip17-pro-esim-256',
-    name: 'Apple iPhone 17 Pro eSIM 256 ГБ',
+    name: 'iPhone 17 Pro eSIM 256 ГБ',
     category: 'iphone-17-pro',
     price: 119990,
     storage: '256 ГБ',
@@ -593,7 +593,7 @@ const DEFAULT_PRODUCTS = [
 
   createPhone({
     id: 'ip17-pro-esim-512',
-    name: 'Apple iPhone 17 Pro eSIM 512 ГБ',
+    name: 'iPhone 17 Pro eSIM 512 ГБ',
     category: 'iphone-17-pro',
     price: 139990,
     storage: '512 ГБ',
@@ -612,7 +612,7 @@ const DEFAULT_PRODUCTS = [
 
   createPhone({
     id: 'ip17-pro-128',
-    name: 'Apple iPhone 17 Pro 128 ГБ',
+    name: 'iPhone 17 Pro 128 ГБ',
     category: 'iphone-17-pro',
     price: 111990,
     storage: '128 ГБ',
@@ -632,7 +632,7 @@ const DEFAULT_PRODUCTS = [
 
   createPhone({
     id: 'ip17-pro-256',
-    name: 'Apple iPhone 17 Pro 256 ГБ',
+    name: 'iPhone 17 Pro 256 ГБ',
     category: 'iphone-17-pro',
     price: 121990,
     storage: '256 ГБ',
@@ -651,7 +651,7 @@ const DEFAULT_PRODUCTS = [
 
   createPhone({
     id: 'ip17-pro-512',
-    name: 'Apple iPhone 17 Pro 512 ГБ',
+    name: 'iPhone 17 Pro 512 ГБ',
     category: 'iphone-17-pro',
     price: 141990,
     storage: '512 ГБ',
@@ -670,7 +670,7 @@ const DEFAULT_PRODUCTS = [
 
   createPhone({
     id: 'ip17-pro-max-esim-256',
-    name: 'Apple iPhone 17 Pro Max eSIM 256 ГБ',
+    name: 'iPhone 17 Pro Max eSIM 256 ГБ',
     category: 'iphone-17-pro-max',
     price: 129990,
     storage: '256 ГБ',
@@ -690,7 +690,7 @@ const DEFAULT_PRODUCTS = [
 
   createPhone({
     id: 'ip17-pro-max-esim-512',
-    name: 'Apple iPhone 17 Pro Max eSIM 512 ГБ',
+    name: 'iPhone 17 Pro Max eSIM 512 ГБ',
     category: 'iphone-17-pro-max',
     price: 149990,
     storage: '512 ГБ',
@@ -709,7 +709,7 @@ const DEFAULT_PRODUCTS = [
 
   createPhone({
     id: 'ip17-pro-max-esim-1tb',
-    name: 'Apple iPhone 17 Pro Max eSIM 1 ТБ',
+    name: 'iPhone 17 Pro Max eSIM 1 ТБ',
     category: 'iphone-17-pro-max',
     price: 169990,
     storage: '1 ТБ',
@@ -728,7 +728,7 @@ const DEFAULT_PRODUCTS = [
 
   createPhone({
     id: 'ip17-pro-max-256',
-    name: 'Apple iPhone 17 Pro Max 256 ГБ',
+    name: 'iPhone 17 Pro Max 256 ГБ',
     category: 'iphone-17-pro-max',
     price: 131990,
     storage: '256 ГБ',
@@ -748,7 +748,7 @@ const DEFAULT_PRODUCTS = [
 
   createPhone({
     id: 'ip17-pro-max-512',
-    name: 'Apple iPhone 17 Pro Max 512 ГБ',
+    name: 'iPhone 17 Pro Max 512 ГБ',
     category: 'iphone-17-pro-max',
     price: 151990,
     storage: '512 ГБ',
@@ -767,7 +767,7 @@ const DEFAULT_PRODUCTS = [
 
   createPhone({
     id: 'ip17-pro-max-1tb',
-    name: 'Apple iPhone 17 Pro Max 1 ТБ',
+    name: 'iPhone 17 Pro Max 1 ТБ',
     category: 'iphone-17-pro-max',
     price: 171990,
     storage: '1 ТБ',
@@ -886,6 +886,24 @@ const DEFAULT_PRODUCTS = [
     category: 'ipad-mini-7',
     price: 64990,
     storage: '256 ГБ',
+    series: 'iPad mini 7',
+    description: '8.3″ Liquid Retina, A17 Pro, компактный формат и поддержка Apple Pencil Pro',
+    specs: {
+      display: '8.3″ Liquid Retina',
+      chip: 'Apple A17 Pro',
+      camera: '12 Мп Wide',
+      battery: 'До 10 ч',
+      connectivity: 'Wi‑Fi 6E, USB‑C',
+      protection: 'Алюминий',
+    },
+  }),
+
+  createIpadSku({
+    id: 'ipadmini7-512',
+    name: 'iPad mini 7 512 ГБ Wi‑Fi',
+    category: 'ipad-mini-7',
+    price: 64990,
+    storage: '512 ГБ',
     series: 'iPad mini 7',
     description: '8.3″ Liquid Retina, A17 Pro, компактный формат и поддержка Apple Pencil Pro',
     specs: {
